@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MeetUp_Group1MobileApp</string>
     <string name="title_activity_maps">Map</string>
+    <string name="APIKey">AIzaSyDcOkWyYVwBp7bPAdea83190j37Exgy5ig</string>
 </resources>
