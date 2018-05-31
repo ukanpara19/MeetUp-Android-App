@@ -60,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLang,18),5000, null);
 
         List<Address> addresses;
-        Geocoder geocoder = new Geocoder(this);
+        Geocoder geocoder = new Geocoder(this); 
         try {
             addresses = geocoder.getFromLocationName("Vilnius",5);
 
