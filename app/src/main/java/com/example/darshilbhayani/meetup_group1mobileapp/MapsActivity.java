@@ -2,12 +2,15 @@ package com.example.darshilbhayani.meetup_group1mobileapp;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+//import com.example.drawroutemap.DrawRouteMaps;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -62,7 +66,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         List<Address> addresses;
         Geocoder geocoder = new Geocoder(this); 
         try {
-            addresses = geocoder.getFromLocationName("Vilnius",5);
+            //addresses = geocoder.getFromLocationName("Vilnius",5);
+            addresses = geocoder.getFromLocationName("Jersey Shore, New Jersey",5);
 
             Log.i("addresses..","."+addresses.size());
 
@@ -81,18 +86,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .fromResource(R.drawable.common_google_signin_btn_icon_dark_focused)));*/
                 Marker hamburg = mMap.addMarker(new MarkerOptions()
                         .position(user)
-                        .title("Vilnius"));
+                        .title("Jersey Shore, New Jersey"));
                 // Move the camera instantly to hamburg with a zoom of 15.
+
+                final LatLng zoomIn = new LatLng((lat+37.349957)/2, (lon+(-121.938827))/2);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
 
                 // Zoom in, animating the camera.
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+                LatLng origin = latLang;
+                LatLng destination = user;
+                DrawRouteMaps.getInstance(this)
+                        .draw(origin, destination, mMap);
+                DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.marker_a, "Origin Location");
+                DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.marker_b, "Destination Location");
+
+                LatLngBounds bounds = new LatLngBounds.Builder()
+                        .include(origin)
+                        .include(destination).build();
+                Point displaySize = new Point();
+                getWindowManager().getDefaultDisplay().getSize(displaySize);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
             }
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
     }
 
     /*
