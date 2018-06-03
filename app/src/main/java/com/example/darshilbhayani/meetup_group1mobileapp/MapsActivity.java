@@ -66,8 +66,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         List<Address> addresses;
         Geocoder geocoder = new Geocoder(this); 
         try {
-            //addresses = geocoder.getFromLocationName("Vilnius",5);
-            addresses = geocoder.getFromLocationName("Jersey Shore, New Jersey",5);
+            addresses = geocoder.getFromLocationName("Vilnius",5);
+           // addresses = geocoder.getFromLocationName("Jersey Shore, New Jersey",5);
 
             Log.i("addresses..","."+addresses.size());
 

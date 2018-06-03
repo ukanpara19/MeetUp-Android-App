@@ -1,1 +1,1 @@
-include ':app', ':drawroutemap'
+include ':app', ':drawroutemap', ':test'
