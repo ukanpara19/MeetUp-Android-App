@@ -1,14 +1,28 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 //import com.example.drawroutemap.DrawRouteMaps;
 
@@ -27,9 +41,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener {
 
     private GoogleMap mMap;
+    private static final int REQUEST_LOCATION = 1;
+    Button button;
+    TextView textView;
+    LocationManager locationManager;
+    String lattitude,longitude;
+
+    LatLng destination;
+    LatLng source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +61,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        textView = (TextView)findViewById(R.id.text_location);
+        button = (Button)findViewById(R.id.button_location);
+
+        button.setOnClickListener(this);
     }
 
 
@@ -55,19 +84,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-         //Drawable circleDrawable = getResources().getDrawable(R.drawable.common_google_signin_btn_icon_dark_focused);
-         //BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
+        sourceLocation(mMap);
+        destinationLocation(mMap);
 
-        // Add a marker in Sydney and move the camera
-        LatLng latLang = new LatLng(37.349957, -121.938827);
-        mMap.addMarker(new MarkerOptions().position(latLang).title("Santa Clara Univeristy"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLang,18),5000, null);
+        drawRoute(source,destination);
+    }
 
+    private void destinationLocation(GoogleMap mMap) {
         List<Address> addresses;
-        Geocoder geocoder = new Geocoder(this); 
+        Geocoder geocoder = new Geocoder(this);
         try {
-            addresses = geocoder.getFromLocationName("Vilnius",5);
-           // addresses = geocoder.getFromLocationName("Jersey Shore, New Jersey",5);
+            // addresses = geocoder.getFromLocationName("Vilnius",5);
+            addresses = geocoder.getFromLocationName("Jersey Shore, New Jersey",5);
 
             Log.i("addresses..","."+addresses.size());
 
@@ -77,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Double lon = (double) (addresses.get(0).getLongitude());
 
                 Log.d("lat-long", "" + lat + "......." + lon);
-                final LatLng user = new LatLng(lat, lon);
+                destination = new LatLng(lat, lon);
 
                 /*Marker hamburg = mMap.addMarker(new MarkerOptions()
                         .position(user)
@@ -85,29 +113,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .icon(BitmapDescriptorFactory
                                 .fromResource(R.drawable.common_google_signin_btn_icon_dark_focused)));*/
                 Marker hamburg = mMap.addMarker(new MarkerOptions()
-                        .position(user)
-                        .title("Jersey Shore, New Jersey"));
+                        .position(destination)
+                        .title("Jersey Shore, New Jersey").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_b)));
                 // Move the camera instantly to hamburg with a zoom of 15.
-
-                final LatLng zoomIn = new LatLng((lat+37.349957)/2, (lon+(-121.938827))/2);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
 
                 // Zoom in, animating the camera.
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
-                LatLng origin = latLang;
-                LatLng destination = user;
-                DrawRouteMaps.getInstance(this)
-                        .draw(origin, destination, mMap);
-                DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.marker_a, "Origin Location");
-                DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.marker_b, "Destination Location");
-
-                LatLngBounds bounds = new LatLngBounds.Builder()
-                        .include(origin)
-                        .include(destination).build();
-                Point displaySize = new Point();
-                getWindowManager().getDefaultDisplay().getSize(displaySize);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
             }
 
         } catch (IOException e) {
@@ -115,7 +127,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
 
+    }
 
+    private void sourceLocation(GoogleMap mMap) {
+        // Add a marker in Sydney and move the camera
+        //LatLng latLang = new LatLng(37.349957, -121.938827);
+        source = new LatLng(30.332523, -97.844303);
+
+        //  mMap.addMarker(new MarkerOptions().position(latLang).title("Santa Clara Univeristy"));
+        mMap.addMarker(new MarkerOptions().position(source).title("Lake Austin").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_a)));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,18),5000, null);
+    }
+
+    public void drawRoute(LatLng source, LatLng finalDestination){
+        LatLng origin = source;
+        LatLng destination = finalDestination;
+        DrawRouteMaps.getInstance(this)
+                .draw(origin, destination, mMap);
+        //DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.marker_a, "Origin Location");
+        //DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.marker_b, "Destination Location");
+
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(origin)
+                .include(destination).build();
+        Point displaySize = new Point();
+        getWindowManager().getDefaultDisplay().getSize(displaySize);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
     }
 
     /*
@@ -256,5 +293,92 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         drawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    @Override
+    public void onClick(View v) {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+
+        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            getLocation();
+        }
+    }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location location2 = locationManager.getLastKnownLocation(LocationManager. PASSIVE_PROVIDER);
+
+            if (location != null) {
+                double latti = location.getLatitude();
+                double longi = location.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                //textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude + "\n" + "Longitude = " + longitude);
+                LatLng source = new LatLng(Double.parseDouble(lattitude), Double.parseDouble(longitude));
+                mMap.addMarker(new MarkerOptions().position(source).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_a)));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,18),5000, null);
+                drawRoute(source,destination);
+
+            } else  if (location1 != null) {
+                double latti = location1.getLatitude();
+                double longi = location1.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                //textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude + "\n" + "Longitude = " + longitude);
+                LatLng source = new LatLng(Double.parseDouble(lattitude), Double.parseDouble(longitude));
+                mMap.addMarker(new MarkerOptions().position(source).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_a)));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,18),5000, null);
+                drawRoute(source,destination);
+
+
+            } else  if (location2 != null) {
+                double latti = location2.getLatitude();
+                double longi = location2.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                //textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude + "\n" + "Longitude = " + longitude);
+                LatLng source = new LatLng(Double.parseDouble(lattitude), Double.parseDouble(longitude));
+                mMap.addMarker(new MarkerOptions().position(source).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_a)));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,18),5000, null);
+                drawRoute(source,destination);
+
+            }else{
+
+                Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+    protected void buildAlertMessageNoGps() {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please Turn ON your GPS Connection")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 }
