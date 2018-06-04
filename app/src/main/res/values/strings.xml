@@ -4,4 +4,6 @@
     <string name="APIKey">AIzaSyDcOkWyYVwBp7bPAdea83190j37Exgy5ig</string>
     <string name="IPKey">AIzaSyAkJ_dRjWP9-g34GiloedGp1H_pUBIH6ME</string>
     <string name="FBkey">ga0RGNYHvNM5d0SLGQfpQWAPGJ8=</string>
+    <string name="facebook_app_id">977143779110159</string>
+    <string name="fb_login_protocol_scheme">fb977143779110159</string>
 </resources>
