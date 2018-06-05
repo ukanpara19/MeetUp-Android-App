@@ -147,7 +147,7 @@
                     app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="@+id/textView4"
                     app:layout_constraintTop_toBottomOf="@+id/textView4"/>
-                
+
 
                 <ImageView
                     android:id="@+id/imageView6"
