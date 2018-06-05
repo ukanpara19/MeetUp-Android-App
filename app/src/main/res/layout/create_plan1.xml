@@ -72,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
                     android:src="@drawable/food" />
 
                 <TextView
@@ -111,6 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
                     android:src="@drawable/movie" />
 
                 <TextView
@@ -149,6 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
                     android:src="@drawable/sports" />
 
                 <TextView
@@ -187,6 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
                     android:src="@drawable/book" />
 
                 <TextView
@@ -225,6 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
                     android:src="@drawable/car" />
 
                 <TextView
@@ -263,6 +268,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp"
                     android:src="@drawable/other" />
 
                 <TextView
