@@ -116,6 +116,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         button = (Button)findViewById(R.id.button_location);
 
         button.setOnClickListener(this);
+
     }
 
     public boolean checkLocationPermission(){
