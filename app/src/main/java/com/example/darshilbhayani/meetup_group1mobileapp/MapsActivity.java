@@ -67,8 +67,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     static Polyline polylineFinal = null;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
-    Button button;
-    TextView textView;
+   // Button button;
+   // TextView textView;
     LocationManager locationManager;
     String lattitude,longitude;
 
@@ -112,10 +112,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ActivityCompat.requestPermissions(this,
                 new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
-        textView = (TextView)findViewById(R.id.text_location);
-        button = (Button)findViewById(R.id.button_location);
+        //textView = (TextView)findViewById(R.id.text_location);
+        //button = (Button)findViewById(R.id.button_location);
 
-        button.setOnClickListener(this);
+        //button.setOnClickListener(this);
 
     }
 
