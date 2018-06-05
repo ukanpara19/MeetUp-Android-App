@@ -35,8 +35,9 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MapsActivity" />
+
         <activity
-            android:name=".CreatePage1"
+            android:name=".MainActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +48,7 @@
         <activity android:name=".LoginDemo"></activity>
         <activity android:name=".SignUpActivity"></activity>
 
-        <activity android:name=".CreatePage2"></activity>
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -68,10 +69,6 @@
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".MainActivity">
-
         </activity>
 
     </application>
