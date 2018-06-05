@@ -29,7 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <GridLayout
         android:id="@+id/grid_layout_id"
         android:layout_width="0dp"
