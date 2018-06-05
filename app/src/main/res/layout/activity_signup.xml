@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#00bcd4"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/signup"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#ffffff"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textColorLink="#ffffff"
+        android:textSize="@dimen/signup_edittext_font_port"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#ffffff"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:textColor="#ffffff"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#ffffff"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/signup_edittext_font_port"
+        app:layout_constraintEnd_toEndOf="@+id/editText6"
+        app:layout_constraintStart_toStartOf="@+id/editText6"
+        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#ffffff"
+        android:ems="10"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColor="#ffffff"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#ffffff"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/signup_edittext_font_port"
+        app:layout_constraintEnd_toEndOf="@+id/editText7"
+        app:layout_constraintStart_toStartOf="@+id/editText7"
+        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#ffffff"
+        android:ems="10"
+        android:hint="@string/phoneno"
+        android:inputType="phone"
+        android:textColor="#ffffff"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#ffffff"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/signup_edittext_font_port"
+        app:layout_constraintEnd_toEndOf="@+id/editText8"
+        app:layout_constraintStart_toStartOf="@+id/editText8"
+        app:layout_constraintTop_toBottomOf="@+id/editText8" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/my_button"
+        android:text="@string/signup"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

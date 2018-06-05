@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="meet_up_font_size_port">36sp</dimen>
+    <dimen name="meet_up_font_size_land">24sp</dimen>
+    <dimen name="image_forgot">36dp</dimen>
+    <dimen name="forgot_margin_top">12dp</dimen>
+    <dimen name="forgot_text_size">12sp</dimen>
+    <dimen name="login_with_facebook_text_size">16sp</dimen>
+    <dimen name="edittext_font_size_land">12sp</dimen>
+
+
+
+    <dimen name="signup_edittext_font_port">18sp</dimen>
+</resources>
