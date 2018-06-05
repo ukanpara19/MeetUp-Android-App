@@ -39,11 +39,11 @@ public class DrawMarker {
         Drawable circleDrawable = ContextCompat.getDrawable(context, resDrawable);
         BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
 
-        googleMap.addMarker(new MarkerOptions()
-                .position(location)
-                .title(title)
-                .icon(markerIcon)
-        );
+//        googleMap.addMarker(new MarkerOptions()
+//                .position(location)
+//                .title(title)
+//                .icon(markerIcon)
+//        );
     }
 
     private BitmapDescriptor getMarkerIconFromDrawable(Drawable drawable) {

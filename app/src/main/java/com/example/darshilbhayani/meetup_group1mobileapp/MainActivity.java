@@ -1,9 +1,11 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -39,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(btn_next.getText().toString()=="Finish"){
+                    Intent intent = new Intent(MainActivity.this,LoginDemo.class);
+                    startActivity(intent);
+                    finish();
+                }
                 mSlideViewPager.setCurrentItem(mCurrentPage + 1);
             }
         });

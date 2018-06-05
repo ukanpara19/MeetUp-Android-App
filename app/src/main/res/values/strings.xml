@@ -3,6 +3,27 @@
     <string name="title_activity_maps">MeetUp</string>
     <string name="APIKey">AIzaSyDcOkWyYVwBp7bPAdea83190j37Exgy5ig</string>
     <string name="IPKey">AIzaSyAkJ_dRjWP9-g34GiloedGp1H_pUBIH6ME</string>
+
+
+    <string name="meet_up">MeetUp</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="username_hint">Email ID</string>
+    <string name="password_hint">Password</string>
+    <string name="lock_content_descr">Forgot Password Lock</string>
+    <string name="register">Register</string>
+    <string name="signin">Sign In</string>
+    <string name="signup">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phoneno">Mobile Number</string>
+    <string name="imagedescr">Back Button</string>
+    <string name="settings">Settings</string>
+    <string name="add_plan">Add a Plan</string>
+    <string name="message_center">Message Center</string>
+    <string name="maps">Maps</string>
+    <string name="user_profile">User</string>
+    <string name="logout">Logout</string>
     <string name="FBkey">ga0RGNYHvNM5d0SLGQfpQWAPGJ8=</string>
     <string name="facebook_app_id">977143779110159</string>
     <string name="fb_login_protocol_scheme">fb977143779110159</string>
