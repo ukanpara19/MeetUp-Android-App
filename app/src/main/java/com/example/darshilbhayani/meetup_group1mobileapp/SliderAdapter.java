@@ -21,7 +21,7 @@ public SliderAdapter(Context context){
 }
 
 public int[] slide_images = {
-        R.drawable.food,
+        R.drawable.food_slide,
         R.drawable.sleep,
         R.drawable.study,
 };
