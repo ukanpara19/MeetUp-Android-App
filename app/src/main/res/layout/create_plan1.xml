@@ -23,7 +23,8 @@
         android:text="CATEGORY"
         android:textAppearance="@android:style/TextAppearance.Material"
         android:textColor="#404040"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +37,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
         android:layout_weight="8"
         android:alignmentMode="alignMargins"
         android:columnCount="2"
