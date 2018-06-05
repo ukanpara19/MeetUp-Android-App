@@ -5,19 +5,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#00bcd4">
 
     <HorizontalScrollView
 
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
 
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:background=" #00bcd4"
+            android:background="#00bcd4"
 
             android:gravity="center"
             android:orientation="horizontal">
@@ -30,8 +33,7 @@
                 android:background=" #00bcd4"
                 android:drawableTop="@drawable/all_show"
                 android:text="ALL"
-                android:textColor="#f4f3f3"
-                 />
+                android:textColor="#f4f3f3" />
 
             <Button
                 android:id="@+id/Button_food"
@@ -40,8 +42,7 @@
                 android:background=" #00bcd4"
                 android:drawableTop="@drawable/food"
                 android:text="Food"
-                android:textColor="#f4f3f3"
-                 />
+                android:textColor="#f4f3f3" />
 
             <Button
                 android:id="@+id/Button_Enter"
@@ -50,8 +51,7 @@
                 android:background=" #00bcd4"
                 android:drawableTop="@drawable/movie"
                 android:text="Movie"
-                android:textColor="#f4f3f3"
-                 />
+                android:textColor="#f4f3f3" />
 
             <Button
                 android:id="@+id/Button_sport"
@@ -60,8 +60,7 @@
                 android:background=" #00bcd4"
                 android:drawableTop="@drawable/sports"
                 android:text="Sports"
-                android:textColor="#f4f3f3"
-                 />
+                android:textColor="#f4f3f3" />
 
             <Button
                 android:id="@+id/Button_reading"
@@ -70,8 +69,7 @@
                 android:background=" #00bcd4"
                 android:drawableTop="@drawable/book"
                 android:text="Reading"
-                android:textColor="#f4f3f3"
-                 />
+                android:textColor="#f4f3f3" />
 
             <Button
                 android:id="@+id/Button_travel"
@@ -80,8 +78,7 @@
                 android:background=" #00bcd4"
                 android:drawableTop="@drawable/car"
                 android:text="Travel"
-                android:textColor="#f4f3f3"
-                 />
+                android:textColor="#f4f3f3" />
 
             <Button
                 android:id="@+id/button_others"
@@ -90,8 +87,7 @@
                 android:background=" #00bcd4"
                 android:drawableTop="@drawable/other"
                 android:text="Other"
-                android:textColor="#f4f3f3"
-                 />
+                android:textColor="#f4f3f3" />
 
 
         </LinearLayout>
