@@ -107,7 +107,7 @@
                     android:background="@drawable/border_xml"
                     android:ems="10"
                     android:hint="Time in Minutes"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     app:layout_constraintEnd_toEndOf="@+id/textView4"
                     app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="@+id/textView4"
