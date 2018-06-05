@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         addDotsIndidcator(0);
 
+
         mSlideViewPager.addOnPageChangeListener(viewListener);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
