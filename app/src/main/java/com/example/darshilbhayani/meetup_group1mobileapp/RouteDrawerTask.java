@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONObject;
@@ -65,6 +66,11 @@ public class RouteDrawerTask extends AsyncTask<String, Integer, List<List<HashMa
         ArrayList<LatLng> points;
         lineOptions = null;
 
+        Log.i("polylineFinal..",MapsActivity.polylineFinal+"");
+
+        if(MapsActivity.polylineFinal!=null)
+            MapsActivity.polylineFinal.remove();
+
         for (int i = 0; i < result.size(); i++) {
             points = new ArrayList<>();
             lineOptions = new PolylineOptions();
@@ -95,7 +101,7 @@ public class RouteDrawerTask extends AsyncTask<String, Integer, List<List<HashMa
 
         // Drawing polyline in the Google Map for the i-th route
         if (lineOptions != null && mMap != null) {
-            mMap.addPolyline(lineOptions);
+            MapsActivity.polylineFinal =  mMap.addPolyline(lineOptions);
         } else {
             Log.d("onPostExecute", "without Polylines draw");
         }

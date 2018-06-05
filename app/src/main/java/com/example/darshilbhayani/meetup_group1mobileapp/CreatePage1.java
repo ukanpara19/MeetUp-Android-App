@@ -20,13 +20,13 @@ public class CreatePage1 extends AppCompatActivity {
         int childCount = grid.getChildCount();
 
 
-        for (int i= 0; i < childCount; i++){
+        for (int i= 0; i < childCount; i++) {
             final CardView container = (CardView) grid.getChildAt(i);
-            Log.d("View",i+"");
-            container.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View view){
+            Log.d("View", i + "");
+            container.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
                     // your click code here
-                    Log.d("Id", view.getId()+"");
+                    Log.d("Id", view.getId() + "");
                 }
             });
         }
