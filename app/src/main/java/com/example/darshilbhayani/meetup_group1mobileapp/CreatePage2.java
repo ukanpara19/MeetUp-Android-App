@@ -370,13 +370,13 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                     if(source_dest_get=="source_current_location_imageview"){
                         source_edittext.setText(add);
                         event.put("lat_source",latti+"");
-                        event.put("lon_source",longi+"");
+                        event.put("lan_source",longi+"");
                         event_data.setSourceLat(latti+"");
                         event_data.setSourceLon(longi+"");
                     }else {
                         destination_edittext.setText(add);
                         event.put("lat_dest",latti+"");
-                        event.put("lon_dest",longi+"");
+                        event.put("lan_dest",longi+"");
                         event_data.setDestLat(latti+"");
                         event_data.setDestLon(longi+"");
                     }
