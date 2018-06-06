@@ -1,104 +1,94 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class CreatePage4 extends AppCompatActivity {
+    private static final int PERMISSION_REQUEST_CONTACT = 1;
     HashMap<String, String> event = new HashMap<>();
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private static String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS};
-    private HashMap<String, String> contactHash;
+    private HashMap<String, String> previousIntentHashMap;
     private DatabaseReference mDatabase;
-
+    Button reviewPlanButton;
+    ArrayList<String> nameArrayList = null;
+    public static final String MainPP_SP = "MainPP_data";
+    public static final int R_PERM = 2822;
+    private static final int REQUEST= 112;
+    HashMap<String,String> selectedNumbers = new HashMap<>();
+    ListView myList;
+    Context mContext = this;
+    ArrayAdapter<String> adapter = null;
+    HashMap<String, String> contactHash1;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_plan4);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         event = (HashMap<String, String>)intent.getSerializableExtra("hashmap");
+        nameArrayList = intent.getStringArrayListExtra("nameArrayList");
+        contactHash1 = (HashMap<String, String>) intent.getSerializableExtra("contact");
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        reviewPlanButton = (Button) findViewById(R.id.button4);
 
-        event.put("email_id","dbp343@gmail.com");
-        event.put("ppl_joined","");
-        mDatabase.child("event").child("1").setValue(event);
-        mDatabase.child("event").child("2").setValue(event);
-        mDatabase.child("event").child("3").setValue(event);
-        mDatabase.child("event").child("4").setValue(event);
-        mDatabase.child("event").child("5").setValue(event);
+        myList = (ListView) findViewById(R.id.newList);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_activated_1,nameArrayList);
+        myList.setAdapter(adapter);
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-        Log.d("event",event+"");
-        permissionEnable();
-    }
-
-    public void permissionEnable() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(PERMISSIONS_CONTACT, PERMISSIONS_REQUEST_READ_CONTACTS);
-        } else {
-            getContactList();
-        }
-    }
-    private void getContactList() {
-        String phoneNumber = "";
-        HashMap<String, String> contact = new HashMap<String, String>();
-        ContentResolver cr = getContentResolver();
-        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                if (Integer.parseInt(hasPhone) > 0) {
-                    Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactId, null, null);
-                    if(phones.getCount()>0){
-                        while (phones.moveToNext()) { //iterate over all contact phone numbers
-                            phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        }
-                    }
-                    phones.close();
+                if(selectedNumbers.containsKey(nameArrayList.get(position))){
+                    selectedNumbers.remove(nameArrayList.get(position));
+                    view.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }else {
+                    Log.d("error",nameArrayList.get(position)+"");
+                    Log.d("error",contactHash1+"");
+                    selectedNumbers.put(nameArrayList.get(position), contactHash1.get(nameArrayList.get(position)));
+                    view.setBackgroundColor(Color.parseColor("#8FD8D8"));
                 }
-                Log.d(name,phoneNumber);
-                contact.put(name,phoneNumber);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        setContact(contact);
-    }
-    private void setContact(HashMap<String, String> contact) {
-        this.contactHash = contact;
-        Log.d("contact",contact+"");
-    }
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        Log.d(requestCode+" hey yea",PERMISSIONS_REQUEST_READ_CONTACTS+"");
-        switch (requestCode) {
-            case 1: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! do the
-                    // calendar task you need to do.
-                    Log.d("dhaval", "permission granted");
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Log.d("dhaval", "permission denied");
-                }
-                return;
+                Log.d("data",selectedNumbers+"");
             }
-        }
-        Log.d("dhaval","error");
-    }
+        });
 
+        reviewPlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(CreatePage4.this,CreatePage5.class);
+                intent1.putExtra("hashmap",event);
+                intent1.putExtra("hashmapofinvitedpeople",selectedNumbers);
+                startActivity(intent1);
+            }
+        });
+    }
 }

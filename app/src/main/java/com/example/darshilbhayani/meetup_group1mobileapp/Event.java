@@ -2,7 +2,6 @@ package com.example.darshilbhayani.meetup_group1mobileapp;
 
 public class Event {
 
-
     private String email_id;
     private String event_date;
     private String event_dest;
@@ -15,7 +14,7 @@ public class Event {
     public String lan_source;
     public String lat_dest;
     public String lat_source;
-    private String pplJoined;
+    private String ppl_joined;
 
     public String getEmail_id() {
         return email_id;
@@ -113,12 +112,12 @@ public class Event {
         this.lat_source = lat_source;
     }
 
-    public String getPplJoined() {
-        return pplJoined;
+    public String getppl_joined() {
+        return ppl_joined;
     }
 
-    public void setPplJoined(String pplJoined) {
-        this.pplJoined = pplJoined;
+    public void setppl_joined(String ppl_joined) {
+        this.ppl_joined = ppl_joined;
     }
 
     public Event(){
@@ -127,7 +126,7 @@ public class Event {
 
     public Event(String email_id, String event_date, String event_dest, String event_duration,
                  String event_name, String event_source, String event_time, String event_type,
-                 String lan_dest, String lan_source, String lat_dest, String lat_source, String pplJoined) {
+                 String lan_dest, String lan_source, String lat_dest, String lat_source, String ppl_joined) {
         this.email_id = email_id;
         this.event_date = event_date;
         this.event_dest = event_dest;
@@ -140,7 +139,25 @@ public class Event {
         this.lan_source = lan_source;
         this.lat_dest = lat_dest;
         this.lat_source = lat_source;
-        this.pplJoined = pplJoined;
+        this.ppl_joined = ppl_joined;
 
+    }
+
+    public void setEvent_all(String email_id,String event_date,String event_dest,String event_duration,String event_name,String event_source,
+            String event_time, String event_type, String lan_dest,String lan_source, String lat_dest,String lat_source,String ppl_joined){
+        this.email_id = email_id;
+        this.event_date = event_date;
+        this.event_dest = event_dest;
+        this.event_duration = event_duration;
+        this.event_name = event_name;
+        this.event_source = event_source;
+        this.event_time = event_time;
+        this.event_type = event_type;
+        this.lan_dest = lan_dest;
+        this.lan_source = lan_source;
+        this.lan_dest = lan_dest;
+        this.lat_source = lat_source;
+        this.lat_dest = lat_dest;
+        this.ppl_joined = ppl_joined;
     }
 }

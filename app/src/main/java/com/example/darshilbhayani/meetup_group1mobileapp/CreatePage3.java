@@ -97,7 +97,7 @@ public class CreatePage3 extends AppCompatActivity{
                 event_data.setEvent_time(time);
                 event_data.setEvent_duration(String.valueOf(duration_int));
 
-                Intent intent1 = new Intent(CreatePage3.this,CreatePage4.class);
+                Intent intent1 = new Intent(CreatePage3.this,requestContactPermission.class);
                 intent1.putExtra("hashmap",event);
                 startActivity(intent1);
             }

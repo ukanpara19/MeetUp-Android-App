@@ -187,7 +187,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(eventData.getKey().equals("lat_source"))
                             e1.setLat_source(eventData.getValue().toString());
                         if(eventData.getKey().equals("ppl_joined"))
-                            e1.setPplJoined(eventData.getValue().toString());
+                            e1.setppl_joined(eventData.getValue().toString());
                     }
                     event.put(eventIDDataSet.getKey(),e1);
                 }
@@ -238,24 +238,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 //ByDefault Making Join to the Event!!
                                 //Start
-                                String tmp = dataModel.getPplJoined();
+                                String tmp = dataModel.getppl_joined();
                                 if(!tmp.trim().equals(""))
                                     tmp = tmp+";darshilbhayani92@gmail.com";
                                 else
                                     tmp = "darshilbhayani92@gmail.com";
-                                dataModel.setPplJoined(tmp);
+                                dataModel.setppl_joined(tmp);
 
-                                Log.i("dataModel..",dataModel.getPplJoined());
+                                Log.i("dataModel..",dataModel.getppl_joined());
 
                                 Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
                                         dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
                                         dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
-                                        dataModel.getLat_source(),dataModel.getPplJoined());
-
-                               //Log.i("ID",marker.getTag().toString());
-
-                                mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
-                                //End
+                                        dataModel.getLat_source(),dataModel.getppl_joined());
+                                mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);//End
                             }
                             return false;
                         }
