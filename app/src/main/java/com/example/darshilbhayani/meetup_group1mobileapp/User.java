@@ -7,16 +7,14 @@ public class User {
     public String name;
     public String password;
     public String number;
-    HashMap<String,String> contact;
 
     public User(){
 
     }
 
-    public User(String name, String email, String number, HashMap<String,String> contact){
+    public User(String name, String email, String number){
         this.name = name;
         this.email = email;
         this.number = number;
-        this.contact = contact;
     }
 }
