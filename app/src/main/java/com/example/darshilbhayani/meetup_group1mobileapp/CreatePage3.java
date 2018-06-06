@@ -45,8 +45,6 @@ public class CreatePage3 extends AppCompatActivity{
                 if (hasFocus) {
                     TimePicker mTimePicker = new TimePicker();
                     mTimePicker.show(getFragmentManager(), "Select time");
-                } else {
-                    Toast.makeText(getApplicationContext(), "Lost the focus", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -57,8 +55,6 @@ public class CreatePage3 extends AppCompatActivity{
                 if (hasFocus) {
                     DatePickerFragment mDatePicker = new DatePickerFragment();
                     mDatePicker.show(getFragmentManager(), "Select date");
-                } else {
-                    Toast.makeText(getApplicationContext(), "Lost the focus", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -94,7 +90,7 @@ public class CreatePage3 extends AppCompatActivity{
 
                                 event.put("event_date",date);
                 event.put("event_time",time);
-                event.put("event_duration",duration);
+                event.put("event_duration",duration +" minutes");
 
 
                 event_data.event_setDate(date);
