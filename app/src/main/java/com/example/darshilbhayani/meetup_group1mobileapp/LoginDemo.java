@@ -59,6 +59,7 @@ public class LoginDemo extends AppCompatActivity {
     private DatabaseReference mDatabase;
     String loginUsername,loginPassword;
     ProgressDialog pd;
+    String fbEmailId;
     private HashMap<String, String> contactHash;
 
     @Override
@@ -95,6 +96,11 @@ public class LoginDemo extends AppCompatActivity {
                                 Log.i("LoginActivity", response.toString());
                                 // Get facebook data from login
                                 Bundle bFacebookData = getFacebookData(object);
+                                try {
+                                    fbEmailId = object.getString("email");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 try{
                                     writeNewUser(bFacebookData.getString("email"),bFacebookData.getString("first_name"),bFacebookData.getString("last_name"));
                                 }
@@ -241,6 +247,7 @@ public class LoginDemo extends AppCompatActivity {
                             Log.d("user",user+"");
                             SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                             editor.putString("logged_in", "yes");
+                            editor.putString("Email_ID",fbEmailId);
                             editor.apply();
                             Intent i = new Intent(LoginDemo.this,MapsActivity.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -282,7 +289,7 @@ public class LoginDemo extends AppCompatActivity {
         return Patterns.EMAIL_ADDRESS.matcher(loginUsername).matches();
     }
 
-    private void validateLogin(String loginUsername, String loginPassword) {
+    private void validateLogin(final String loginUsername, String loginPassword) {
         mAuth.signInWithEmailAndPassword(loginUsername,loginPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -290,6 +297,7 @@ public class LoginDemo extends AppCompatActivity {
                 if(task.isSuccessful()){
                     SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                     editor.putString("logged_in", "yes");
+                    editor.putString("Email_ID",loginUsername);
                     editor.apply();
                     Intent i = new Intent(LoginDemo.this,MapsActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

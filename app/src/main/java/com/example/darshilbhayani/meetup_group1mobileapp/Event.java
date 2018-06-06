@@ -25,6 +25,7 @@ public class Event {
     public void setPpl_joined(String ppl_joined) {
         this.ppl_joined = ppl_joined;
     }
+
     public String getEmail_id() {
         return email_id;
     }
