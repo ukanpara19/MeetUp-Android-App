@@ -43,8 +43,6 @@ public class SignUpActivity extends AppCompatActivity{
 
     EditText name_edittext_signup,email_edittext_signup,password_edittext_signup,mobileNumber_edittext_signup;
     String name_signup,email_signup,password_signup,mobilenumber_signup;
-    public  static final int RequestPermissionCode  = 1 ;
-    public  static final int PERMISSIONS_REQUEST_READ_CONTACTS  = 1 ;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -148,8 +146,7 @@ public class SignUpActivity extends AppCompatActivity{
     }
 
     private void writeNewUser(String username, String name_signup, String email_signup, String mobilenumber_signup) {
-        permissionEnable();
-        User user = new User(name_signup,email_signup,mobilenumber_signup,getContactHash());
+        User user = new User(name_signup,email_signup,mobilenumber_signup);
         mDatabase.child("users").child(username).setValue(user);
         signup.setEnabled(true);
     }
@@ -176,59 +173,5 @@ public class SignUpActivity extends AppCompatActivity{
             return false;
         }
         return true;
-    }
-
-    public void permissionEnable() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-        } else {
-            getContactList();
-        }
-    }
-
-    private void getContactList() {
-        String phoneNumber = "";
-        HashMap<String, String> contact = new HashMap<String, String>();
-        ContentResolver cr = getContentResolver();
-        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                try{
-                    if (Integer.parseInt(hasPhone) > 0) {
-                        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactId, null, null);
-                        if(phones.getCount()>0){
-                            while (phones.moveToNext()) { //iterate over all contact phone numbers
-                                phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                            }
-                        }
-                        phones.close();
-                        contact.put(name,phoneNumber);
-                    }
-                }
-                catch (Exception e){
-                    Toast.makeText(getApplicationContext(),"Exceptoin while reading contacts",Toast.LENGTH_LONG);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        setContact(contact);
-    }
-    private void setContact(HashMap<String, String> contact) {
-        this.contactHash = contact;
-    }
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission is granted
-                permissionEnable();
-            } else {
-                Toast.makeText(this, "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 }
