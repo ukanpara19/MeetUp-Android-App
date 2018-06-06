@@ -80,9 +80,9 @@ public class CreatePage1 extends AppCompatActivity {
         });
     }
     private void createPage2(HashMap<String, String> event_data, Event event) {
-        //Intent intent = new Intent(CreatePage1.this,CreatePage2.class);
-        //intent.putExtra("hashmap",event_data);
-        //intent.putExtra("event_object",event.getEvent_type());
-        //startActivity(intent);
+        Intent intent = new Intent(CreatePage1.this,CreatePage2.class);
+        intent.putExtra("hashmap",event_data);
+        intent.putExtra("event_object",event.getEvent_type());
+        startActivity(intent);
     }
 }
