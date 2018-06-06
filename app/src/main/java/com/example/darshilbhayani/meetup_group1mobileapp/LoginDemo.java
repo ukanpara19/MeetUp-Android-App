@@ -60,7 +60,6 @@ public class LoginDemo extends AppCompatActivity {
     String loginUsername,loginPassword;
     ProgressDialog pd;
     private HashMap<String, String> contactHash;
-    private static int PERMISSIONS_REQUEST_READ_CONTACTS = 501;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +81,6 @@ public class LoginDemo extends AppCompatActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-// code to logout from facebook
-//                           if (AccessToken.getCurrentAccessToken() != null) {
-//                                LoginManager.getInstance().logOut();
-//                                finish();
-//                            }
-
                         Log.d("Success", "Login");
                         System.out.println("onSuccess");
                         pd = new ProgressDialog(LoginDemo.this);
@@ -206,65 +199,12 @@ public class LoginDemo extends AppCompatActivity {
         });
     }
     private void writeNewUser(String email, String first_name, String last_name) {
-        //permissionEnable();
         Log.d("checking for perm","got permission");
         String username = email.trim().replace(".",",");
-        User user = new User(first_name + " " + last_name,email,"",getContactHash());
+        User user = new User(first_name + " " + last_name,email,"");
         Log.d("checking for perm",user+"");
         mDatabase.child("users").child(username).setValue(user);
     }
-    public HashMap<String, String> getContactHash() {
-        return contactHash;
-    }
-
-    public void permissionEnable() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-        } else {
-            getContactList();
-        }
-    }
-    private void getContactList() {
-        String phoneNumber = "";
-        HashMap<String, String> contact = new HashMap<String, String>();
-        ContentResolver cr = getContentResolver();
-        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                if (Integer.parseInt(hasPhone) > 0) {
-                    Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactId, null, null);
-                    if(phones.getCount()>0){
-                        while (phones.moveToNext()) { //iterate over all contact phone numbers
-                            phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        }
-                    }
-                    phones.close();
-                }
-                contact.put(name,phoneNumber);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        setContact(contact);
-    }
-    private void setContact(HashMap<String, String> contact) {
-        this.contactHash = contact;
-    }
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission is granted
-                permissionEnable();
-            } else {
-                Toast.makeText(this, "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private Bundle getFacebookData(JSONObject object) {
         try {
             Bundle bundle = new Bundle();
