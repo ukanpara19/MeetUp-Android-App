@@ -34,10 +34,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".CreatePage1" />
+        <activity android:name=".MapsActivity"
+            android:theme="@style/SplashTheme" />
         <activity
-            android:name=".UserProfile"
-            android:label="@string/title_activity_maps">
+            android:name=".ProfilePage"
+            android:label="@string/title_activity_maps"
+            android:theme="@style/AppTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +49,6 @@
         </activity>
         <activity android:name=".LoginDemo"></activity>
         <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".MapsActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
