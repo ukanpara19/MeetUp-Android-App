@@ -39,7 +39,7 @@
         <activity
             android:name=".ProfilePage"
             android:label="@string/title_activity_maps"
-            android:theme="@style/ProfileTheme"
+            android:theme="@style/AppTheme"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
