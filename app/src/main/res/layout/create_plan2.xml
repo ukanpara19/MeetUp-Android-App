@@ -184,7 +184,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/editText4"/>
 
                 <fragment
-                    android:id="@+id/fragment"
+                    android:id="@+id/fragment_mMap"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
