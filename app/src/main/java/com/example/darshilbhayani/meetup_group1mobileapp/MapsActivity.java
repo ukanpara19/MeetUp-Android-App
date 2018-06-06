@@ -196,7 +196,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.i("PlanId.........",entryData.getKey());
                     Event eventData = event.get(entryData.getKey());
 
-                    Log.i("eventData.........",eventData.getPpl_joined()+"");
+                    Log.i("eventData.......",eventData.getPpl_joined()+"");
 
                     Double lat = Double.parseDouble(eventData.getLat_dest().toString());
                     Double lon = Double.parseDouble(eventData.getLan_dest().trim());
