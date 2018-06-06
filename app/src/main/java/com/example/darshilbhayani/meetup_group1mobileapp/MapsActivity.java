@@ -151,16 +151,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.i("Total Record...!!",dataSnapshot.getChildrenCount()+"");
                 for(DataSnapshot eventIDDataSet : dataSnapshot.getChildren())
                 {
-                    Log.i(eventIDDataSet.getKey(),eventIDDataSet.getChildrenCount() + "");
+                   // Log.i(eventIDDataSet.getKey(),eventIDDataSet.getChildrenCount() + "");
                     Event e1 = new Event();
                     for(DataSnapshot eventDatalocal : eventIDDataSet.getChildren())
                     {
-                        Log.i(eventDatalocal.getKey()+"**","--"+eventDatalocal.getValue().toString());
+                        /*if(eventDatalocal.getKey().equals("ppl_joined"))
+                             Log.i(eventDatalocal.getKey()+"**","--"+eventDatalocal.getValue().toString());*/
 
                         DataSnapshot eventData = eventDatalocal;
-
-
-                        Log.i("eventData.getKey()",eventData.getKey().trim());
 
                         if(eventData.getKey().equals("email_id"))
                             e1.setEmail_id(eventData.getValue().toString());
@@ -187,7 +185,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(eventData.getKey().equals("lat_source"))
                             e1.setLat_source(eventData.getValue().toString());
                         if(eventData.getKey().equals("ppl_joined"))
-                            e1.setPplJoined(eventData.getValue().toString());
+                            e1.setPpl_joined(eventData.getValue().toString());
                     }
                     event.put(eventIDDataSet.getKey(),e1);
                 }
@@ -198,9 +196,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.i("PlanId.........",entryData.getKey());
                     Event eventData = event.get(entryData.getKey());
 
-                    Log.i("eventData.........",eventData.getLat_dest()+"");
+                    Log.i("eventData.........",eventData.getPpl_joined()+"");
 
-                    Double lat = Double.parseDouble(eventData.getLan_dest().toString());
+                    Double lat = Double.parseDouble(eventData.getLat_dest().toString());
                     Double lon = Double.parseDouble(eventData.getLan_dest().trim());
                     String PlanNm = eventData.getEvent_name();
 
@@ -238,23 +236,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 //ByDefault Making Join to the Event!!
                                 //Start
-                                String tmp = dataModel.getPplJoined();
+                                String tmp = dataModel.getPpl_joined();
                                 if(!tmp.trim().equals(""))
                                     tmp = tmp+";darshilbhayani92@gmail.com";
                                 else
                                     tmp = "darshilbhayani92@gmail.com";
-                                dataModel.setPplJoined(tmp);
+                                dataModel.setPpl_joined(tmp);
 
-                                Log.i("dataModel..",dataModel.getPplJoined());
+                                Log.i("dataModel..",dataModel.getPpl_joined());
 
                                 Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
                                         dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
                                         dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
-                                        dataModel.getLat_source(),dataModel.getPplJoined());
+                                        dataModel.getLat_source(),dataModel.getPpl_joined());
 
                                //Log.i("ID",marker.getTag().toString());
 
                                 mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
+                                Toast.makeText(MapsActivity.this,title+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
                                 //End
                             }
                             return false;

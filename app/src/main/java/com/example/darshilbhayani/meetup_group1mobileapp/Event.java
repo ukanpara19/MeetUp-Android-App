@@ -15,8 +15,16 @@ public class Event {
     public String lan_source;
     public String lat_dest;
     public String lat_source;
-    private String pplJoined;
+    private String ppl_joined;
 
+
+    public String getPpl_joined() {
+        return ppl_joined;
+    }
+
+    public void setPpl_joined(String ppl_joined) {
+        this.ppl_joined = ppl_joined;
+    }
     public String getEmail_id() {
         return email_id;
     }
@@ -113,21 +121,13 @@ public class Event {
         this.lat_source = lat_source;
     }
 
-    public String getPplJoined() {
-        return pplJoined;
-    }
-
-    public void setPplJoined(String pplJoined) {
-        this.pplJoined = pplJoined;
-    }
-
     public Event(){
 
     }
 
     public Event(String email_id, String event_date, String event_dest, String event_duration,
                  String event_name, String event_source, String event_time, String event_type,
-                 String lan_dest, String lan_source, String lat_dest, String lat_source, String pplJoined) {
+                 String lan_dest, String lan_source, String lat_dest, String lat_source, String ppl_joined) {
         this.email_id = email_id;
         this.event_date = event_date;
         this.event_dest = event_dest;
@@ -140,7 +140,7 @@ public class Event {
         this.lan_source = lan_source;
         this.lat_dest = lat_dest;
         this.lat_source = lat_source;
-        this.pplJoined = pplJoined;
+        this.ppl_joined = ppl_joined;
 
     }
 }
