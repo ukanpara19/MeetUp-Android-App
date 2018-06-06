@@ -307,7 +307,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             textView = (TextView)findViewById(R.id.text_location);
             button = (Button)findViewById(R.id.button_location);
 
-            button.setOnClickListener(this);
+            //button.setOnClickListener(this);
         }catch (Exception e){
             e.printStackTrace();
         }
