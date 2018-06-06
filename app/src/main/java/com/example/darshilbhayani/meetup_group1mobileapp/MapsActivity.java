@@ -26,6 +26,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -74,6 +76,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener,
         GoogleMap.OnMarkerClickListener {
 
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+
     private GoogleMap mMap;
 
     private static final int REQUEST_LOCATION = 1;
@@ -105,154 +110,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FirebaseAuth.AuthStateListener mAuthListner;
     private DatabaseReference mDatabase;
 
-    static HashMap<String,Event> event = new HashMap<>();
+    HashMap<String,Event> event = new HashMap<>();
     String uId;
 
-    private void darwPlanMarkers(final GoogleMap mMap) {
+    private void darwPlanMarkers(GoogleMap mMap) {
 
         try{
-            Intent intent = getIntent();
+            loadDatForJoinPlan();
+            //fillData(planData);
 
-            mAuth = FirebaseAuth.getInstance();
-            mFireBaseDatabase = FirebaseDatabase.getInstance();
-            mDatabase = mFireBaseDatabase.getReference();
-
-            FirebaseUser user = mAuth.getCurrentUser();
-            uId = user.getUid();
-
-            mAuthListner = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if(user!=null){
-                        Log.d("User!",user.getUid());
-                    }else{
-                        Log.d("User","User is null!");
-                    }
-                }
-            };
-
-            mDatabase.child("event").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.i("Total Record...!!",dataSnapshot.getChildrenCount()+"");
-                    for(DataSnapshot eventIDDataSet : dataSnapshot.getChildren())
-                    {
-                        // Log.i(eventIDDataSet.getKey(),eventIDDataSet.getChildrenCount() + "");
-                        Event e1 = new Event();
-                        for(DataSnapshot eventData : eventIDDataSet.getChildren())
-                        {
-                        /*if(eventDatalocal.getKey().equals("ppl_joined"))
-                             Log.i(eventDatalocal.getKey()+"**","--"+eventDatalocal.getValue().toString());*/
-
-                            if(eventData.getKey().equals("email_id"))
-                                e1.setEmail_id(eventData.getValue().toString());
-                            if(eventData.getKey().equals("event_date"))
-                                e1.setEvent_date(eventData.getValue().toString());
-                            if(eventData.getKey().equals("event_dest"))
-                                e1.setEvent_dest(eventData.getValue().toString());
-                            if(eventData.getKey().equals("event_duration"))
-                                e1.setEvent_duration(eventData.getValue().toString());
-                            if(eventData.getKey().equals("event_name"))
-                                e1.setEvent_name(eventData.getValue().toString());
-                            if(eventData.getKey().equals("event_source"))
-                                e1.setEvent_source(eventData.getValue().toString());
-                            if(eventData.getKey().equals("event_time"))
-                                e1.setEvent_time(eventData.getValue().toString());
-                            if(eventData.getKey().equals("event_type"))
-                                e1.setEvent_type(eventData.getValue().toString());
-                            if(eventData.getKey().equals("lan_dest"))
-                                e1.setLan_dest(eventData.getValue().toString());
-                            if(eventData.getKey().equals("lan_source"))
-                                e1.setLan_source(eventData.getValue().toString());
-                            if(eventData.getKey().equals("lat_dest"))
-                                e1.setLat_dest(eventData.getValue().toString());
-                            if(eventData.getKey().equals("lat_source"))
-                                e1.setLat_source(eventData.getValue().toString());
-                            if(eventData.getKey().equals("ppl_joined"))
-                                e1.setPpl_joined(eventData.getValue().toString());
-                        }
-                        MapsActivity.event.put(eventIDDataSet.getKey(),e1);
-                    }
-
-                    Log.i("event.entrySet()..",MapsActivity.event.keySet()+"");
-
-                    Log.i("event.keySet()...",MapsActivity.event.keySet()+"");
-                    for (Map.Entry<String,Event> entryData : MapsActivity.event.entrySet()){
-                        Log.i("PlanId.........",entryData.getKey());
-                        Event eventData = MapsActivity.event.get(entryData.getKey());
-
-                        Log.i("eventData.......",eventData.getPpl_joined()+"");
-
-                        Double lat = Double.parseDouble(eventData.getLat_dest().toString());
-                        Double lon = Double.parseDouble(eventData.getLan_dest().trim());
-                        String PlanNm = eventData.getEvent_name();
-
-                        Log.d("lat-long Heree!!!", "" + lat + "......." + lon);
-                        LatLng sourceLocal = new LatLng((double)lon, (double)lat);
-
-                /*
-
-                MarkerOptions mo = new MarkerOptions().position(destination).
-                        title("Jersey Shore, New Jersey").
-                        icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_b)).
-                        visible(true);
-
-                Marker marker =  mMap.addMarker(mo);
-                mo.anchor(0f, 0.5f);
-                marker.showInfoWindow();
-                 */
-
-                        Marker marker =  mMap.addMarker(new MarkerOptions()
-                                .position(sourceLocal)
-                                .title(PlanNm).icon(BitmapDescriptorFactory.fromResource(drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));
-                        marker.setTag(entryData.getKey());
-                        markersData.put(marker,eventData);
-
-
-                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                            @Override
-                            public boolean onMarkerClick(Marker marker) {
-                                Event dataModel = markersData.get(marker);
-                                if(dataModel!=null) {
-                                    String title = dataModel.getEvent_name();
-
-                                    //Log.i("dataModel...", title);
-                                    Toast.makeText(MapsActivity.this,title,Toast.LENGTH_SHORT).show();
-
-                                    //ByDefault Making Join to the Event!!
-                                    //Start
-                                    String tmp = dataModel.getPpl_joined();
-                                    if(!tmp.trim().equals(""))
-                                        tmp = tmp+";darshilbhayani92@gmail.com";
-                                    else
-                                        tmp = "darshilbhayani92@gmail.com";
-                                    dataModel.setPpl_joined(tmp);
-
-                                    Log.i("dataModel..",dataModel.getPpl_joined());
-
-                                    Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
-                                            dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
-                                            dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
-                                            dataModel.getLat_source(),dataModel.getPpl_joined());
-
-                                    //Log.i("ID",marker.getTag().toString());
-
-                                    mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
-                                    Toast.makeText(MapsActivity.this,title+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
-                                    //End
-                                }
-                                return false;
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+            Log.i("Dattatat.ABCD.",event+"");
+            Log.i("Dattatat..",event.entrySet()+"");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -260,8 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void loadDatForJoinPlan() {
-
+    private void loadDatForJoinPlan() {
         Intent intent = getIntent();
 
         mAuth = FirebaseAuth.getInstance();
@@ -289,12 +156,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.i("Total Record...!!",dataSnapshot.getChildrenCount()+"");
                 for(DataSnapshot eventIDDataSet : dataSnapshot.getChildren())
                 {
-                    // Log.i(eventIDDataSet.getKey(),eventIDDataSet.getChildrenCount() + "");
+                   // Log.i(eventIDDataSet.getKey(),eventIDDataSet.getChildrenCount() + "");
                     Event e1 = new Event();
-                    for(DataSnapshot eventData : eventIDDataSet.getChildren())
+                    for(DataSnapshot eventDatalocal : eventIDDataSet.getChildren())
                     {
                         /*if(eventDatalocal.getKey().equals("ppl_joined"))
                              Log.i(eventDatalocal.getKey()+"**","--"+eventDatalocal.getValue().toString());*/
+
+                        DataSnapshot eventData = eventDatalocal;
 
                         if(eventData.getKey().equals("email_id"))
                             e1.setEmail_id(eventData.getValue().toString());
@@ -323,8 +192,80 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(eventData.getKey().equals("ppl_joined"))
                             e1.setPpl_joined(eventData.getValue().toString());
                     }
-                    MapsActivity.event.put(eventIDDataSet.getKey(),e1);
+                    event.put(eventIDDataSet.getKey(),e1);
                 }
+
+                Log.i("event.entrySet()..",event.keySet()+"");
+
+                for (Map.Entry<String,Event> entryData : event.entrySet()){
+                    Log.i("PlanId.........",entryData.getKey());
+                    Event eventData = event.get(entryData.getKey());
+
+                    Log.i("eventData.......",eventData.getPpl_joined()+"");
+
+                    Double lat = Double.parseDouble(eventData.getLat_dest().toString());
+                    Double lon = Double.parseDouble(eventData.getLan_dest().trim());
+                    String PlanNm = eventData.getEvent_name();
+
+                    Log.d("lat-long Heree!!!", "" + lat + "......." + lon);
+                    LatLng sourceLocal = new LatLng((double)lon, (double)lat);
+
+                /*
+
+                MarkerOptions mo = new MarkerOptions().position(destination).
+                        title("Jersey Shore, New Jersey").
+                        icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_b)).
+                        visible(true);
+
+                Marker marker =  mMap.addMarker(mo);
+                mo.anchor(0f, 0.5f);
+                marker.showInfoWindow();
+                 */
+
+                    Marker marker =  mMap.addMarker(new MarkerOptions()
+                            .position(sourceLocal)
+                            .title(PlanNm).icon(BitmapDescriptorFactory.fromResource(drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));
+                    marker.setTag(entryData.getKey());
+                    markersData.put(marker,eventData);
+
+
+                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            Event dataModel = markersData.get(marker);
+                            if(dataModel!=null) {
+                                String title = dataModel.getEvent_name();
+
+                                //Log.i("dataModel...", title);
+                                Toast.makeText(MapsActivity.this,title,Toast.LENGTH_SHORT).show();
+
+                                //ByDefault Making Join to the Event!!
+                                //Start
+                                String tmp = dataModel.getPpl_joined();
+                                if(!tmp.trim().equals(""))
+                                    tmp = tmp+";darshilbhayani92@gmail.com";
+                                else
+                                    tmp = "darshilbhayani92@gmail.com";
+                                dataModel.setPpl_joined(tmp);
+
+                                Log.i("dataModel..",dataModel.getPpl_joined());
+
+                                Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
+                                        dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
+                                        dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
+                                        dataModel.getLat_source(),dataModel.getPpl_joined());
+
+                               //Log.i("ID",marker.getTag().toString());
+
+                                mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
+                                Toast.makeText(MapsActivity.this,title+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
+                                //End
+                            }
+                            return false;
+                        }
+                    });
+                }
+
             }
 
             @Override
@@ -354,6 +295,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
+
+
+
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 checkLocationPermission();
@@ -781,6 +725,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }catch (Exception e){
             e.printStackTrace();
         }
+
+
     }
 
     @Override
@@ -800,4 +746,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return false;
     }
+
+
 }

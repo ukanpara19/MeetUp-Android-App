@@ -28,6 +28,10 @@
     <string name="facebook_app_id">977143779110159</string>
     <string name="fb_login_protocol_scheme">fb977143779110159</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+
 
     <string-array name="Main_menuArray_list">
         <item>Change Password</item>
