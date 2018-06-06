@@ -27,4 +27,15 @@
     <string name="FBkey">ga0RGNYHvNM5d0SLGQfpQWAPGJ8=</string>
     <string name="facebook_app_id">977143779110159</string>
     <string name="fb_login_protocol_scheme">fb977143779110159</string>
+
+
+    <string-array name="Main_menuArray_list">
+        <item>Change Password</item>
+        <item>Like us on Facebook</item>
+        <item>About Application</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
