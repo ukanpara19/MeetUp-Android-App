@@ -41,10 +41,7 @@ public class CreatePage5 extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final Intent intent = getIntent();
         event = (HashMap<String, String>) intent.getSerializableExtra("hashmap");
-
         invited_people = (HashMap<String, String>) intent.getSerializableExtra("hashmapofinvitedpeople");
-
-
 
         Log.d("data1",event+"");
         Log.d("data2",invited_people+"");
@@ -55,7 +52,7 @@ public class CreatePage5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 requestMessagePermission();
-                insertData("people");
+                insertData();
             }
         });
     }
@@ -67,16 +64,14 @@ public class CreatePage5 extends AppCompatActivity {
             else {
                 ActivityCompat.requestPermissions(CreatePage5.this,new String[]{Manifest.permission.SEND_SMS},MY_PERMISSIONS_REQUEST_SEND_SMS);
             }
+        }
     }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    insertData("people");
                     Iterator it = invited_people.entrySet().iterator();
                     while (it.hasNext()){
                         Map.Entry pair = (Map.Entry)it.next();
@@ -85,29 +80,17 @@ public class CreatePage5 extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-                    insertData("nopeople");
                     return;
                 }
             }
         }
     }
-    private void insertData(String people) {
+    private void insertData() {
         Event event_set = new Event();
-        if(people=="people"){
-            Log.d("peoplewith","if");
             event_set.setEvent_all("dbp3435@gmail.com",event.get("event_date"),event.get("event_dest"),event.get("event_time"),
                     event.get("event_duration"),event.get("event_name"),event.get("event_source"),event.get("event_type"),
-                    event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest"),event.get("lat_source"),"");
-            Log.d("event",event_set+"");
+                    event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest"),event.get("lat_source"),"dhaval1019@yahoo.com");
             mDatabase.child("event").child("10").setValue(event_set);
-        }else {
-            Log.d("peoplewithout","else");
-            event_set.setEvent_all("dbp3435@gmail.com",event.get("event_date"),event.get("event_dest"),event.get("event_time"),
-                    event.get("event_duration"),event.get("event_name"),event.get("event_source"),event.get("event_type"),
-                    event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest"),event.get("lat_source"),"");
-            Log.d("event",event_set+"");
-            mDatabase.child("event").child("10").setValue(event_set);
-        }
     }
     private void MultipleSMS(String phoneNumber, String message) {
         String SENT = "SMS_SENT";
