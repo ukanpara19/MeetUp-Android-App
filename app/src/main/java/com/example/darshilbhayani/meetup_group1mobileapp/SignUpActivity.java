@@ -43,8 +43,6 @@ public class SignUpActivity extends AppCompatActivity{
 
     EditText name_edittext_signup,email_edittext_signup,password_edittext_signup,mobileNumber_edittext_signup;
     String name_signup,email_signup,password_signup,mobilenumber_signup;
-    public  static final int RequestPermissionCode  = 1 ;
-    public  static final int PERMISSIONS_REQUEST_READ_CONTACTS  = 1 ;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
