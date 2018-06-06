@@ -124,8 +124,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
-            textView = (TextView)findViewById(R.id.text_location);
-            button = (Button)findViewById(R.id.button_location);
+            //textView = (TextView)findViewById(R.id.text_location);
+            //button = (Button)findViewById(R.id.button_location);
 
             button.setOnClickListener(this);
         }catch (Exception e){
