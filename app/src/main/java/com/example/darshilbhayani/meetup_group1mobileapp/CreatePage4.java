@@ -31,6 +31,8 @@ public class CreatePage4 extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         event.put("email_id","dbp3435@gmail.com");
+        event.put("ppl_joined","");
+        mDatabase.child("event").child("1").setValue(event);
         mDatabase.child("event").child("2").setValue(event);
         mDatabase.child("event").child("3").setValue(event);
         mDatabase.child("event").child("4").setValue(event);

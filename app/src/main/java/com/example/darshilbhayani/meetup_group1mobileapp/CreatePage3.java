@@ -93,9 +93,9 @@ public class CreatePage3 extends AppCompatActivity{
                 event.put("event_duration",duration +" minutes");
 
 
-                event_data.event_setDate(date);
-                event_data.event_setTime(time);
-                event_data.event_setDuration(duration_int);
+                event_data.setEvent_date(date);
+                event_data.setEvent_time(time);
+                event_data.setEvent_duration(String.valueOf(duration_int));
 
                 Intent intent1 = new Intent(CreatePage3.this,CreatePage4.class);
                 intent1.putExtra("hashmap",event);
