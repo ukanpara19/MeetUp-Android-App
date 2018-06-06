@@ -30,11 +30,14 @@ public class CreatePage4 extends AppCompatActivity {
         event = (HashMap<String, String>)intent.getSerializableExtra("hashmap");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        event.put("email_id","dbp3435@gmail.com");
+        event.put("email_id","dbp343@gmail.com");
+        event.put("ppl_joined","");
+        mDatabase.child("event").child("1").setValue(event);
         mDatabase.child("event").child("2").setValue(event);
         mDatabase.child("event").child("3").setValue(event);
         mDatabase.child("event").child("4").setValue(event);
         mDatabase.child("event").child("5").setValue(event);
+
 
         Log.d("event",event+"");
         permissionEnable();

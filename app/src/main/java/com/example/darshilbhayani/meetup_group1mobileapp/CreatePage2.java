@@ -161,8 +161,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 event.put("event_dest",destination_location);
 
                 event_data.setEvent_name(event_name);
-                event_data.setSourceLocation(source_location);
-                event_data.setDestLocation(source_location);
+                event_data.setEvent_source(source_location);
+                event_data.setEvent_dest(source_location);
 
                 Intent intent1 = new Intent(CreatePage2.this,CreatePage3.class);
                 intent1.putExtra("hashmap",event);
@@ -371,14 +371,14 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                         source_edittext.setText(add);
                         event.put("lat_source",latti+"");
                         event.put("lan_source",longi+"");
-                        event_data.setSourceLat(latti+"");
-                        event_data.setSourceLon(longi+"");
+                        event_data.setLat_source(latti+"");
+                        event_data.setLan_source(longi+"");
                     }else {
                         destination_edittext.setText(add);
                         event.put("lat_dest",latti+"");
                         event.put("lan_dest",longi+"");
-                        event_data.setDestLat(latti+"");
-                        event_data.setDestLon(longi+"");
+                        event_data.setLat_dest(latti+"");
+                        event_data.setLan_dest(longi+"");
                     }
                 }catch (Exception e){
                     e.printStackTrace();
