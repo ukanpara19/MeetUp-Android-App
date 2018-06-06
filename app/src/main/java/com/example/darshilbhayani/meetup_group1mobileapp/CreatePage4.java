@@ -5,21 +5,15 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 public class CreatePage4 extends AppCompatActivity {
@@ -28,52 +22,25 @@ public class CreatePage4 extends AppCompatActivity {
     private static String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS};
     private HashMap<String, String> contactHash;
     private DatabaseReference mDatabase;
-    Button reviewPlanButton;
-    ArrayList<String> nameArrayList;
-    HashMap<String,String> selectedNumbers = new HashMap<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_plan4);
-        final Intent intent = getIntent();
+        Intent intent = getIntent();
         event = (HashMap<String, String>)intent.getSerializableExtra("hashmap");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        event.put("email_id","dbp343@gmail.com");
+        event.put("ppl_joined","");
         mDatabase.child("event").child("1").setValue(event);
+        mDatabase.child("event").child("2").setValue(event);
+        mDatabase.child("event").child("3").setValue(event);
+        mDatabase.child("event").child("4").setValue(event);
+        mDatabase.child("event").child("5").setValue(event);
 
+
+        Log.d("event",event+"");
         permissionEnable();
-        final HashMap<String, String> contactHash1 = getContact();
-
-
-        final ListView myList = (ListView) findViewById(R.id.newList);
-        reviewPlanButton = (Button) findViewById(R.id.button4);
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_activated_1,nameArrayList);
-        myList.setAdapter(adapter);
-
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(selectedNumbers.containsKey(nameArrayList.get(position))){
-                    selectedNumbers.remove(nameArrayList.get(position));
-                    view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                }else {
-                    selectedNumbers.put(nameArrayList.get(position), contactHash1.get(nameArrayList.get(position)));
-                    view.setBackgroundColor(Color.parseColor("#8FD8D8"));
-                }
-            }
-        });
-
-        reviewPlanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                event.put("Invited People",selectedNumbers+"");
-                Intent intent1 = new Intent(CreatePage4.this,CreatePage5.class);
-                intent1.putExtra("hashmap",event);
-                startActivity(intent1);
-            }
-        });
     }
 
     public void permissionEnable() {
@@ -83,13 +50,9 @@ public class CreatePage4 extends AppCompatActivity {
             getContactList();
         }
     }
-    public HashMap<String,String> getContact(){
-        return contactHash;
-    }
     private void getContactList() {
         String phoneNumber = "";
         HashMap<String, String> contact = new HashMap<String, String>();
-        nameArrayList = new ArrayList<>();
         ContentResolver cr = getContentResolver();
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
@@ -97,18 +60,18 @@ public class CreatePage4 extends AppCompatActivity {
             do {
 
                 String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                nameArrayList.add(name);
                 String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
                 String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
                 if (Integer.parseInt(hasPhone) > 0) {
                     Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactId, null, null);
                     if(phones.getCount()>0){
-                        while (phones.moveToNext()) {
+                        while (phones.moveToNext()) { //iterate over all contact phone numbers
                             phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         }
                     }
                     phones.close();
                 }
+                Log.d(name,phoneNumber);
                 contact.put(name,phoneNumber);
             } while (cursor.moveToNext());
         }
@@ -124,11 +87,18 @@ public class CreatePage4 extends AppCompatActivity {
         switch (requestCode) {
             case 1: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! do the
+                    // calendar task you need to do.
+                    Log.d("dhaval", "permission granted");
                 } else {
-                    Toast.makeText(CreatePage4.this,"Permission Denied",Toast.LENGTH_LONG).show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Log.d("dhaval", "permission denied");
                 }
                 return;
             }
         }
+        Log.d("dhaval","error");
     }
+
 }
