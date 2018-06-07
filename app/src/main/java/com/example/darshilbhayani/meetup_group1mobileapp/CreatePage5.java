@@ -10,14 +10,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.CardView;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -32,19 +37,88 @@ public class CreatePage5 extends AppCompatActivity {
     HashMap<String, String> event = new HashMap<>();
     HashMap<String, String> invited_people = new HashMap<>();
 
+    TextView planName, sourceLoc, destLoc, duration, eventType, time, date, invitedCount;
+
+    ImageView imageID1,imageID2,imageID3;
+    CardView cardView;
     Button createEvent;
     DatabaseReference mDatabase;
+    Context context;
+    View v;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_plan5);
+
+        planName = (TextView) findViewById(R.id.planName);
+        sourceLoc = (TextView) findViewById(R.id.sourceLoc);
+        destLoc = (TextView) findViewById(R.id.destLoc);
+        duration = (TextView) findViewById(R.id.duration);
+        eventType = (TextView) findViewById(R.id.eventType);
+        time = (TextView) findViewById(R.id.time);
+        date = (TextView) findViewById(R.id.date);
+        invitedCount = (TextView) findViewById(R.id.invitedCount);
+        cardView = (CardView) findViewById(R.id.cardView1);
+
+        imageID1.setVisibility(View.INVISIBLE);
+        imageID2.setVisibility(View.INVISIBLE);
+        imageID3.setVisibility(View.INVISIBLE);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final Intent intent = getIntent();
         event = (HashMap<String, String>) intent.getSerializableExtra("hashmap");
         invited_people = (HashMap<String, String>) intent.getSerializableExtra("hashmapofinvitedpeople");
 
         Log.d("data1",event+"");
+
+        planName.setText(event.get("event_name"));
+        sourceLoc.setText(event.get("event_source"));
+        destLoc.setText(event.get("event_dest"));
+        duration.setText(event.get("event_duration"));
+        eventType.setText(event.get("event_type"));
+        time.setText(event.get("event_time"));
+        date.setText(event.get("event_date"));
+
         Log.d("data2",invited_people+"");
+
+        invitedCount.setText(String.valueOf(invited_people.size()));
+
+        Log.i("DARTTTAAA...",event.get("event_type"));
+
+        if(event.get("event_type").equals("Entertainment")) {
+            Log.i("In","--22-");
+            imageID2.setVisibility(View.VISIBLE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                imageID1.setImageResource(R.drawable.movie);
+                imageID1.setImageDrawable(getResources().getDrawable(R.drawable.movie));
+             } else {
+                imageID1.setImageDrawable(getResources().getDrawable(R.drawable.movie));
+                imageID1.setImageResource(R.drawable.movie);
+            }
+          //  imageID.setImageResource(R.drawable.movie);
+        }
+        else if(event.get("event_type").equals("Food")) {
+            Log.i("In","--11-");
+            imageID1.setVisibility(View.INVISIBLE);
+            imageID1.setImageResource(R.drawable.food_gray);
+        }
+        else if(event.get("event_type").equals("Sports")) {
+            Log.i("In","---");
+
+        }
+        else if(event.get("event_type").equals("Study")) {
+            Log.i("In","--44-");
+            imageID1.setImageResource(R.drawable.study);
+        }
+        else if(event.get("event_type").equals("Carpool")) {
+            Log.i("In","--55-");
+            imageID1.setImageResource(R.drawable.car);
+        }
+        else if(event.get("event_type").equals("Other")) {
+            Log.i("In","-66--");
+            imageID1.setImageResource(R.drawable.other);
+        }
 
         createEvent = findViewById(R.id.button4);
 

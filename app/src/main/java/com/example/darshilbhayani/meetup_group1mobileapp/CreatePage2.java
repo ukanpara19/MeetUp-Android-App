@@ -96,8 +96,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
         source_edittext = findViewById(R.id.editText3);
         destination_edittext = findViewById(R.id.editText4);
 
-        use_current_location_source_textview = findViewById(R.id.textView3);
-        use_current_location_dest_textview = findViewById(R.id.textView5);
+        use_current_location_source_textview = findViewById(R.id.sourceLoc);
+        use_current_location_dest_textview = findViewById(R.id.destLoc);
 
         source_current_location_imageview = findViewById(R.id.imageView);
         source_search_imageview = findViewById(R.id.imageView5);

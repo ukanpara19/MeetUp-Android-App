@@ -65,8 +65,8 @@ public class LoginDemo extends AppCompatActivity {
         registerButton =  findViewById(R.id.button);
         usernameEdittext =  findViewById(R.id.editText4);
         passwordEdittext = findViewById(R.id.editText5);
-        forgot_password = findViewById(R.id.personNm);
-        login_with_facebook = findViewById(R.id.textView3);
+        forgot_password = findViewById(R.id.planName);
+        login_with_facebook = findViewById(R.id.sourceLoc);
         forgot_password_image =  findViewById(R.id.imageView4);
 
         mCallbackManager = CallbackManager.Factory.create();

@@ -249,7 +249,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 TextView eventNm = myDialog.findViewById(R.id.eventNm);
                                 eventNm.setText(dataModel.getEvent_name());
 
-                                TextView personNm = myDialog.findViewById(R.id.personNm);
+                                TextView personNm = myDialog.findViewById(R.id.planName);
                                 personNm.setText(dataModel.getEmail_id());
 
                                 TextView eventType = myDialog.findViewById(R.id.eventTy);
@@ -260,6 +260,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 TextView date = myDialog.findViewById(R.id.date);
                                 date.setText(dataModel.getEvent_date());
+
+                                TextView eventLen = myDialog.findViewById(R.id.eventLength);
+                                eventLen.setText(dataModel.getEvent_duration());
 
                                 Button join = myDialog.findViewById(R.id.join);
                                 join.setOnClickListener(new View.OnClickListener() {
