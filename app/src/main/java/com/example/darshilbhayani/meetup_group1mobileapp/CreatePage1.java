@@ -33,14 +33,14 @@ public class CreatePage1 extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //-- Drawer Button --
 
 //----Navigation Drawer---
-
         Intent i = new Intent(this, MapsActivity.class);
         curr = this;
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_createplan1);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
