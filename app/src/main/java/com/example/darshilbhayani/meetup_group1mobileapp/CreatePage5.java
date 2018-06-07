@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 public class CreatePage5 extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
@@ -60,7 +61,6 @@ public class CreatePage5 extends AppCompatActivity {
         invitedCount = (TextView) findViewById(R.id.invitedCount);
         cardView = (CardView) findViewById(R.id.cardView1);
         imageID = (ImageView) findViewById(R.id.imageID);
-
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final Intent intent = getIntent();
@@ -157,11 +157,12 @@ public class CreatePage5 extends AppCompatActivity {
         }
     }
     private void insertData() {
+        Random ran = new Random();
         Event event_set = new Event();
             event_set.setEvent_all("dbp3435@gmail.com",event.get("event_date"),event.get("event_dest"),event.get("event_duration"), event.get("event_name"),event.get("event_source"),
                     event.get("event_time"),event.get("event_type"),
                     event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest"),event.get("lat_source"),"dhaval1019@yahoo.com");
-            mDatabase.child("event").child("10").setValue(event_set);
+            mDatabase.child("event").child(String.valueOf(ran.nextInt())).setValue(event_set);
         Toast.makeText(getBaseContext(), "Created Successfully!",
                 Toast.LENGTH_SHORT).show();
         Intent intent1 = new Intent(CreatePage5.this,MapsActivity.class);

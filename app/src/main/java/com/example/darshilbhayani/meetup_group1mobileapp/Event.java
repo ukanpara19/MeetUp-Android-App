@@ -1,6 +1,7 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
+import java.io.Serializable;
 
-public class Event {
+public class Event implements Serializable{
 
     private String email_id;
     private String event_date;
@@ -155,6 +156,7 @@ public class Event {
         this.event_type = event_type;
         this.lan_dest = lan_dest;
         this.lan_source = lan_source;
+        this.lat_source = lat_source;
         this.lat_dest = lat_dest;
         this.lat_source = lat_source;
         this.ppl_joined = ppl_joined;

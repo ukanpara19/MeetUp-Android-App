@@ -38,11 +38,9 @@
 
 
 
-        <activity android:name=".CreatePage1" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
+        <activity android:name=".MapsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -75,9 +73,11 @@
         <activity android:name=".CreatePage3"></activity>
         <activity android:name=".CreatePage4"></activity>
         <activity android:name=".CreatePage5"></activity>
-        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".CreatePage1"></activity>
         <activity android:name=".SplashScreenActivity"></activity>
         <activity android:name=".requestContactPermission"></activity>
+        <activity android:name=".ListPlanDetails"></activity>
+        <activity android:name=".EditPlan"></activity>
     </application>
 
 </manifest>

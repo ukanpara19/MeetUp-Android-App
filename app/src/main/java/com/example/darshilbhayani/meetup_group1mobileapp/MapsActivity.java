@@ -30,6 +30,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +55,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -63,9 +65,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.security.spec.ECField;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -75,6 +81,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     Dialog myDialog;
     ImageView imgView;
+
+    Button buttonFromLoc;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -111,6 +119,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FirebaseAuth.AuthStateListener mAuthListner;
     private DatabaseReference mDatabase;
 
+    static private Map<Marker, Event> markersData = new HashMap<>();
+    static private Map<Marker, Boolean> markersVisibility = new HashMap<>();
+    static private Map<Marker, String> markerType = new HashMap<>();
+
     HashMap<String,Event> event = new HashMap<>();
     String uId;
 
@@ -118,7 +130,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try{
             loadDatForJoinPlan();
-           // fillData(planData);
+            fillData(planData);
 
             Log.i("Dattatat.ABCD.",event+"");
             Log.i("Dattatat..",event.entrySet()+"");
@@ -201,9 +213,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.i("event.entrySet()..",event.keySet()+"");
 
                 for (Map.Entry<String,Event> entryData : event.entrySet()){
-                    Log.i("PlanId.........",entryData.getKey());
+
                     Event eventData = event.get(entryData.getKey());
 
+                    Log.i("PlanId.........",entryData.getKey());
+                    Log.i("getEvent_nam........",eventData.getEvent_name());
                     Log.i("eventData.......",eventData.getppl_joined()+"");
                     Log.i("eventData..nm.....",eventData.getEvent_name()+"");
 
@@ -226,12 +240,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 marker.showInfoWindow();
                  */
 
-                  final Marker marker =  mMap.addMarker(new MarkerOptions()
+                    Marker marker =  mMap.addMarker(new MarkerOptions()
                             .position(sourceLocal)
-                            .title(PlanNm).icon(BitmapDescriptorFactory.fromResource(drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));
+                            .title(PlanNm).icon(BitmapDescriptorFactory.fromResource
+                                    (drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));
                     marker.setTag(entryData.getKey());
-                    markersData.put(marker,eventData);
+                    marker.setVisible(true);
 
+                    markersData.put(marker,eventData);
+                    markersVisibility.put(marker,true);
+                    markerType.put(marker,eventData.getEvent_type());
 
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
@@ -311,6 +329,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     });
                 }
 
+
+
+                for(Marker m1 : markersVisibility.keySet()){
+                    Log.i("m1",m1+"");
+                }
             }
 
             @Override
@@ -341,8 +364,101 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
 
+            Button btnAll = findViewById(R.id.button_all);
+            Button btnFood = findViewById(R.id.Button_food);
+            Button btnEnter = findViewById(R.id.Button_Enter);
+            Button btnSports = findViewById(R.id.Button_sport);
+            Button btnStudy = findViewById(R.id.Button_reading);
+            Button btnTravel = findViewById(R.id.Button_travel);
+            Button btnOthers = findViewById(R.id.button_others);
 
 
+            btnAll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for( Map.Entry<Marker,String> entData : markerType.entrySet()){
+                        entData.getKey().setVisible(true);
+                    }
+                }
+            });
+
+            btnFood.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for( Map.Entry<Marker,String> entData : markerType.entrySet()){
+                        if(entData.getValue().equals("Food")) {
+                            Marker mTemp = entData.getKey();
+                            mTemp.setVisible(true);
+                        }else
+                            entData.getKey().setVisible(false);
+                    }
+                }
+            });
+
+            btnEnter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for( Map.Entry<Marker,String> entData : markerType.entrySet()){
+                        if(entData.getValue().equals("Entertainment")) {
+                            Marker mTemp = entData.getKey();
+                            mTemp.setVisible(true);
+                        }else
+                            entData.getKey().setVisible(false);
+                    }
+                }
+            });
+
+            btnSports.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for( Map.Entry<Marker,String> entData : markerType.entrySet()){
+                        if(entData.getValue().equals("Sports")) {
+                            Marker mTemp = entData.getKey();
+                            mTemp.setVisible(true);
+                        }else
+                            entData.getKey().setVisible(false);
+                    }
+                }
+            });
+
+            btnStudy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for( Map.Entry<Marker,String> entData : markerType.entrySet()){
+                        if(entData.getValue().equals("Study")) {
+                            Marker mTemp = entData.getKey();
+                            mTemp.setVisible(true);
+                        }else
+                            entData.getKey().setVisible(false);
+                    }
+                }
+            });
+
+            btnTravel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for( Map.Entry<Marker,String> entData : markerType.entrySet()){
+                        if(entData.getValue().equals("Carpool")) {
+                            Marker mTemp = entData.getKey();
+                            mTemp.setVisible(true);
+                        }else
+                            entData.getKey().setVisible(false);
+                    }
+                }
+            });
+
+            btnOthers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for( Map.Entry<Marker,String> entData : markerType.entrySet()){
+                        if(entData.getValue().equals("Other")) {
+                            Marker mTemp = entData.getKey();
+                            mTemp.setVisible(true);
+                        }else
+                            entData.getKey().setVisible(false);
+                    }
+                }
+            });
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 checkLocationPermission();
@@ -357,9 +473,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
             //textView = (TextView)findViewById(R.id.text_location);
-            //button = (Button)findViewById(R.id.button_location);
-
-            button.setOnClickListener(this);
+            buttonFromLoc = (Button)findViewById(R.id.buttonFromLoc);
+            buttonFromLoc.setOnClickListener(this);
 
             myDialog = new Dialog(this);
         }catch (Exception e){
@@ -474,17 +589,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
-        //sourceLocation(mMap);
-        destinationLocation(mMap);
-        drawRoute(source,destination);
+        //destinationLocation(mMap);
+        //drawRoute(source,destination);
         darwPlanMarkers(mMap);
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
-    private Map<Marker, Event> markersData = new HashMap<>();
 
     private void fillData(HashMap<String, HashMap<String, String>> planData) {
         HashMap<String, String> tmp = new HashMap<>();
@@ -547,7 +659,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
 
                 // Zoom in, animating the camera.
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(11), 2000, null);
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 5000, null);
             }
 
         } catch (IOException e) {
@@ -636,7 +748,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mCurrLocationMarker = mMap.addMarker(markerOptions);
 
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(source));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,18),5000, null);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,10),5000, null);
                 drawRoute(source,destination);
 
             } else  if (location1 != null) {
@@ -655,7 +767,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 mCurrLocationMarker = mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(source));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,18),5000, null);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,10),5000, null);
                 drawRoute(source,destination);
 
             } else  if (location2 != null) {
@@ -674,7 +786,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 mCurrLocationMarker = mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(source));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,18),5000, null);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,10),5000, null);
                 drawRoute(source,destination);
 
             }else{
@@ -748,7 +860,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,18),5000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10),5000, null);
         drawRoute(latLng,destination);
         }catch (Exception e){
             e.printStackTrace();

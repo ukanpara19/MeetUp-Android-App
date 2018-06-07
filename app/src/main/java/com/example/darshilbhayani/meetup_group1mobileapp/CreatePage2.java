@@ -122,6 +122,16 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 }
                 String source_location = source_edittext.getText().toString().trim();
                 destinationLocation(mMap,source_location,"source_search_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+               // if(source!=null && destination!=null)
+                    //drawRoute(source,destination);
             }
         });
 
@@ -134,6 +144,16 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 }
                 String dest_location = destination_edittext.getText().toString().trim();
                 destinationLocation(mMap,dest_location,"dest_search_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+               if(source!=null && destination!=null)
+                    drawRoute(source,destination,mMap);
             }
         });
 
@@ -154,18 +174,36 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                     return;
                 }
 
-                String event_name = event_name_edittext.getText().toString().trim();
-                String source_location = source_edittext.getText().toString().trim();
-                String destination_location = destination_edittext.getText().toString().trim();
-                event.put("event_name",event_name);
-                event.put("event_source",source_location);
-                event.put("event_dest",destination_location);
-                event_data.setEvent_name(event_name);
-                event_data.setEvent_source(source_location);
-                event_data.setEvent_dest(source_location);
-                Intent intent1 = new Intent(CreatePage2.this,CreatePage3.class);
-                intent1.putExtra("hashmap",event);
-                startActivity(intent1);
+                boolean sourceFlag = false;
+                boolean destFlag = false;
+
+                if(event.get("lat_source")==null || event.get("lan_source")==null)
+                    sourceFlag = true;
+
+                if(event.get("lat_source")==null || event.get("lan_source")==null)
+                        destFlag = true;
+
+                if(!sourceFlag && !destFlag) {
+                    String event_name = event_name_edittext.getText().toString().trim();
+                    String source_location = source_edittext.getText().toString().trim();
+                    String destination_location = destination_edittext.getText().toString().trim();
+                    event.put("event_name", event_name);
+                    event.put("event_source", source_location);
+                    event.put("event_dest", destination_location);
+                    event_data.setEvent_name(event_name);
+                    event_data.setEvent_source(source_location);
+                    event_data.setEvent_dest(source_location);
+                    Intent intent1 = new Intent(CreatePage2.this, CreatePage3.class);
+                    intent1.putExtra("hashmap", event);
+                    startActivity(intent1);
+                }else{
+                    if(sourceFlag)
+                        Toast.makeText(CreatePage2.this,"Please Enter the Source Location",Toast.LENGTH_SHORT).show();
+
+                    if(destFlag)
+                        Toast.makeText(CreatePage2.this,"Please Enter the Destination Location",Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 
@@ -205,6 +243,7 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
 
                 LatLng destination = new LatLng(lat, lon);
                 Log.d(source_dest,"source_search_imageview");
+
                 if(source_dest == "source_search_imageview"){
                     Marker hamburg = mMap.addMarker(new MarkerOptions()
                             .position(destination)
@@ -218,8 +257,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                             .position(destination)
                             .title(search_location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_b)));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
-                    event.put("lat_dest",lat.toString());
-                    event.put("lan_dest",lon.toString());
+                    event.put("lat_dest",lon.toString());
+                    event.put("lan_dest",lat.toString());
                 }
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
             }
@@ -291,7 +330,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 longitude = String.valueOf(longi);
 
                 Log.d("lat-lon",lattitude +" " + longitude);
-
                 LatLng source = new LatLng(Double.parseDouble(lattitude), Double.parseDouble(longitude));
 
                 MarkerOptions markerOptions = new MarkerOptions();
@@ -315,6 +353,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
 
+                Log.d("lat-lon",lattitude +" " + longitude);
+
                 LatLng source = new LatLng(Double.parseDouble(lattitude), Double.parseDouble(longitude));
 
                 MarkerOptions markerOptions = new MarkerOptions();
@@ -335,6 +375,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 longi = location2.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
+
+                Log.d("lat-lon",lattitude +" " + longitude);
 
                 //textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude + "\n" + "Longitude = " + longitude);
                 LatLng source = new LatLng(Double.parseDouble(lattitude), Double.parseDouble(longitude));
@@ -359,6 +401,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
             Log.i("latti..",latti+"");
             Log.i("longi..",longi+"");
 
+            Log.d("latti-longi",latti +" " + longi);
+
             if(!Double.isNaN(latti) && !Double.isNaN(longi)){
                 Geocoder geocoder = new Geocoder(this);
                 try {
@@ -374,8 +418,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                         event_data.setLan_source(longi+"");
                     }else {
                         destination_edittext.setText(add);
-                        event.put("lat_dest",latti+"");
-                        event.put("lan_dest",longi+"");
+                        event.put("lat_dest",longi+"");
+                        event.put("lan_dest",latti+"");
                         event_data.setLat_dest(latti+"");
                         event_data.setLan_dest(longi+"");
                     }
@@ -386,21 +430,27 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    public void drawRoute(LatLng source, LatLng finalDestination){
+    public void drawRoute(LatLng source, LatLng finalDestination, GoogleMap mMapLocal){
 
-        LatLng origin = source;
-        LatLng destination = finalDestination;
-        DrawRouteMaps.getInstance(this)
-                .draw(origin, destination, mMap);
-        //DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.marker_a, "Origin Location");
-        //DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.marker_b, "Destination Location");
+        try{
+            if(source!=null && finalDestination!=null) {
+                LatLng origin = source;
+                LatLng destination = finalDestination;
+                DrawRouteMaps.getInstance(this)
+                        .draw(origin, destination, mMapLocal);
+                //DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.marker_a, "Origin Location");
+                //DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.marker_b, "Destination Location");
 
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(origin)
-                .include(destination).build();
-        Point displaySize = new Point();
-        getWindowManager().getDefaultDisplay().getSize(displaySize);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+                LatLngBounds bounds = new LatLngBounds.Builder()
+                        .include(origin)
+                        .include(destination).build();
+                Point displaySize = new Point();
+                getWindowManager().getDefaultDisplay().getSize(displaySize);
+                mMapLocal.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
