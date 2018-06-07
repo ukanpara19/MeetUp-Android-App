@@ -1,5 +1,7 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
+import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 
 import android.os.Build;
@@ -32,6 +34,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +79,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener,
         GoogleMap.OnMarkerClickListener {
 
+    Dialog myDialog;
+    ImageView imgView;
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
@@ -103,6 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LatLng source;
 
     HashMap<String, Integer> drawableImg = new HashMap<>();
+    HashMap<String, HashMap<String, String>> planData = new HashMap<>();
 
 
     private FirebaseDatabase mFireBaseDatabase;
@@ -117,7 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try{
             loadDatForJoinPlan();
-            //fillData(planData);
+           // fillData(planData);
 
             Log.i("Dattatat.ABCD.",event+"");
             Log.i("Dattatat..",event.entrySet()+"");
@@ -149,6 +156,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         };
+
+        myDialog = new Dialog(this);
 
         mDatabase.child("event").addValueEventListener(new ValueEventListener() {
             @Override
@@ -190,7 +199,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(eventData.getKey().equals("lat_source"))
                             e1.setLat_source(eventData.getValue().toString());
                         if(eventData.getKey().equals("ppl_joined"))
-                            e1.setPpl_joined(eventData.getValue().toString());
+                            e1.setppl_joined(eventData.getValue().toString());
                     }
                     event.put(eventIDDataSet.getKey(),e1);
                 }
@@ -201,7 +210,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.i("PlanId.........",entryData.getKey());
                     Event eventData = event.get(entryData.getKey());
 
-                    Log.i("eventData.......",eventData.getPpl_joined()+"");
+                    Log.i("eventData.......",eventData.getppl_joined()+"");
+                    Log.i("eventData..nm.....",eventData.getEvent_name()+"");
 
                     Double lat = Double.parseDouble(eventData.getLat_dest().toString());
                     Double lon = Double.parseDouble(eventData.getLan_dest().trim());
@@ -239,9 +249,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 //Log.i("dataModel...", title);
                                 Toast.makeText(MapsActivity.this,title,Toast.LENGTH_SHORT).show();
 
+                                myDialog.setContentView(R.layout.custompopup);
+                                imgView = (ImageView) myDialog.findViewById(R.id.btnclose);
+
+                                imgView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        myDialog.dismiss();
+                                    }
+                                });
+
+                                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                myDialog.show();
+
                                 //ByDefault Making Join to the Event!!
                                 //Start
-                                String tmp = dataModel.getPpl_joined();
+                                /*String tmp = dataModel.getPpl_joined();
                                 if(!tmp.trim().equals(""))
                                     tmp = tmp+";darshilbhayani92@gmail.com";
                                 else
@@ -258,7 +281,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                //Log.i("ID",marker.getTag().toString());
 
                                 mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
-                                Toast.makeText(MapsActivity.this,title+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MapsActivity.this,title+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();*/
                                 //End
                             }
                             return false;
@@ -315,8 +338,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //button = (Button)findViewById(R.id.button_location);
 
             button.setOnClickListener(this);
+
+            myDialog = new Dialog(this);
         }catch (Exception e){
             e.printStackTrace();
+
         }
 
     }
