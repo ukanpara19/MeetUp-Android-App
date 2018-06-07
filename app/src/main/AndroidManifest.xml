@@ -38,7 +38,7 @@
 
 
 
-        <activity android:name=".SplashScreenActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".MapsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +47,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginDemo" android:theme="@style/ProfileTheme"></activity>
-        <activity android:name=".MapsActivity" android:theme="@style/AppTheme"></activity>
         <activity android:name=".MainActivity" android:theme="@style/ProfileTheme"></activity>
         <activity android:name=".SignUpActivity" android:theme="@style/ProfileTheme"></activity>
 
@@ -76,6 +75,8 @@
         <activity android:name=".CreatePage3"></activity>
         <activity android:name=".CreatePage4"></activity>
         <activity android:name=".CreatePage5"></activity>
+        <activity android:name=".SplashScreenActivity"></activity>
+        <activity android:name=".requestContactPermission"></activity>
     </application>
 
 </manifest>
