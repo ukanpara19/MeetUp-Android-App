@@ -10,6 +10,11 @@
         android:icon="@mipmap/round_add_circle_black_24dp"
         android:title="Add Plan" />
 
+    <item android:id="@+id/nav_myPlan"
+        android:icon="@mipmap/round_accessibility_new_black_24dp"
+        android:title="My Plan" />
+
+
     <item android:id="@+id/nav_planHistory"
         android:icon="@mipmap/round_event_note_black_24dp"
         android:title="Plan History " />

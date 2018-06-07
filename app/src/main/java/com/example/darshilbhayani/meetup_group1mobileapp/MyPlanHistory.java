@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,6 +29,11 @@ import java.util.Map;
 
 public class MyPlanHistory extends AppCompatActivity {
 
+    private MyPlanHistory plan;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mtoggle;
+
+
     private ListView rowDataView;
     private rowDataAdapterListPlans adapter;
     private List<rowData> rowDataList;
@@ -43,6 +52,74 @@ public class MyPlanHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_myplan);
+
+        //-- Drawer button --
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_myPlans);
+        mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+
+        mDrawerLayout.addDrawerListener(mtoggle);
+        mtoggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //-- Drawer Button --
+
+        //----Navigation Drawer---
+
+        Intent i = new Intent(this, MapsActivity.class);
+        plan = this;
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_myplan);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+
+                int id = item.getItemId();
+                Intent i;
+
+                if (id == R.id.nav_Map) {
+                    i = new Intent(curr, MapsActivity.class);
+                    startActivity(i);
+
+                } else if (id == R.id.nav_settings) {
+                    i=new Intent(curr,Settings_main.class);
+                    startActivity(i);
+                }
+
+                else if (id == R.id.nav_Addplan) {
+                    i = new Intent(curr, CreatePage1.class);
+                    startActivity(i);
+                }
+                else if (id == R.id.nav_myPlan) {
+                    i = new Intent(curr, MyPlanHistory.class);
+                    startActivity(i);
+                }
+                else if (id == R.id.nav_planHistory) {
+                    i = new Intent(curr, ListPlanDetails.class);
+                    startActivity(i);
+                }
+
+                else if (id == R.id.nav_profile) {
+                    i = new Intent(curr, ProfilePage.class);
+                    startActivity(i);
+                }
+
+                return true;
+            }
+
+        });
+
+        //----Navigation Drawer---
+
+
+
+
+
+
+
+
+
+
         curr = this;
 
         rowDataView = findViewById(R.id.newList);
@@ -167,5 +244,16 @@ public class MyPlanHistory extends AppCompatActivity {
             }
         });
     }
+    //-- Drawer Button --
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // -- Drawer Button --
+
 }
 

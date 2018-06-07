@@ -393,6 +393,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         i = new Intent(curr, CreatePage1.class);
                         startActivity(i);
                     }
+                    else if (id == R.id.nav_myPlan) {
+                        i = new Intent(curr, MyPlanHistory.class);
+                        startActivity(i);
+                    }
                     else if (id == R.id.nav_planHistory) {
                         i = new Intent(curr, ListPlanDetails.class);
                         startActivity(i);

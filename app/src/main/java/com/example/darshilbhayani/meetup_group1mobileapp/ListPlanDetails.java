@@ -100,6 +100,10 @@ public class ListPlanDetails extends AppCompatActivity {
                     i = new Intent(curr, CreatePage1.class);
                     startActivity(i);
                 }
+                else if (id == R.id.nav_myPlan) {
+                    i = new Intent(curr, MyPlanHistory.class);
+                    startActivity(i);
+                }
                 else if (id == R.id.nav_planHistory) {
                     i = new Intent(curr, ListPlanDetails.class);
                     startActivity(i);

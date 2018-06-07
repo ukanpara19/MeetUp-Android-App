@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +15,12 @@ import android.widget.Button;
 
 public class ProfilePage extends AppCompatActivity {
 
-    private NavigationView navigationView;
     private Button button_myplan;
     private  Button  button_joinedplan;
+
     private ProfilePage curr;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mtoggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,17 @@ public class ProfilePage extends AppCompatActivity {
 
         button_joinedplan = findViewById(R.id.button_joinplan);
         button_myplan = findViewById(R.id.button_myplan);
+
+        //-- Drawer button --
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_profilepage);
+        mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+
+        mDrawerLayout.addDrawerListener(mtoggle);
+        mtoggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //-- Drawer Button --
+
 
         //----Navigation Drawer---
 
@@ -51,6 +66,10 @@ NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_profi
       }
      else if (id == R.id.nav_Addplan) {
      i = new Intent(curr, CreatePage1.class);
+     startActivity(i);
+ }
+ else if (id == R.id.nav_myPlan) {
+     i = new Intent(curr, MyPlanHistory.class);
      startActivity(i);
  }
  else if (id == R.id.nav_planHistory) {
@@ -133,6 +152,16 @@ NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_profi
 
         });
     }
+    //-- Drawer Button --
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // -- Drawer Button --
 }
 
 

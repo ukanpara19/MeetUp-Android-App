@@ -80,6 +80,7 @@
         <activity android:name=".EditPlan"></activity>
         <activity android:name=".ProfilePage"></activity>
         <activity android:name=".Settings_main"></activity>
+        <activity android:name=".MyPlanHistory"></activity>
     </application>
 
 </manifest>
