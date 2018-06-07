@@ -7,8 +7,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -38,6 +42,10 @@ import java.util.Map;
 
 public class ListPlanDetails extends AppCompatActivity {
 
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mtoggle;
+    private ListPlanDetails curr;
+
     private ListView rowDataView;
     private rowDataAdapter adapter;
     private List<rowData> rowDataList;
@@ -54,6 +62,63 @@ public class ListPlanDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_plans);
+
+        //-- Drawer button --
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_planHistory);
+        mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+
+        mDrawerLayout.addDrawerListener(mtoggle);
+        mtoggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //-- Drawer Button --
+
+        //----Navigation Drawer---
+
+        Intent i = new Intent(this, MapsActivity.class);
+        curr = this;
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_planHistory);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+
+                int id = item.getItemId();
+                Intent i;
+
+                if (id == R.id.nav_Map) {
+                    i = new Intent(curr, MapsActivity.class);
+                    startActivity(i);
+
+                } else if (id == R.id.nav_settings) {
+                    i=new Intent(curr,Settings_main.class);
+                    startActivity(i);
+                }
+
+                else if (id == R.id.nav_Addplan) {
+                    i = new Intent(curr, CreatePage1.class);
+                    startActivity(i);
+                }
+                else if (id == R.id.nav_planHistory) {
+                    i = new Intent(curr, ListPlanDetails.class);
+                    startActivity(i);
+                }
+
+                else if (id == R.id.nav_profile) {
+                    i = new Intent(curr, ProfilePage.class);
+                    startActivity(i);
+                }
+
+                return true;
+            }
+
+        });
+
+        //----Navigation Drawer---
+
+
+
 
         drawableImg.put("a",R.drawable.a);
         drawableImg.put("b",R.drawable.b);
@@ -349,4 +414,15 @@ public class ListPlanDetails extends AppCompatActivity {
             }
         });
     }
+    //-- Drawer Button --
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // -- Drawer Button --
+
 }

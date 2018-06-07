@@ -1,13 +1,10 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +13,10 @@ import android.widget.Button;
 
 public class ProfilePage extends AppCompatActivity {
 
+    private NavigationView navigationView;
     private Button button_myplan;
     private  Button  button_joinedplan;
-
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
-
-    private NavigationView navigationView;
-
+    private ProfilePage curr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,50 +24,52 @@ public class ProfilePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
 
-
-//App Drawer Button
-        mDrawerLayout = findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
-
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        navigationView=(NavigationView)findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-
-            public boolean onNavigationItemSelected(MenuItem item) {
-
-                int id = item.getItemId();
-                if (id == R.id.nav_Addplan) {
-                // Handle the camera action
-                    Intent i = new Intent(ProfilePage.this, CreatePage1.class);
-                    startActivity(i);
-                } else if (id == R.id.nav_contacts) {
-                    Intent i = new Intent(ProfilePage.this,User.class );
-                    startActivity(i);
-
-                } else if (id == R.id.nav_Map) {
-                    Intent i = new Intent(ProfilePage.this, MapsActivity.class);
-
-                    startActivity(i);
-
-                } else if (id == R.id.nav_settings) {
-                    Intent i = new Intent(ProfilePage.this, Settings_main.class);
-                    startActivity(i);
-                }
-                return true;
-            }
-
-        });
-
-/////
-
         button_joinedplan = findViewById(R.id.button_joinplan);
         button_myplan = findViewById(R.id.button_myplan);
+
+        //----Navigation Drawer---
+
+        Intent i = new Intent(this, MapsActivity.class);
+        curr = this;
+
+NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_profile);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+   @Override
+ public boolean onNavigationItemSelected(MenuItem item) {
+
+  int id = item.getItemId();
+   Intent i;
+
+ if (id == R.id.nav_Map) {
+      i = new Intent(curr, MapsActivity.class);
+        startActivity(i);
+
+    } else if (id == R.id.nav_settings) {
+       i=new Intent(curr,Settings_main.class);
+         startActivity(i);
+      }
+     else if (id == R.id.nav_Addplan) {
+     i = new Intent(curr, CreatePage1.class);
+     startActivity(i);
+ }
+ else if (id == R.id.nav_planHistory) {
+     i = new Intent(curr, ListPlanDetails.class);
+     startActivity(i);
+ }
+
+ else if (id == R.id.nav_profile) {
+     i = new Intent(curr, ProfilePage.class);
+     startActivity(i);
+ }
+
+    return true;
+    }
+
+    });
+
+        //----Navigation Drawer---
+
 
         button_myplan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,17 +132,6 @@ public class ProfilePage extends AppCompatActivity {
             }
 
         });
-            }
-
-
-            //APP Drawer
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
 

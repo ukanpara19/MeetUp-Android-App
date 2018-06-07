@@ -2,6 +2,7 @@ package com.example.darshilbhayani.meetup_group1mobileapp;
 
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 
 import android.os.Build;
@@ -32,6 +33,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -78,6 +80,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
         GoogleMap.OnMarkerClickListener {
+
+    private MapsActivity curr;
 
     Dialog myDialog;
     ImageView imgView;
@@ -363,6 +367,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
+
+            //----Navigation Drawer---
+
+            Intent i = new Intent(this, MapsActivity.class);
+            curr = this;
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_maps);
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+                @Override
+                public boolean onNavigationItemSelected(MenuItem item) {
+
+                    int id = item.getItemId();
+                    Intent i;
+
+                    if (id == R.id.nav_Map) {
+                        i = new Intent(curr, MapsActivity.class);
+                        startActivity(i);
+
+                    } else if (id == R.id.nav_settings) {
+                        i=new Intent(curr,Settings_main.class);
+                        startActivity(i);
+                    }
+                    else if (id == R.id.nav_Addplan) {
+                        i = new Intent(curr, CreatePage1.class);
+                        startActivity(i);
+                    }
+                    else if (id == R.id.nav_planHistory) {
+                        i = new Intent(curr, ListPlanDetails.class);
+                        startActivity(i);
+                    }
+
+                    else if (id == R.id.nav_profile) {
+                        i = new Intent(curr, ProfilePage.class);
+                        startActivity(i);
+                    }
+
+                    return true;
+                }
+
+            });
+
+            //---Navigation Drawer-----
+
 
             Button btnAll = findViewById(R.id.button_all);
             Button btnFood = findViewById(R.id.Button_food);
