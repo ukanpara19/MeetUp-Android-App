@@ -155,9 +155,8 @@ public class Event {
         this.event_type = event_type;
         this.lan_dest = lan_dest;
         this.lan_source = lan_source;
-        this.lan_dest = lan_dest;
-        this.lat_source = lat_source;
         this.lat_dest = lat_dest;
+        this.lat_source = lat_source;
         this.ppl_joined = ppl_joined;
     }
 }

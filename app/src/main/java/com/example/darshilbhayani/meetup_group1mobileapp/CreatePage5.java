@@ -39,7 +39,7 @@ public class CreatePage5 extends AppCompatActivity {
 
     TextView planName, sourceLoc, destLoc, duration, eventType, time, date, invitedCount;
 
-    ImageView imageID1,imageID2,imageID3;
+    ImageView imageID;
     CardView cardView;
     Button createEvent;
     DatabaseReference mDatabase;
@@ -59,10 +59,8 @@ public class CreatePage5 extends AppCompatActivity {
         date = (TextView) findViewById(R.id.date);
         invitedCount = (TextView) findViewById(R.id.invitedCount);
         cardView = (CardView) findViewById(R.id.cardView1);
+        imageID = (ImageView) findViewById(R.id.imageID);
 
-        imageID1.setVisibility(View.INVISIBLE);
-        imageID2.setVisibility(View.INVISIBLE);
-        imageID3.setVisibility(View.INVISIBLE);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         final Intent intent = getIntent();
@@ -87,21 +85,20 @@ public class CreatePage5 extends AppCompatActivity {
 
         if(event.get("event_type").equals("Entertainment")) {
             Log.i("In","--22-");
-            imageID2.setVisibility(View.VISIBLE);
+
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                imageID1.setImageResource(R.drawable.movie);
-                imageID1.setImageDrawable(getResources().getDrawable(R.drawable.movie));
+                imageID.setImageResource(R.drawable.movie);
+                imageID.setImageDrawable(getResources().getDrawable(R.drawable.movie));
              } else {
-                imageID1.setImageDrawable(getResources().getDrawable(R.drawable.movie));
-                imageID1.setImageResource(R.drawable.movie);
+                imageID.setImageDrawable(getResources().getDrawable(R.drawable.movie));
+                imageID.setImageResource(R.drawable.movie);
             }
           //  imageID.setImageResource(R.drawable.movie);
         }
         else if(event.get("event_type").equals("Food")) {
             Log.i("In","--11-");
-            imageID1.setVisibility(View.INVISIBLE);
-            imageID1.setImageResource(R.drawable.food_gray);
+            imageID.setImageResource(R.drawable.food_gray);
         }
         else if(event.get("event_type").equals("Sports")) {
             Log.i("In","---");
@@ -109,15 +106,15 @@ public class CreatePage5 extends AppCompatActivity {
         }
         else if(event.get("event_type").equals("Study")) {
             Log.i("In","--44-");
-            imageID1.setImageResource(R.drawable.study);
+            imageID.setImageResource(R.drawable.book);
         }
         else if(event.get("event_type").equals("Carpool")) {
             Log.i("In","--55-");
-            imageID1.setImageResource(R.drawable.car);
+            imageID.setImageResource(R.drawable.car);
         }
         else if(event.get("event_type").equals("Other")) {
             Log.i("In","-66--");
-            imageID1.setImageResource(R.drawable.other);
+            imageID.setImageResource(R.drawable.other);
         }
 
         createEvent = findViewById(R.id.button4);
@@ -161,11 +158,18 @@ public class CreatePage5 extends AppCompatActivity {
     }
     private void insertData() {
         Event event_set = new Event();
-            event_set.setEvent_all("dbp3435@gmail.com",event.get("event_date"),event.get("event_dest"),event.get("event_time"),
-                    event.get("event_duration"),event.get("event_name"),event.get("event_source"),event.get("event_type"),
+            event_set.setEvent_all("dbp3435@gmail.com",event.get("event_date"),event.get("event_dest"),event.get("event_duration"), event.get("event_name"),event.get("event_source"),
+                    event.get("event_time"),event.get("event_type"),
                     event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest"),event.get("lat_source"),"dhaval1019@yahoo.com");
             mDatabase.child("event").child("10").setValue(event_set);
+        Toast.makeText(getBaseContext(), "Created Successfully!",
+                Toast.LENGTH_SHORT).show();
+        Intent intent1 = new Intent(CreatePage5.this,MapsActivity.class);
+        startActivity(intent1);
+
     }
+
+
     private void MultipleSMS(String phoneNumber, String message) {
         String SENT = "SMS_SENT";
         String DELIVERED = "SMS_DELIVERED";
