@@ -153,17 +153,16 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                     Toast.makeText(CreatePage2.this,"Please enter destination event location.",Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 String event_name = event_name_edittext.getText().toString().trim();
                 String source_location = source_edittext.getText().toString().trim();
                 String destination_location = destination_edittext.getText().toString().trim();
                 event.put("event_name",event_name);
                 event.put("event_source",source_location);
                 event.put("event_dest",destination_location);
-
                 event_data.setEvent_name(event_name);
                 event_data.setEvent_source(source_location);
                 event_data.setEvent_dest(source_location);
-
                 Intent intent1 = new Intent(CreatePage2.this,CreatePage3.class);
                 intent1.putExtra("hashmap",event);
                 startActivity(intent1);
