@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawerLayout_planHistory"
-    >
+    android:id="@+id/drawerLayout_planHistory">
 
 <android.support.constraint.ConstraintLayout
 
@@ -15,18 +14,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#00bcd4"
-    >
+    android:layout_height="match_parent">
+
 
     <HorizontalScrollView
 
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,7 +36,8 @@
             android:background=" #00bcd4"
 
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="15dp">
 
             <Button
                 android:id="@+id/button_all"
@@ -110,27 +109,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="797dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="512dp"
+        android:layout_marginTop="5dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
-            <ListView
-                android:id="@+id/listViewProduct"
-                android:layout_width="match_parent"
-                android:layout_height="470dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:divider="#d1d1d1"
-                android:dividerHeight="10dp">
+        <ListView
+            android:id="@+id/listViewProduct"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:divider="#d1d1d1"
+            android:dividerHeight="10dp">
 
-            </ListView>
+        </ListView>
 
     </LinearLayout>
 
-
 </android.support.constraint.ConstraintLayout>
+
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_bar_planHistory"
         android:layout_width="wrap_content"
@@ -140,4 +140,5 @@
         app:headerLayout="@layout/navigation_header">
 
     </android.support.design.widget.NavigationView>
+
 </android.support.v4.widget.DrawerLayout>

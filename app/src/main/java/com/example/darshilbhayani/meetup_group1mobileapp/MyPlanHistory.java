@@ -60,7 +60,7 @@ public class MyPlanHistory extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //-- Drawer Button --
 
