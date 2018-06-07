@@ -1,6 +1,8 @@
 buildscript {
     ext.support_version = '27.0.2'
     ext.play_service_version = '11.8.0'
+
+
     repositories {
         jcenter()
         maven {
@@ -26,6 +28,7 @@ allprojects {
         }
     }
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
