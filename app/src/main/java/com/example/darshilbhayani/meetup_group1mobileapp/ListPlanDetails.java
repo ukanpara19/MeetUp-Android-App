@@ -69,7 +69,7 @@ public class ListPlanDetails extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //-- Drawer Button --
 
