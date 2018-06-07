@@ -30,7 +30,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +54,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -65,13 +63,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
-import java.security.spec.ECField;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.prefs.Preferences;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -143,7 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mDatabase = mFireBaseDatabase.getReference();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        uId = user.getUid();
+        //uId = user.getUid();
 
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -232,7 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 marker.showInfoWindow();
                  */
 
-                    Marker marker =  mMap.addMarker(new MarkerOptions()
+                  final Marker marker =  mMap.addMarker(new MarkerOptions()
                             .position(sourceLocal)
                             .title(PlanNm).icon(BitmapDescriptorFactory.fromResource(drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));
                     marker.setTag(entryData.getKey());
@@ -241,8 +235,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
-                        public boolean onMarkerClick(Marker marker) {
-                            Event dataModel = markersData.get(marker);
+                        public boolean onMarkerClick(final Marker marker) {
+                            final Event dataModel = markersData.get(marker);
                             if(dataModel!=null) {
                                 String title = dataModel.getEvent_name();
 
@@ -251,6 +245,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 myDialog.setContentView(R.layout.custompopup);
                                 imgView = (ImageView) myDialog.findViewById(R.id.btnclose);
+
+                                TextView eventNm = myDialog.findViewById(R.id.eventNm);
+                                eventNm.setText(dataModel.getEvent_name());
+
+                                TextView personNm = myDialog.findViewById(R.id.personNm);
+                                personNm.setText(dataModel.getEmail_id());
+
+                                TextView eventType = myDialog.findViewById(R.id.eventTy);
+                                eventType.setText(dataModel.getEvent_type());
+
+                                TextView time = myDialog.findViewById(R.id.time);
+                                time.setText(dataModel.getEvent_time());
+
+                                TextView date = myDialog.findViewById(R.id.date);
+                                date.setText(dataModel.getEvent_date());
+
+                                Button join = myDialog.findViewById(R.id.join);
+                                join.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        String tmp = dataModel.getppl_joined();
+                                        if(!tmp.trim().equals(""))
+                                            tmp = tmp+";darshilbhayani92@gmail.com";
+                                        else
+                                            tmp = "darshilbhayani92@gmail.com";
+                                        dataModel.setppl_joined(tmp);
+
+                                        Log.i("dataModel..",dataModel.getppl_joined());
+
+                                        Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
+                                                dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
+                                                dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
+                                                dataModel.getLat_source(),dataModel.getppl_joined());
+
+                                        //Log.i("ID",marker.getTag().toString());
+
+                                        mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
+                                        Toast.makeText(MapsActivity.this,dataModel.getEvent_name()+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
+                                        myDialog.dismiss();
+                                    }
+                                });
 
                                 imgView.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -262,26 +297,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 myDialog.show();
 
+
                                 //ByDefault Making Join to the Event!!
                                 //Start
-                                /*String tmp = dataModel.getPpl_joined();
-                                if(!tmp.trim().equals(""))
-                                    tmp = tmp+";darshilbhayani92@gmail.com";
-                                else
-                                    tmp = "darshilbhayani92@gmail.com";
-                                dataModel.setPpl_joined(tmp);
-
-                                Log.i("dataModel..",dataModel.getPpl_joined());
-
-                                Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
-                                        dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
-                                        dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
-                                        dataModel.getLat_source(),dataModel.getPpl_joined());
-
-                               //Log.i("ID",marker.getTag().toString());
-
-                                mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
-                                Toast.makeText(MapsActivity.this,title+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();*/
+                                /**/
                                 //End
                             }
                             return false;

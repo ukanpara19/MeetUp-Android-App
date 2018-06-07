@@ -30,7 +30,7 @@
 
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/eventNm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -69,7 +69,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/eventNm" />
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -104,12 +104,12 @@
                     android:layout_marginEnd="2dp"
                     android:layout_marginTop="4dp"
                     android:contentDescription="@string/lock_content_descr"
-                    app:layout_constraintEnd_toStartOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/personNm"
                     app:layout_constraintTop_toBottomOf="@+id/editText5"
                     app:srcCompat="@drawable/ic_baseline_lock_24px" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/personNm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

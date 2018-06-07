@@ -25,7 +25,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/eventNm"
                     android:layout_width="0dp"
                     android:layout_height="29dp"
                     android:layout_alignParentStart="true"
@@ -51,13 +51,13 @@
                     android:ems="10"
                     android:hint="Enter Plan Name"
                     android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="@+id/eventNm"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/textView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintStart_toStartOf="@+id/eventNm"
+                    app:layout_constraintTop_toBottomOf="@+id/eventNm" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/personNm"
                     android:layout_width="0dp"
                     android:layout_height="29dp"
                     android:layout_marginEnd="16dp"
@@ -79,9 +79,9 @@
                     android:ems="10"
                     android:hint="Enter Starting Location"
                     android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="@+id/textView2"
-                    app:layout_constraintStart_toStartOf="@+id/textView2"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                    app:layout_constraintEnd_toEndOf="@+id/personNm"
+                    app:layout_constraintStart_toStartOf="@+id/personNm"
+                    app:layout_constraintTop_toBottomOf="@+id/personNm" />
 
                 <ImageView
                     android:id="@+id/imageView5"

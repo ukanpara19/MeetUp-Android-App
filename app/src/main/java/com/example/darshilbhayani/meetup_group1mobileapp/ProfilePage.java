@@ -3,7 +3,9 @@ package com.example.darshilbhayani.meetup_group1mobileapp;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,13 +22,14 @@ public class ProfilePage extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
+    private NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
-
 
 
 //App Drawer Button
@@ -36,6 +39,37 @@ public class ProfilePage extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        navigationView=(NavigationView)findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+
+            public boolean onNavigationItemSelected(MenuItem item) {
+
+                int id = item.getItemId();
+                if (id == R.id.nav_Addplan) {
+                // Handle the camera action
+                    Intent i = new Intent(ProfilePage.this, CreatePage1.class);
+                    startActivity(i);
+                } else if (id == R.id.nav_contacts) {
+                    Intent i = new Intent(ProfilePage.this,User.class );
+                    startActivity(i);
+
+                } else if (id == R.id.nav_Map) {
+                    Intent i = new Intent(ProfilePage.this, MapsActivity.class);
+
+                    startActivity(i);
+
+                } else if (id == R.id.nav_settings) {
+                    Intent i = new Intent(ProfilePage.this, Settings_main.class);
+                    startActivity(i);
+                }
+                return true;
+            }
+
+        });
 
 /////
 

@@ -1,18 +1,11 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
 import android.support.v7.app.AppCompatActivity;
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -33,7 +26,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -73,7 +65,7 @@ public class LoginDemo extends AppCompatActivity {
         registerButton =  findViewById(R.id.button);
         usernameEdittext =  findViewById(R.id.editText4);
         passwordEdittext = findViewById(R.id.editText5);
-        forgot_password = findViewById(R.id.textView2);
+        forgot_password = findViewById(R.id.personNm);
         login_with_facebook = findViewById(R.id.textView3);
         forgot_password_image =  findViewById(R.id.imageView4);
 
