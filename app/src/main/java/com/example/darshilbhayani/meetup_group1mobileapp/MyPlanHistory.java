@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -36,7 +37,7 @@ public class MyPlanHistory extends AppCompatActivity {
 
     private ListView rowDataView;
     private rowDataAdapterListPlans adapter;
-    private List<rowData> rowDataList;
+    private List<rowDataListPlans> rowDataListPlans;
 
     private FirebaseDatabase mFireBaseDatabase;
     private FirebaseAuth mAuth;
@@ -59,7 +60,7 @@ public class MyPlanHistory extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //-- Drawer Button --
 
@@ -111,19 +112,10 @@ public class MyPlanHistory extends AppCompatActivity {
 
         //----Navigation Drawer---
 
-
-
-
-
-
-
-
-
-
         curr = this;
 
         rowDataView = findViewById(R.id.newList);
-        rowDataList = new ArrayList<>();
+        rowDataListPlans = new ArrayList<>();
 
         drawableImg.put("a",R.drawable.a);
         drawableImg.put("b",R.drawable.b);
@@ -152,8 +144,22 @@ public class MyPlanHistory extends AppCompatActivity {
         drawableImg.put("y",R.drawable.y);
         drawableImg.put("z",R.drawable.z);
 
+        rowDataView = findViewById(R.id.listViewProduct);
+        rowDataListPlans = new ArrayList<>();
+
         fetchData();
 
+        rowDataView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getApplicationContext(), MapNavigation.class);
+                Log.i("Tag!", String.valueOf(view.getTag()));
+                Event e1Tmp = event.get(String.valueOf(view.getTag()));
+                i.putExtra("EVENT",e1Tmp);
+                i.putExtra("ID",String.valueOf(view.getTag()));
+                startActivity(i);
+            }
+        });
     }
 
     private void fetchData() {
@@ -230,11 +236,11 @@ public class MyPlanHistory extends AppCompatActivity {
                 for(Map.Entry<String,Event> evnData : event.entrySet()) {
 
                     Event e1 = evnData.getValue();
-                    rowDataList.add(new rowData(Integer.parseInt(evnData.getKey()), e1.getEvent_name(),
+                    rowDataListPlans.add(new rowDataListPlans(Integer.parseInt(evnData.getKey()), e1.getEvent_name(),
                             drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase()),
-                            e1.getEvent_date(), e1.getEvent_time(), e1.getEvent_duration()));
+                            e1.getEvent_date(), e1.getEvent_time(), e1.getEvent_duration(), drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase())));
                 }
-                adapter = new rowDataAdapterListPlans(getApplicationContext(), rowDataList);
+                adapter = new rowDataAdapterListPlans(getApplicationContext(), rowDataListPlans);
                 rowDataView.setAdapter(adapter);
             }
 

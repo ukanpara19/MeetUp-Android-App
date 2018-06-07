@@ -15,9 +15,9 @@ import java.util.List;
 public class rowDataAdapterListPlans extends BaseAdapter {
 
     private Context rContext;
-    private List<rowData> rowDataList;
+    private List<rowDataListPlans> rowDataList;
 
-    public rowDataAdapterListPlans(Context rContext, List<rowData> rowDataList) {
+    public rowDataAdapterListPlans(Context rContext, List<rowDataListPlans> rowDataList) {
         this.rContext = rContext;
         this.rowDataList = rowDataList;
     }
@@ -45,25 +45,13 @@ public class rowDataAdapterListPlans extends BaseAdapter {
         TextView evenDatTime = v.findViewById(R.id.dateTime);
         TextView duration = v.findViewById(R.id.duration);
         ImageView imgSource = (ImageView) v.findViewById(R.id.img);
-
-        Button startNav = (Button) v.findViewById(R.id.startNav);
-
-        /*startNav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MyPlanHistory.curr, EditPlan.class);
-                Log.i("Tag!", String.valueOf(view.getTag()));
-                Event e1Tmp = event.get(String.valueOf(view.getTag()));
-                i.putExtra("EVENT",e1Tmp);
-                i.putExtra("ID",String.valueOf(view.getTag()));
-                startActivity(i);
-            }
-        });*/
+        ImageView imgSourceNav = (ImageView) v.findViewById(R.id.imgforNavigation);
 
         eventNm.setText(String.valueOf(rowDataList.get(position).getEventNm()));
         evenDatTime.setText(rowDataList.get(position).getDate().toString()+" - "+rowDataList.get(position).getTime().toString());
         duration.setText(String.valueOf(rowDataList.get(position).getDuration()));
         imgSource.setImageResource(rowDataList.get(position).getImgSrc());
+        imgSourceNav.setImageResource(rowDataList.get(position).getImgSrc());
 
         v.setTag(rowDataList.get(position).getId());
 

@@ -1,5 +1,6 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
+import android.content.Intent;
 import android.location.Location;
 import com.google.android.gms.location.LocationListener;
 
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,6 +31,15 @@ public class MapNavigation extends AppCompatActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_navigation);
+
+        Button exitNav = findViewById(R.id.exitNav);
+        exitNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MyPlanHistory.class);
+                startActivity(i);
+            }
+        });
 
         Event event = (Event) getIntent().getSerializableExtra("EVENT");
         String id = getIntent().getStringExtra("ID");

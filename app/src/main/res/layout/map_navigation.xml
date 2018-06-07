@@ -36,7 +36,7 @@
         tools:context=".MapsActivity" />
 
     <Button
-        android:id="@+id/startNav"
+        android:id="@+id/exitNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
