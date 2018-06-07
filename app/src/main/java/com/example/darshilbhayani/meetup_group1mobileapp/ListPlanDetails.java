@@ -118,8 +118,6 @@ public class ListPlanDetails extends AppCompatActivity {
         //----Navigation Drawer---
 
 
-
-
         drawableImg.put("a",R.drawable.a);
         drawableImg.put("b",R.drawable.b);
         drawableImg.put("c",R.drawable.c);
@@ -147,10 +145,10 @@ public class ListPlanDetails extends AppCompatActivity {
         drawableImg.put("y",R.drawable.y);
         drawableImg.put("z",R.drawable.z);
 
-        fetchData();
-
         rowDataView = findViewById(R.id.listViewProduct);
         rowDataList = new ArrayList<>();
+
+        fetchData();
 
         Button btnAll = findViewById(R.id.button_all);
         Button btnFood = findViewById(R.id.Button_food);

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -25,7 +26,7 @@ import java.util.Map;
 public class MyPlanHistory extends AppCompatActivity {
 
     private ListView rowDataView;
-    private rowDataAdapter adapter;
+    private rowDataAdapterListPlans adapter;
     private List<rowData> rowDataList;
 
     private FirebaseDatabase mFireBaseDatabase;
@@ -36,13 +37,16 @@ public class MyPlanHistory extends AppCompatActivity {
     HashMap<String,Event> event = new HashMap<>();
     HashMap<String, Integer> drawableImg = new HashMap<>();
 
+    static MyPlanHistory curr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_myplan);
+        curr = this;
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_plans);
+        rowDataView = findViewById(R.id.newList);
+        rowDataList = new ArrayList<>();
 
         drawableImg.put("a",R.drawable.a);
         drawableImg.put("b",R.drawable.b);
@@ -72,9 +76,6 @@ public class MyPlanHistory extends AppCompatActivity {
         drawableImg.put("z",R.drawable.z);
 
         fetchData();
-
-        rowDataView = findViewById(R.id.listViewProduct);
-        rowDataList = new ArrayList<>();
 
     }
 
@@ -156,7 +157,7 @@ public class MyPlanHistory extends AppCompatActivity {
                             drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase()),
                             e1.getEvent_date(), e1.getEvent_time(), e1.getEvent_duration()));
                 }
-                adapter = new rowDataAdapter(getApplicationContext(), rowDataList);
+                adapter = new rowDataAdapterListPlans(getApplicationContext(), rowDataList);
                 rowDataView.setAdapter(adapter);
             }
 
