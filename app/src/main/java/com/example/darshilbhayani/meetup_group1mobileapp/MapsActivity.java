@@ -1,5 +1,7 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
@@ -89,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button buttonFromLoc;
 
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
+    private ActionBarDrawerToggle mtoggle;
 
     private GoogleMap mMap;
 
@@ -367,6 +369,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
+
+            mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
+            mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+
+            mDrawerLayout.addDrawerListener(mtoggle);
+            mtoggle.syncState();
 
             //----Navigation Drawer---
 
