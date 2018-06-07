@@ -59,6 +59,7 @@ public class CreatePage5 extends AppCompatActivity {
         time = (TextView) findViewById(R.id.time);
         date = (TextView) findViewById(R.id.date);
         invitedCount = (TextView) findViewById(R.id.invitedCount);
+
         cardView = (CardView) findViewById(R.id.cardView1);
         imageID = (ImageView) findViewById(R.id.imageID);
 
