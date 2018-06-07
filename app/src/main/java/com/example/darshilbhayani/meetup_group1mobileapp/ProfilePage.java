@@ -1,9 +1,13 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,11 +17,27 @@ public class ProfilePage extends AppCompatActivity {
     private Button button_myplan;
     private  Button  button_joinedplan;
 
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
+
+
+
+//App Drawer Button
+        mDrawerLayout = findViewById(R.id.drawerLayout);
+        mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+/////
 
         button_joinedplan = findViewById(R.id.button_joinplan);
         button_myplan = findViewById(R.id.button_myplan);
@@ -84,7 +104,18 @@ public class ProfilePage extends AppCompatActivity {
 
         });
             }
+
+
+            //APP Drawer
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mToggle.onOptionsItemSelected(item)){
+            return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
+}
 
 
 
