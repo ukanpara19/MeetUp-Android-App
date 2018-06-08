@@ -21,8 +21,6 @@
 
         <HorizontalScrollView
 
-
-
             android:id="@+id/horizontalScrollView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,120 +34,86 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
 
-                android:background="#00bcd4"
                 android:clickable="true"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/button_all"
                     android:layout_width="80dp"
-                    android:layout_height="70dp"
+                    android:layout_height="55dp"
                     android:layout_weight="1"
-                    android:background="#00bcd4"
+                    android:background="@drawable/button_border"
+
                     android:drawableTop="@drawable/all_show"
-                    android:text="ALL"
                     android:textColor="#f4f3f3" />
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/Button_food"
                     android:layout_width="80dp"
-                    android:layout_height="70dp"
-                    android:background=" #00bcd4"
+                    android:layout_height="55dp"
+                    android:background="@drawable/button_border"
                     android:drawableTop="@drawable/food"
-                    android:text="Food"
+
                     android:textColor="#f4f3f3" />
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/Button_Enter"
                     android:layout_width="80dp"
-                    android:layout_height="70dp"
-                    android:background=" #00bcd4"
+                    android:layout_height="55dp"
+                    android:background="@drawable/button_border"
                     android:drawableTop="@drawable/movie"
-                    android:text="Movie"
+
                     android:textColor="#f4f3f3" />
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/Button_sport"
                     android:layout_width="80dp"
-                    android:layout_height="70dp"
-                    android:background=" #00bcd4"
+                    android:layout_height="55dp"
+                    android:background="@drawable/button_border"
                     android:drawableTop="@drawable/sports"
-                    android:text="Sports"
+
                     android:textColor="#f4f3f3" />
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/Button_reading"
                     android:layout_width="80dp"
-                    android:layout_height="70dp"
-                    android:background=" #00bcd4"
+                    android:layout_height="55dp"
+                    android:background="@drawable/button_border"
                     android:drawableTop="@drawable/book"
-                    android:text="Study"
+
                     android:textColor="#f4f3f3" />
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/Button_travel"
                     android:layout_width="80dp"
-                    android:layout_height="70dp"
-                    android:background=" #00bcd4"
+                    android:layout_height="55dp"
+                    android:background="@drawable/button_border"
                     android:drawableTop="@drawable/car"
-                    android:text="Travel"
+
                     android:textColor="#f4f3f3" />
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/button_others"
                     android:layout_width="80dp"
-                    android:layout_height="70dp"
-                    android:background="#00bcd4"
+                    android:layout_height="55dp"
+                    android:background="@drawable/button_border"
                     android:drawableTop="@drawable/other"
-                    android:text="Other"
-                    android:textColor="#f4f3f3" />
 
-                <FrameLayout
-                    android:background="#ffffff"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"/>
+                    android:textColor="#f4f3f3" />
 
 
             </LinearLayout>
         </HorizontalScrollView>
+
 
 
         <android.support.constraint.ConstraintLayout
