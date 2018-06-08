@@ -1,5 +1,6 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -80,6 +81,9 @@ public class CreatePage1 extends AppCompatActivity {
                 }
                 else if (id == R.id.nav_logout) {
                     i = new Intent(curr, LoginDemo.class);
+                    SharedPreferences.Editor editor = getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putString("logged_in", "No");
+                    editor.putString("Email_ID","");
                     startActivity(i);
                 }
 

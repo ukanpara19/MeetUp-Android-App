@@ -2,7 +2,6 @@ package com.example.darshilbhayani.meetup_group1mobileapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -10,26 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.Semaphore;
+import org.w3c.dom.Text;
 
-public class UserProfile extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Navigation extends AppCompatActivity {
 
     private FirebaseDatabase mFireBaseDatabase;
     private FirebaseAuth mAuth;
@@ -37,28 +30,15 @@ public class UserProfile extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     static HashMap<String,User> userDetails = new HashMap<>();
-
-    TextView userNm,userEmailId,userPhno;
+    String loogedInUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_page);
+        setContentView(R.layout.navigation_header);
 
-        userNm = (TextView) findViewById(R.id.tv_name);
-        userEmailId = (TextView) findViewById(R.id.userEmailId);
-        userPhno = (TextView) findViewById(R.id.userPhno);
-
-            SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
-            String loogedInUser = editor.getString("Email_ID","darshilbhayani92@gmail.com");
-
-            if(userDetails.keySet().contains(loogedInUser.toString())){
-                User currUserData = userDetails.get(loogedInUser.toString());
-
-                userNm.setText(currUserData.getName()==null?"":currUserData.getName());
-                userEmailId.setText(currUserData.getEmail()==null?"":currUserData.getEmail());
-                userPhno.setText(currUserData.getNumber()==null?"":currUserData.getNumber());
-            }
+        SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+        loogedInUser = editor.getString("Email_ID","darshilbhayani1892@gmail.com");
 
         getUserData();
     }
@@ -69,6 +49,7 @@ public class UserProfile extends AppCompatActivity {
 
         try {
             Intent intent = getIntent();
+            String loggedInUserNm=null;
 
             mAuth = FirebaseAuth.getInstance();
             mFireBaseDatabase = FirebaseDatabase.getInstance();
@@ -167,6 +148,18 @@ public class UserProfile extends AppCompatActivity {
 
                 }
             });
+
+            Log.i("LOGED IN User! ",loogedInUser);
+
+            for(Map.Entry<String,User> userItr : userDetails.entrySet()){
+                User u1Tmp = userItr.getValue();
+                Log.i("USER ",u1Tmp.getEmail());
+                if(u1Tmp.getEmail().equals(loogedInUser))
+                    loggedInUserNm = u1Tmp.getName();
+            }
+
+            TextView textView10 = (TextView)findViewById(R.id.textView10);
+            textView10.setText("Welcome to MeetUp,/n"+(loggedInUserNm==null?"Darshil Bhayani":loggedInUserNm));
 
         }catch (Exception e){
 

@@ -1,6 +1,7 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -64,7 +65,6 @@ public class MyPlanHistory extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //-- Drawer Button --
-
         //----Navigation Drawer---
 
         Intent i = new Intent(this, MapsActivity.class);
@@ -107,6 +107,9 @@ public class MyPlanHistory extends AppCompatActivity {
                 }
                 else if (id == R.id.nav_logout) {
                     i = new Intent(curr, LoginDemo.class);
+                    SharedPreferences.Editor editor = getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putString("logged_in", "No");
+                    editor.putString("Email_ID","");
                     startActivity(i);
                 }
 
@@ -237,13 +240,18 @@ public class MyPlanHistory extends AppCompatActivity {
 
                 Log.i("event",event+"");
 
+                SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                String loogedInUser = editor.getString("Email_ID","darshilbhayani1892@gmail.com");
+
                 int i=1;
                 for(Map.Entry<String,Event> evnData : event.entrySet()) {
 
                     Event e1 = evnData.getValue();
-                    rowDataListPlans.add(new rowDataListPlans(Integer.parseInt(evnData.getKey()), e1.getEvent_name(),
-                            drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase()),
-                            e1.getEvent_date(), e1.getEvent_time(), e1.getEvent_duration(), drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase())));
+                    if(e1.getEmail_id().equals(loogedInUser)) {
+                        rowDataListPlans.add(new rowDataListPlans(Integer.parseInt(evnData.getKey()), e1.getEvent_name(),
+                                drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase()),
+                                e1.getEvent_date(), e1.getEvent_time(), e1.getEvent_duration(), drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase())));
+                    }
                 }
                 adapter = new rowDataAdapterListPlans(getApplicationContext(), rowDataListPlans);
                 rowDataView.setAdapter(adapter);

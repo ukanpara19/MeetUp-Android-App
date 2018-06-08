@@ -3,6 +3,7 @@ package com.example.darshilbhayani.meetup_group1mobileapp;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -357,8 +358,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
 
-
-
             mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
             mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
 
@@ -406,10 +405,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     else if (id == R.id.nav_logout) {
                         i = new Intent(curr, LoginDemo.class);
+                        SharedPreferences.Editor editor = getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putString("logged_in", "No");
+                        editor.putString("Email_ID","");
+                        editor.apply();
                         startActivity(i);
                     }
-
-
                     return true;
                 }
 

@@ -68,15 +68,16 @@ public class LoginDemo extends AppCompatActivity {
 
         mCallbackManager = CallbackManager.Factory.create();
         SharedPreferences preferences=getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
-        Log.d("SharedPref",preferences.getString("logged_in",null));
-        if(preferences.getString("logged_in",null)!=null)
-        {
-            Intent i = new Intent(LoginDemo.this,MapsActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(i);
+        if(preferences.contains("logged_in")) {
+            Log.d("SharedPref", preferences.getString("logged_in", null));
+            if (!preferences.getString("logged_in", null).equals("No")) {
+                Intent i = new Intent(this, MapsActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
 
-        }else {
-            Log.d("SharedPrefNo",preferences.getString("logged_in",null));
+            } else {
+                Log.d("SharedPrefNo", preferences.getString("logged_in", null));
+            }
         }
 
         LoginManager.getInstance().registerCallback(mCallbackManager,

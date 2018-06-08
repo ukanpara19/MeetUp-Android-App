@@ -45,7 +45,6 @@
                     android:layout_height="70dp"
                     android:layout_weight="1"
                     android:background=" #00bcd4"
-                    android:backgroundTint="@drawable/border"
                     android:drawableTop="@drawable/all_show"
                     android:text="ALL"
                     android:textColor="#f4f3f3" />
