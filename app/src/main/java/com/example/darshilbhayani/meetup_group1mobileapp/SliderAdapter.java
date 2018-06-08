@@ -34,9 +34,9 @@ public String[] slide_heading ={
 
 public  String[] slide_body = {
 
-       "Lorem Ipsum is simply dummy text of the printing and typesetting industry." + "aliqua",
-               "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." + "aliqua",
-               "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " + "aliqua"
+       "Travel makes one modest. You see what a tiny place you occupy in the world." + "",
+               "Let us always meet each other with smile, for the smile is the beginning of love.\n" ,
+               "Life is an experiment in which you may fail or succeed. Explore more, expect least. "
 };
 
 
