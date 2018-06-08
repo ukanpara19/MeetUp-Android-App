@@ -36,17 +36,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
-
-        <activity android:name=".MapsActivity" android:theme="@style/AppTheme">
+        <activity android:name=".SplashScreenActivity" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginDemo" android:theme="@style/ProfileTheme"></activity>
-        <activity android:name=".MainActivity" android:theme="@style/ProfileTheme"></activity>
-        <activity android:name=".SignUpActivity" android:theme="@style/ProfileTheme"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -76,13 +71,16 @@
         <activity android:name=".ListPlanDetails"></activity>
         <activity android:name=".MyPlanHistory"></activity>
         <activity android:name=".requestContactPermission"></activity>
-        <activity android:name=".SplashScreenActivity" android:theme="@style/AppTheme"></activity>
+        <activity android:name=".MapsActivity" android:theme="@style/AppTheme"></activity>
         <activity android:name=".EditPlan"></activity>
         <activity android:name=".Settings_main"></activity>
         <activity android:name=".ProfilePage"></activity>
         <activity android:name=".CreatePage1"></activity>
         <activity android:name=".MapNavigation"></activity>
         <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".LoginDemo" android:theme="@style/ProfileTheme"></activity>
+        <activity android:name=".MainActivity" android:theme="@style/ProfileTheme"></activity>
+        <activity android:name=".SignUpActivity" android:theme="@style/ProfileTheme"></activity>
     </application>
 
 </manifest>

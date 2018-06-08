@@ -76,7 +76,6 @@
                     android:layout_height="55dp"
                     android:background="@drawable/button_border"
                     android:drawableTop="@drawable/sports"
-
                     android:textColor="#f4f3f3" />
 
 
