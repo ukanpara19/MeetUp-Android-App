@@ -8,7 +8,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +27,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,7 +43,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
-public class CreatePage5 extends AppCompatActivity {
+public class CreatePage5 extends AppCompatActivity implements OnMapReadyCallback {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     HashMap<String, String> event = new HashMap<>();
     HashMap<String, String> invited_people = new HashMap<>();
@@ -47,9 +57,19 @@ public class CreatePage5 extends AppCompatActivity {
     Context context;
     View v;
 
+    private GoogleMap mMap;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_plan5);
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment);
+        mapFragment.getMapAsync(this);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MapsActivity.REQUEST_LOCATION);
 
         planName = (TextView) findViewById(R.id.planName);
         sourceLoc = (TextView) findViewById(R.id.sourceLoc);
@@ -160,13 +180,20 @@ public class CreatePage5 extends AppCompatActivity {
     private void insertData() {
         Random ran = new Random();
         Event event_set = new Event();
-            event_set.setEvent_all("dbp3435@gmail.com",event.get("event_date"),event.get("event_dest"),event.get("event_duration"), event.get("event_name"),event.get("event_source"),
+
+        SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+        String loogedInUser = editor.getString("Email_ID","darshilbhayani1892@gmail.com");
+
+            event_set.setEvent_all(loogedInUser,event.get("event_date"),event.get("event_dest"),event.get("event_duration"), event.get("event_name"),event.get("event_source"),
                     event.get("event_time"),event.get("event_type"),
-                    event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest"),event.get("lat_source"),"dhaval1019@yahoo.com");
+                    event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest")
+                    ,event.get("lat_source"),"");
             mDatabase.child("event").child(String.valueOf(ran.nextInt())).setValue(event_set);
+
         Toast.makeText(getBaseContext(), "Created Successfully!",
                 Toast.LENGTH_SHORT).show();
         Intent intent1 = new Intent(CreatePage5.this,MapsActivity.class);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent1);
 
     }
@@ -236,5 +263,51 @@ public class CreatePage5 extends AppCompatActivity {
         }, new IntentFilter(DELIVERED));
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mMap = googleMap;
+        LatLng source = null;
+        LatLng destination = null;
+
+        if(event.get("lat_source")!=null && event.get("lan_source")!=null) {
+            source = new LatLng(Double.parseDouble(event.get("lat_source")), Double.parseDouble(event.get("lan_source")));
+            mMap.addMarker(new MarkerOptions().position(source).title("Start Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_a)));
+        }
+
+        if(event.get("lan_dest")!=null && event.get("lat_dest")!=null) {
+            destination = new LatLng(Double.parseDouble(event.get("lan_dest")), Double.parseDouble(event.get("lat_dest")));
+            mMap.addMarker(new MarkerOptions().position(destination).title("Destination Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_b)));
+        }
+
+        if(source!=null && destination!=null) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source, 18), 5000, null);
+            drawRoute(source, destination);
+        }
+
+    }
+
+    public void drawRoute(LatLng source, LatLng finalDestination){
+        try{
+            if(source!=null && finalDestination!=null) {
+                LatLng origin = source;
+                LatLng destination = finalDestination;
+                DrawRouteMaps.getInstance(this)
+                        .draw(origin, destination, mMap);
+                //DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.marker_a, "Origin Location");
+                //DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.marker_b, "Destination Location");
+
+                LatLngBounds bounds = new LatLngBounds.Builder()
+                        .include(origin)
+                        .include(destination).build();
+                Point displaySize = new Point();
+                getWindowManager().getDefaultDisplay().getSize(displaySize);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

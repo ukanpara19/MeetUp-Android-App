@@ -123,6 +123,7 @@ public class CreatePage3 extends AppCompatActivity{
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
+            month = month + 1;
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
         public void onDateSet(DatePicker view, int year, int month, int day) {

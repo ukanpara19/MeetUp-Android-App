@@ -430,12 +430,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 boolean sourceFlag = false;
                 boolean destFlag = false;
 
-                if(event.get("lat_source")==null || event.get("lan_source")==null)
-                    sourceFlag = true;
-
-                if(event.get("lat_source")==null || event.get("lan_source")==null)
-                    destFlag = true;
-
                 if(!sourceFlag && !destFlag) {
                     String event_name = event_name_edittext.getText().toString().trim();
                     String source_location = source_edittext.getText().toString().trim();

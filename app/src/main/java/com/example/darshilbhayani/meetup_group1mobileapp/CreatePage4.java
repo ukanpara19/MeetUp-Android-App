@@ -61,20 +61,26 @@ public class CreatePage4 extends AppCompatActivity {
         reviewPlanButton = (Button) findViewById(R.id.button4);
 
         myList = (ListView) findViewById(R.id.newList);
+
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_activated_1,nameArrayList);
         myList.setAdapter(adapter);
+        myList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Log.d("ID", id +"");
+
+                Log.d("Sel ID", parent.getSelectedItemId()+"");
                 if(selectedNumbers.containsKey(nameArrayList.get(position))){
                     selectedNumbers.remove(nameArrayList.get(position));
-                    view.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    //view.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }else {
                     Log.d("error",nameArrayList.get(position)+"");
                     Log.d("error",contactHash1+"");
                     selectedNumbers.put(nameArrayList.get(position), contactHash1.get(nameArrayList.get(position)));
-                    view.setBackgroundColor(Color.parseColor("#8FD8D8"));
+
+                    //view.setBackgroundColor(Color.parseColor("#8FD8D8"));
                 }
                 Log.d("data",selectedNumbers+"");
             }

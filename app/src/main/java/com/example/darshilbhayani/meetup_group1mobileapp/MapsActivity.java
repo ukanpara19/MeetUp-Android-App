@@ -6,9 +6,7 @@ import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
-
 import android.os.Build;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,7 +31,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,13 +38,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.location.LocationRequest;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -59,7 +53,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -67,15 +60,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.io.IOException;
-import java.security.spec.ECField;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.prefs.Preferences;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -95,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
-    private static final int REQUEST_LOCATION = 1;
+    public static final int REQUEST_LOCATION = 1;
     static Polyline polylineFinal = null;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -131,7 +119,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String uId;
 
     private void darwPlanMarkers(GoogleMap mMap) {
-
         try{
             loadDatForJoinPlan();
             fillData(planData);
@@ -142,19 +129,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     private void loadDatForJoinPlan() {
         Intent intent = getIntent();
-
         mAuth = FirebaseAuth.getInstance();
         mFireBaseDatabase = FirebaseDatabase.getInstance();
         mDatabase = mFireBaseDatabase.getReference();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        //uId = user.getUid();
-
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -939,9 +922,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-
-
         return false;
     }
 
