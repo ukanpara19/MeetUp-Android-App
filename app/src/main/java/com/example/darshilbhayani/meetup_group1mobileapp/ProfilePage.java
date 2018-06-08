@@ -32,10 +32,6 @@ public class ProfilePage extends AppCompatActivity {
         setContentView(R.layout.profile_page);
 
 
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.abs_layout);
-
         //-- Drawer button --
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_profilepage);
         mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);

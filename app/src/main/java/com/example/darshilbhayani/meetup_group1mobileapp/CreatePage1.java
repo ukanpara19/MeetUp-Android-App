@@ -22,6 +22,7 @@ public class CreatePage1 extends AppCompatActivity {
     private CreatePage1 curr;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mtoggle;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class CreatePage1 extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
-      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //-- Drawer Button --
 
