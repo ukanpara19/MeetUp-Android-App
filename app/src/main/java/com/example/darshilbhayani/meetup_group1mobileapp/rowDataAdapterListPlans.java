@@ -45,13 +45,13 @@ public class rowDataAdapterListPlans extends BaseAdapter {
         TextView evenDatTime = v.findViewById(R.id.dateTime);
         TextView duration = v.findViewById(R.id.duration);
         ImageView imgSource = (ImageView) v.findViewById(R.id.img);
-        ImageView imgSourceNav = (ImageView) v.findViewById(R.id.imgforNavigation);
+        //ImageView imgSourceNav = (ImageView) v.findViewById(R.id.imgforNavigation);
 
         eventNm.setText(String.valueOf(rowDataList.get(position).getEventNm()));
         evenDatTime.setText(rowDataList.get(position).getDate().toString()+" - "+rowDataList.get(position).getTime().toString());
         duration.setText(String.valueOf(rowDataList.get(position).getDuration()));
         imgSource.setImageResource(rowDataList.get(position).getImgSrc());
-        imgSourceNav.setImageResource(rowDataList.get(position).getImgSrc());
+        //imgSourceNav.setImageResource(rowDataList.get(position).getImgSrc());
 
         v.setTag(rowDataList.get(position).getId());
 

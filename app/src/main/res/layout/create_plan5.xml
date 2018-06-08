@@ -169,13 +169,11 @@
                         android:layout_columnWeight="1"
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="16dp"
-                        android:layout_rowWeight="1"
-
-                        android:onClick="onBindViewHolder">
+                        android:layout_rowWeight="1">
 
                         <FrameLayout
                             android:background="#404040"
-                            android:layout_width="4dp"
+                            android:layout_width="2dp"
                             android:layout_height="match_parent"/>
 
                         <LinearLayout
@@ -219,7 +217,7 @@
 
                         <FrameLayout
                             android:background="#404040"
-                            android:layout_width="4dp"
+                            android:layout_width="2dp"
                             android:layout_height="match_parent"/>
 
                         <LinearLayout
@@ -265,7 +263,7 @@
 
                         <FrameLayout
                             android:background="#404040"
-                            android:layout_width="4dp"
+                            android:layout_width="2dp"
                             android:layout_height="match_parent"/>
 
                         <LinearLayout

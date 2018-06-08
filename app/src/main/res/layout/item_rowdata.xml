@@ -16,10 +16,10 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/a" />
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:text="Plan Name"
             android:textColor="#404040"
             android:textSize="15sp"
@@ -40,8 +40,8 @@
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/date"
@@ -52,18 +52,18 @@
             android:id="@+id/dateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:text="12 PM | 15:55"
             android:textColor="#404040"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView7"
             app:layout_constraintTop_toBottomOf="@+id/planNm" />
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/duration"
@@ -75,11 +75,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
             android:text="15 minutes"
             android:textColor="#404040"
-            android:textSize="20sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView8"
             app:layout_constraintTop_toBottomOf="@+id/dateTime" />
