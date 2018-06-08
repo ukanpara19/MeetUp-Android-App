@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -30,6 +31,9 @@ public class ProfilePage extends AppCompatActivity {
 
         button_joinedplan = findViewById(R.id.button_joinplan);
         button_myplan = findViewById(R.id.button_myplan);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.abs_layout);
 
         //-- Drawer button --
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_profilepage);

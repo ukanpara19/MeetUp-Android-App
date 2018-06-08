@@ -368,6 +368,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
 
+
+
             mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
             mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
 
