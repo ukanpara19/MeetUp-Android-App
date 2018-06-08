@@ -39,6 +39,11 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
+
                 <Button
                     android:id="@+id/button_all"
                     android:layout_width="80dp"
@@ -49,6 +54,11 @@
                     android:text="ALL"
                     android:textColor="#f4f3f3" />
 
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
+
                 <Button
                     android:id="@+id/Button_food"
                     android:layout_width="80dp"
@@ -57,6 +67,11 @@
                     android:drawableTop="@drawable/food"
                     android:text="Food"
                     android:textColor="#f4f3f3" />
+
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/Button_Enter"
@@ -67,6 +82,11 @@
                     android:text="Movie"
                     android:textColor="#f4f3f3" />
 
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
+
                 <Button
                     android:id="@+id/Button_sport"
                     android:layout_width="80dp"
@@ -75,6 +95,11 @@
                     android:drawableTop="@drawable/sports"
                     android:text="Sports"
                     android:textColor="#f4f3f3" />
+
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
 
                 <Button
                     android:id="@+id/Button_reading"
@@ -85,6 +110,11 @@
                     android:text="Study"
                     android:textColor="#f4f3f3" />
 
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
+
                 <Button
                     android:id="@+id/Button_travel"
                     android:layout_width="80dp"
@@ -94,6 +124,11 @@
                     android:text="Travel"
                     android:textColor="#f4f3f3" />
 
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
+
                 <Button
                     android:id="@+id/button_others"
                     android:layout_width="80dp"
@@ -102,6 +137,11 @@
                     android:drawableTop="@drawable/other"
                     android:text="Other"
                     android:textColor="#f4f3f3" />
+
+                <FrameLayout
+                    android:background="#ffffff"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"/>
 
 
             </LinearLayout>
