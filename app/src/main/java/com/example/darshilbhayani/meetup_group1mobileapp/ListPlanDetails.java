@@ -356,6 +356,7 @@ public class ListPlanDetails extends AppCompatActivity {
                     flag = true;
                 }else {
                     Toast.makeText(ListPlanDetails.this,"You are not authorised to edit the event!",Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 if(Integer.valueOf(event_date[0])>=year){
