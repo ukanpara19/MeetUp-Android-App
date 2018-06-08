@@ -95,7 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
-    private static final int REQUEST_LOCATION = 1;
+    public static final int REQUEST_LOCATION = 1;
     static Polyline polylineFinal = null;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
