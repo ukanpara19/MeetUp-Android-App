@@ -411,6 +411,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         editor.apply();
                         startActivity(i);
                     }
+
+
                     return true;
                 }
 
