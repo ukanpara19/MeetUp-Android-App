@@ -29,8 +29,7 @@ public class ProfilePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
 
-        button_joinedplan = findViewById(R.id.button_joinplan);
-        button_myplan = findViewById(R.id.button_myplan);
+
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.abs_layout);
@@ -85,6 +84,10 @@ NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_profi
      i = new Intent(curr, ProfilePage.class);
      startActivity(i);
  }
+ else if (id == R.id.nav_logout) {
+     i = new Intent(curr, LoginDemo.class);
+     startActivity(i);
+ }
 
     return true;
     }
@@ -93,68 +96,6 @@ NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_profi
 
         //----Navigation Drawer---
 
-
-        button_myplan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(ProfilePage.this);
-                builderSingle.setIcon(R.drawable.ic_launcher_background);
-                builderSingle.setTitle("Select One Name:-");
-
-                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ProfilePage.this, android.R.layout.select_dialog_singlechoice);
-
-                arrayAdapter.add("Hardik");
-                arrayAdapter.add("Archit");
-                arrayAdapter.add("Jignesh");
-                arrayAdapter.add("Umang");
-                arrayAdapter.add("Gatti");
-
-                builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        String strName = arrayAdapter.getItem(which);
-                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ProfilePage.this);
-                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog,int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                    }
-                });
-                builderSingle.show();
-
-            }
-        });
-
-
-
-
-        button_joinedplan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog alertDialog = new AlertDialog.Builder(ProfilePage.this).create(); //Read Update
-                alertDialog.setTitle("Joined Plan");
-                alertDialog.setMessage("This Alert box displays plans that I have joined in");
-
-                alertDialog.setButton("Done", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
-                    }
-                });
-
-                alertDialog.show();  //<-- See This!
-            }
-
-        });
     }
     //-- Drawer Button --
     @Override

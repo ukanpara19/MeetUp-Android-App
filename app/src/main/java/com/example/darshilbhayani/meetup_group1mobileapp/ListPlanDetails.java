@@ -108,9 +108,12 @@ public class ListPlanDetails extends AppCompatActivity {
                     i = new Intent(curr, ListPlanDetails.class);
                     startActivity(i);
                 }
-
                 else if (id == R.id.nav_profile) {
                     i = new Intent(curr, ProfilePage.class);
+                    startActivity(i);
+                }
+                else if (id == R.id.nav_logout) {
+                    i = new Intent(curr, LoginDemo.class);
                     startActivity(i);
                 }
 

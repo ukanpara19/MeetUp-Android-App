@@ -105,6 +105,10 @@ public class MyPlanHistory extends AppCompatActivity {
                     i = new Intent(curr, ProfilePage.class);
                     startActivity(i);
                 }
+                else if (id == R.id.nav_logout) {
+                    i = new Intent(curr, LoginDemo.class);
+                    startActivity(i);
+                }
 
                 return true;
             }

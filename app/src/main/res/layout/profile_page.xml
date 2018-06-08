@@ -304,59 +304,6 @@
 
         </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
-
-        <Button
-            android:id="@+id/button_myplan"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00bcd4"
-            android:text="My Plan"
-            android:textColor="@color/cardview_light_background"
-            tools:layout_editor_absoluteX="146dp"
-            tools:layout_editor_absoluteY="568dp" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"
-        app:layout_constraintVertical_bias="0.314">
-
-        <Button
-            android:id="@+id/button_joinplan"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00bcd4"
-            android:text="Joined plan"
-            android:textColor="@color/cardview_light_background"
-            tools:layout_editor_absoluteX="146dp"
-            tools:layout_editor_absoluteY="568dp" />
-
-
-    </RelativeLayout>
-
 
     </android.support.constraint.ConstraintLayout>
 

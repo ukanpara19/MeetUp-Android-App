@@ -85,6 +85,11 @@ public class Settings_main extends AppCompatActivity {
                     i = new Intent(curr, ProfilePage.class);
                     startActivity(i);
                 }
+                else if (id == R.id.nav_logout) {
+                    i = new Intent(curr, LoginDemo.class);
+                    startActivity(i);
+                }
+
 
                 return true;
             }
@@ -97,7 +102,12 @@ public class Settings_main extends AppCompatActivity {
         settings_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 2) {
+               if (position == 0){
+                   Intent i = new Intent(curr,ChangePassword.class);
+                   startActivity(i);
+               }
+
+               else if (position == 2) {
                     AlertDialog alertDialog = new AlertDialog.Builder(Settings_main.this).create(); //Read Update
                     alertDialog.setTitle("About Meetup");
                     alertDialog.setMessage("MeetUp is developed by hardworking Students at Santa Clara University." +"\n"+"\n" + "Out of 4 highly skilled members of awesome team"
