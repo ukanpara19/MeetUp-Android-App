@@ -126,7 +126,7 @@ public class CreatePage3 extends AppCompatActivity{
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            date_edittext.setText(String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day));
+            date_edittext.setText(String.valueOf(year) + "-" + String.valueOf(month+1) + "-" + String.valueOf(day));
         }
     }
 }

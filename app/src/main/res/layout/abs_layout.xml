@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_gravity="center"
+    android:gravity="center_horizontal|center"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/action_bar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Settings"
+        android:text="MeetUp"
+        android:textAppearance="@android:style/TextAppearance.Material.Body2"
         android:textColor="#ffffff"
-        android:id="@+id/mytext"
-        android:textSize="18sp" />
-
+        android:textSize="22sp" />
 </LinearLayout>

@@ -107,13 +107,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
     Marker mCurrLocationMarker;
 
     Double destiLat = 37.351275;
     Double destiLon = -121.939584;
 
-    LatLng destination;
     LatLng source;
 
     HashMap<String, Integer> drawableImg = new HashMap<>();
@@ -369,6 +367,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
+
+
 
             mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
             mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
@@ -648,7 +648,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
-        //destinationLocation(mMap);
+            try{
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps();
+                } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    getLocation();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //destinationLocation(mMap);
         //drawRoute(source,destination);
         darwPlanMarkers(mMap);
 
@@ -691,41 +702,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    private void destinationLocation(GoogleMap mMap) {
-        List<Address> addresses;
-        Geocoder geocoder = new Geocoder(this);
-        try {
-            // addresses = geocoder.getFromLocationName("Vilnius",5);
-            addresses = geocoder.getFromLocationName("Jersey Shore, New Jersey",5);
-            Log.i("addresses..","."+addresses.size());
-
-            if(addresses.size() > 0) {
-                Double lat = (double) (addresses.get(0).getLatitude());
-                Double lon = (double) (addresses.get(0).getLongitude());
-
-                lat = destiLat;
-                lon = destiLon;
-
-                Log.d("lat-long", "" + lat + "......." + lon);
-                destination = new LatLng(lat, lon);
-
-                Marker hamburg = mMap.addMarker(new MarkerOptions()
-                        .position(destination)
-                        .title("Jersey Shore, New Jersey").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_b)));
-                // Move the camera instantly to hamburg with a zoom of 15.
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
-
-                // Zoom in, animating the camera.
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 5000, null);
-            }
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
     }
 
     public void drawRoute(LatLng source, LatLng finalDestination){
@@ -808,7 +784,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(source));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,10),5000, null);
-                drawRoute(source,destination);
+               // drawRoute(source,destination);
 
             } else  if (location1 != null) {
                  latti = location1.getLatitude();
@@ -827,7 +803,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mCurrLocationMarker = mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(source));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,10),5000, null);
-                drawRoute(source,destination);
+                //drawRoute(source,destination);
 
             } else  if (location2 != null) {
                  latti = location2.getLatitude();
@@ -846,7 +822,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mCurrLocationMarker = mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(source));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,10),5000, null);
-                drawRoute(source,destination);
+                //drawRoute(source,destination);
 
             }else{
                 Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
@@ -903,24 +879,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
         try{
-        mLastLocation = location;
+            try{
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps();
+                } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    getLocation();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         if (mCurrLocationMarker != null)
         {
             mCurrLocationMarker.remove();
         }
-
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10),5000, null);
-        drawRoute(latLng,destination);
+        //drawRoute(latLng,destination);
         }catch (Exception e){
             e.printStackTrace();
         }

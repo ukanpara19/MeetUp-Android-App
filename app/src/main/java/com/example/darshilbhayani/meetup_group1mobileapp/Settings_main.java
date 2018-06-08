@@ -32,9 +32,6 @@ public class Settings_main extends AppCompatActivity {
         ListView settings_listView = (ListView) findViewById(R.id.setting_lv);
         settings_listView.setAdapter(setting_adapter);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.abs_layout);
-
 
 
         //-- Drawer button --
@@ -44,6 +41,7 @@ public class Settings_main extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         //-- Drawer Button --
 

@@ -113,113 +113,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
 
 
         //Search a location
-        source_search_imageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(TextUtils.isEmpty(source_edittext.getText())){
-                    Toast.makeText(CreatePage2.this,"Please Enter Source Location.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String source_location = source_edittext.getText().toString().trim();
-                destinationLocation(mMap,source_location,"source_search_imageview");
-
-                LatLng source=null, destination=null;
-                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
-                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
-
-                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
-                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
-
-               // if(source!=null && destination!=null)
-                    //drawRoute(source,destination);
-            }
-        });
-
-        dest_search_imageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(TextUtils.isEmpty(destination_edittext.getText())){
-                    Toast.makeText(CreatePage2.this,"Please Enter Destination Location.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String dest_location = destination_edittext.getText().toString().trim();
-                destinationLocation(mMap,dest_location,"dest_search_imageview");
-
-                LatLng source=null, destination=null;
-                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
-                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
-
-                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
-                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
-
-               if(source!=null && destination!=null)
-                    drawRoute(source,destination,mMap);
-            }
-        });
-
-        add_date_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(TextUtils.isEmpty(event_name_edittext.getText())){
-                    Toast.makeText(CreatePage2.this,"Please enter plan name.",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(source_edittext.getText())){
-                    Toast.makeText(CreatePage2.this,"Please enter source event location.",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(TextUtils.isEmpty(destination_edittext.getText().toString().trim())){
-                    Toast.makeText(CreatePage2.this,"Please enter destination event location.",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                boolean sourceFlag = false;
-                boolean destFlag = false;
-
-                if(event.get("lat_source")==null || event.get("lan_source")==null)
-                    sourceFlag = true;
-
-                if(event.get("lat_source")==null || event.get("lan_source")==null)
-                        destFlag = true;
-
-                if(!sourceFlag && !destFlag) {
-                    String event_name = event_name_edittext.getText().toString().trim();
-                    String source_location = source_edittext.getText().toString().trim();
-                    String destination_location = destination_edittext.getText().toString().trim();
-                    event.put("event_name", event_name);
-                    event.put("event_source", source_location);
-                    event.put("event_dest", destination_location);
-                    event_data.setEvent_name(event_name);
-                    event_data.setEvent_source(source_location);
-                    event_data.setEvent_dest(source_location);
-                    Intent intent1 = new Intent(CreatePage2.this, CreatePage3.class);
-                    intent1.putExtra("hashmap", event);
-                    startActivity(intent1);
-                }else{
-                    if(sourceFlag)
-                        Toast.makeText(CreatePage2.this,"Please Enter the Source Location",Toast.LENGTH_SHORT).show();
-
-                    if(destFlag)
-                        Toast.makeText(CreatePage2.this,"Please Enter the Destination Location",Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-
-        source_current_location_imageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setLocaation("source_current_location_imageview");
-            }
-        });
-
-        dest_current_location_imageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setLocaation("dest_current_location_imageview");
-            }
-        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_mMap);
@@ -434,6 +327,9 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
 
         try{
             if(source!=null && finalDestination!=null) {
+
+                Log.i("DrawRoute","Came inside to drawa");
+
                 LatLng origin = source;
                 LatLng destination = finalDestination;
                 DrawRouteMaps.getInstance(this)
@@ -470,6 +366,131 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
+        source_search_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(TextUtils.isEmpty(source_edittext.getText())){
+                    Toast.makeText(CreatePage2.this,"Please Enter Source Location.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String source_location = source_edittext.getText().toString().trim();
+                destinationLocation(mMap,source_location,"source_search_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+                drawRoute(source,destination,mMap);
+            }
+        });
+
+        dest_search_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(TextUtils.isEmpty(destination_edittext.getText())){
+                    Toast.makeText(CreatePage2.this,"Please Enter Destination Location.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String dest_location = destination_edittext.getText().toString().trim();
+                destinationLocation(mMap,dest_location,"dest_search_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+
+                drawRoute(source,destination,mMap);
+            }
+        });
+
+        add_date_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(TextUtils.isEmpty(event_name_edittext.getText())){
+                    Toast.makeText(CreatePage2.this,"Please enter plan name.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(source_edittext.getText())){
+                    Toast.makeText(CreatePage2.this,"Please enter source event location.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(destination_edittext.getText().toString().trim())){
+                    Toast.makeText(CreatePage2.this,"Please enter destination event location.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                boolean sourceFlag = false;
+                boolean destFlag = false;
+
+                if(event.get("lat_source")==null || event.get("lan_source")==null)
+                    sourceFlag = true;
+
+                if(event.get("lat_source")==null || event.get("lan_source")==null)
+                    destFlag = true;
+
+                if(!sourceFlag && !destFlag) {
+                    String event_name = event_name_edittext.getText().toString().trim();
+                    String source_location = source_edittext.getText().toString().trim();
+                    String destination_location = destination_edittext.getText().toString().trim();
+                    event.put("event_name", event_name);
+                    event.put("event_source", source_location);
+                    event.put("event_dest", destination_location);
+                    event_data.setEvent_name(event_name);
+                    event_data.setEvent_source(source_location);
+                    event_data.setEvent_dest(source_location);
+                    Intent intent1 = new Intent(CreatePage2.this, CreatePage3.class);
+                    intent1.putExtra("hashmap", event);
+                    startActivity(intent1);
+                }else{
+                    if(sourceFlag)
+                        Toast.makeText(CreatePage2.this,"Please Enter the Source Location",Toast.LENGTH_SHORT).show();
+
+                    if(destFlag)
+                        Toast.makeText(CreatePage2.this,"Please Enter the Destination Location",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        source_current_location_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocaation("source_current_location_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+                drawRoute(source,destination,mMap);
+            }
+        });
+
+        dest_current_location_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocaation("dest_current_location_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+                drawRoute(source,destination,mMap);
+            }
+        });
     }
 
     protected synchronized void buildGoogleApiClient() {
