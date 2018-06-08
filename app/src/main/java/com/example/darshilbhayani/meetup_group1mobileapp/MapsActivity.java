@@ -427,6 +427,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         startActivity(i);
 
                     } else if (id == R.id.nav_settings) {
+                        i = new Intent(curr, Settings_main.class);
+                        startActivity(i);
                     }
 
                     else if (id == R.id.nav_Addplan) {
