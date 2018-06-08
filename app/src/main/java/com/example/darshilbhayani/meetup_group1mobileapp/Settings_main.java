@@ -1,9 +1,12 @@
 package com.example.darshilbhayani.meetup_group1mobileapp;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -64,8 +67,6 @@ public class Settings_main extends AppCompatActivity {
                     startActivity(i);
 
                 } else if (id == R.id.nav_settings) {
-                    i=new Intent(curr,Settings_main.class);
-                    startActivity(i);
                 }
 
                 else if (id == R.id.nav_Addplan) {
@@ -109,7 +110,12 @@ public class Settings_main extends AppCompatActivity {
                    Intent i = new Intent(curr,ChangePassword.class);
                    startActivity(i);
                }
-
+                else if(position == 1){
+                   Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+                   String facebookUrl = getFacebookPageURL(Settings_main.this);
+                   facebookIntent.setData(Uri.parse(facebookUrl));
+                   startActivity(facebookIntent);
+               }
                else if (position == 2) {
                     AlertDialog alertDialog = new AlertDialog.Builder(Settings_main.this).create(); //Read Update
                     alertDialog.setTitle("About Meetup");
@@ -129,6 +135,23 @@ public class Settings_main extends AppCompatActivity {
 
         });
     }
+
+    public String getFacebookPageURL(Context context) {
+        String FACEBOOK_URL = "https://www.facebook.com/MeetUp-COEN-268-605091763191601/";
+        String FACEBOOK_PAGE_ID = "605091763191601";
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
+    }
+
     //-- Drawer Button --
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
