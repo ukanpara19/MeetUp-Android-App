@@ -109,6 +109,7 @@ NavigationView navigationView = findViewById(R.id.nav_bar_profile);
      SharedPreferences.Editor editor = getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE).edit();
      editor.putString("logged_in", "No");
      editor.putString("Email_ID","");
+     editor.apply();
      startActivity(i);
  }
 

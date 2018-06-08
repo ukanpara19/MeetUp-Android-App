@@ -220,7 +220,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="#00bcd4"
+            android:background="#7fccd2"
             android:text="ADD DATE/TIME"
             android:textColor="@android:color/white"
             android:textSize="18sp" />

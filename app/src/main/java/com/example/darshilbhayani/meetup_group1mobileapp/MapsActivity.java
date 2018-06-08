@@ -215,10 +215,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Log.d("lat-long Heree!!!", "" + lat + "......." + lon);
                     LatLng sourceLocal = new LatLng((double)lon, (double)lat);
 
+                   /* Marker marker =  mMap.addMarker(new MarkerOptions()
+                            .position(sourceLocal)
+                            .title(PlanNm).icon(BitmapDescriptorFactory.fromResource
+                                    (drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));*/
+
                     Marker marker =  mMap.addMarker(new MarkerOptions()
                             .position(sourceLocal)
                             .title(PlanNm).icon(BitmapDescriptorFactory.fromResource
-                                    (drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));
+                                    (R.drawable.lettera)));
+
                     marker.setTag(entryData.getKey());
                     marker.setVisible(true);
 
@@ -249,6 +255,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     myDialog.setContentView(R.layout.custompopup);
                     imgView = (ImageView) myDialog.findViewById(R.id.btnclose);
+
+                    SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                    String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
+
+                    boolean currUserJoined = false;
+                    if(dataModel.getppl_joined().contains(loogedInUser))
+                        currUserJoined = true;
 
                     Log.i("dataModel.getppl_joined",dataModel.getppl_joined()==null?"":dataModel.getppl_joined());
 
@@ -286,19 +299,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     Button join = myDialog.findViewById(R.id.join);
 
-                    SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
-                    String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
-
-                    boolean currUserJoined = false;
-                    if(dataModel.getppl_joined().contains(loogedInUser))
-                        currUserJoined = true;
-
                     if(currUserJoined){
                         Drawable drawable = getResources().getDrawable(R.color.grey);
                         join.setBackground(drawable);
                         Toast.makeText(MapsActivity.this,dataModel.getEvent_name()+" Plan already Joined!",Toast.LENGTH_SHORT).show();
                     }else {
-
                         join.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
