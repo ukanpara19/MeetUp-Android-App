@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,7 +59,7 @@ public class Settings_main extends AppCompatActivity {
 
                 int id = item.getItemId();
                 Intent i;
-
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
                 if (id == R.id.nav_Map) {
                     i = new Intent(curr, MapsActivity.class);
                     startActivity(i);

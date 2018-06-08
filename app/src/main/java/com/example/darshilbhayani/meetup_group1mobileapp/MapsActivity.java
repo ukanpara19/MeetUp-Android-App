@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -245,9 +246,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             if(dataModel!=null) {
                                 String title = dataModel.getEvent_name();
 
-                                //Log.i("dataModel...", title);
-                                Toast.makeText(MapsActivity.this,title,Toast.LENGTH_SHORT).show();
-
                                 myDialog.setContentView(R.layout.custompopup);
                                 imgView = (ImageView) myDialog.findViewById(R.id.btnclose);
 
@@ -328,6 +326,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
     }
 
     @Override
@@ -363,7 +369,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             Intent i = new Intent(this, MapsActivity.class);
             curr = this;
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_maps);
+            final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_maps);
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
                 @Override
@@ -371,9 +377,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     int id = item.getItemId();
                     Intent i;
-
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
                     if (id == R.id.nav_Map) {
                         i = new Intent(curr, MapsActivity.class);
+
                         startActivity(i);
 
                     } else if (id == R.id.nav_settings) {

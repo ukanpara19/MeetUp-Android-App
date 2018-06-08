@@ -75,6 +75,8 @@ public class LoginDemo extends AppCompatActivity {
             i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
 
+        }else {
+            Log.d("SharedPrefNo",preferences.getString("logged_in",null));
         }
 
         LoginManager.getInstance().registerCallback(mCallbackManager,

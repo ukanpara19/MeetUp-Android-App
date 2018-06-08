@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class CreatePage1 extends AppCompatActivity {
 
                 int id = item.getItemId();
                 Intent i;
-
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
                 if (id == R.id.nav_Map) {
                     i = new Intent(curr, MapsActivity.class);
                     startActivity(i);
