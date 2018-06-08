@@ -355,7 +355,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     myDialog.show();
 
-
                     //ByDefault Making Join to the Event!!
                     //Start
                     /**/

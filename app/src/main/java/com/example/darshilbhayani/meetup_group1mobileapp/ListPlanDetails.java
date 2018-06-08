@@ -347,6 +347,17 @@ public class ListPlanDetails extends AppCompatActivity {
                 Log.d("today date",year+"-"+month+"-"+date);
                 Log.d("event_date",event_date[0]+"-"+event_date[1]+"-"+event_date[2]);
 
+                Boolean flag = false;
+
+                SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
+
+                if(edit_event_data.getEmail_id().equals(loogedInUser)) {
+                    flag = true;
+                }else {
+                    Toast.makeText(ListPlanDetails.this,"You are not authorised to edit the event!",Toast.LENGTH_LONG).show();
+                }
+
                 if(Integer.valueOf(event_date[0])>=year){
 
                     if(Integer.valueOf(event_date[1])>=month){
@@ -370,10 +381,13 @@ public class ListPlanDetails extends AppCompatActivity {
                 }
 
                 try {
+
+                    if(flag) {
                         Intent i = new Intent(getApplicationContext(), EditPlan.class);
-                        i.putExtra("EVENT",edit_event_data);
-                        i.putExtra("ID",String.valueOf(view.getTag()));
+                        i.putExtra("EVENT", edit_event_data);
+                        i.putExtra("ID", String.valueOf(view.getTag()));
                         startActivity(i);
+                    }
                 }
                 catch (Exception e){
 
