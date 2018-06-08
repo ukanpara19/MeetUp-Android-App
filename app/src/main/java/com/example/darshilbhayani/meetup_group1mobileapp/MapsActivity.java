@@ -215,15 +215,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Log.d("lat-long Heree!!!", "" + lat + "......." + lon);
                     LatLng sourceLocal = new LatLng((double)lon, (double)lat);
 
-                   /* Marker marker =  mMap.addMarker(new MarkerOptions()
-                            .position(sourceLocal)
-                            .title(PlanNm).icon(BitmapDescriptorFactory.fromResource
-                                    (drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));*/
+                    SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                    String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
 
-                    Marker marker =  mMap.addMarker(new MarkerOptions()
-                            .position(sourceLocal)
-                            .title(PlanNm).icon(BitmapDescriptorFactory.fromResource
-                                    (R.drawable.lettera)));
+                    boolean currUserJoinedLocal = false;
+                    if(eventData.getppl_joined().contains(loogedInUser))
+                        currUserJoinedLocal = true;
+
+                    Marker marker;
+                    if(!currUserJoinedLocal) {
+                        marker = mMap.addMarker(new MarkerOptions()
+                                .position(sourceLocal)
+                                .title(PlanNm).icon(BitmapDescriptorFactory.fromResource
+                                        (R.drawable.marker_ok)));
+                    }else{
+                        marker = mMap.addMarker(new MarkerOptions()
+                                .position(sourceLocal)
+                                .title(PlanNm).icon(BitmapDescriptorFactory.fromResource
+                                        (R.drawable.marker_orange)));
+                    }
 
                     marker.setTag(entryData.getKey());
                     marker.setVisible(true);
@@ -324,6 +334,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         dataModel.getEvent_duration(), dataModel.getEvent_name(), dataModel.getEvent_source(), dataModel.getEvent_time(),
                                         dataModel.getEvent_type(), dataModel.getLan_dest(), dataModel.getLan_source(), dataModel.getLat_dest(),
                                         dataModel.getLat_source(), dataModel.getppl_joined());
+
+                                marker.setIcon(BitmapDescriptorFactory.fromResource
+                                        (R.drawable.marker_orange));
 
                                 mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
                                 Toast.makeText(MapsActivity.this, dataModel.getEvent_name() + " Plan Successfully Joined!", Toast.LENGTH_SHORT).show();
