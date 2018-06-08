@@ -405,8 +405,8 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
                     destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
 
-                //if(source!=null && destination!=null)
-                    drawRoute(source,destination,mMap);
+
+                drawRoute(source,destination,mMap);
             }
         });
 
@@ -464,6 +464,15 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 setLocaation("source_current_location_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+                drawRoute(source,destination,mMap);
             }
         });
 
@@ -471,6 +480,15 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 setLocaation("dest_current_location_imageview");
+
+                LatLng source=null, destination=null;
+                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
+                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
+
+                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
+                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
+
+                drawRoute(source,destination,mMap);
             }
         });
     }
