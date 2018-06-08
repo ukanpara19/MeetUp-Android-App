@@ -70,13 +70,17 @@ public class LoginDemo extends AppCompatActivity {
         SharedPreferences preferences=getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
         if(preferences.contains("logged_in")) {
             Log.d("SharedPref", preferences.getString("logged_in", null));
-            if (!preferences.getString("logged_in", null).equals("No")) {
-                Intent i = new Intent(this, MapsActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(i);
+            try{
+                if (!preferences.getString("logged_in", null).equals("No")) {
+                    Intent i = new Intent(this, MapsActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(i);
 
-            } else {
-                Log.d("SharedPrefNo", preferences.getString("logged_in", null));
+                } else {
+                    Log.d("SharedPrefNo", preferences.getString("logged_in", null));
+                }
+            }catch (Exception e){
+                Toast.makeText(LoginDemo.this,"Exception",Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -268,12 +272,10 @@ public class LoginDemo extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     usernameEdittext.setText("");
                     passwordEdittext.setText("");
-                    pd.hide();
                     Toast.makeText(getApplicationContext(),"Reset password link sent.",Toast.LENGTH_SHORT).show();
                 }
                 else {
                     passwordEdittext.setText("");
-                    pd.hide();
                     Toast.makeText(getApplicationContext(),"Invalid Email ID/No Internet connection.",Toast.LENGTH_SHORT).show();
                 }
             }
