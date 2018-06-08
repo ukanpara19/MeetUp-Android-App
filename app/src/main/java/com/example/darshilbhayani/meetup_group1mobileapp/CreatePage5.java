@@ -69,7 +69,7 @@ public class CreatePage5 extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MapsActivity.REQUEST_LOCATION);
+                new String[]{android.Manifest.permission.SEND_SMS}, CreatePage5.MY_PERMISSIONS_REQUEST_SEND_SMS);
 
         planName = (TextView) findViewById(R.id.planName);
         sourceLoc = (TextView) findViewById(R.id.sourceLoc);
@@ -143,32 +143,32 @@ public class CreatePage5 extends AppCompatActivity implements OnMapReadyCallback
         createEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestMessagePermission();
+//                requestMessagePermission();
+                Iterator it = invited_people.entrySet().iterator();
+                while (it.hasNext()){
+                    Map.Entry pair = (Map.Entry)it.next();
+                    MultipleSMS(pair.getValue().toString(),pair.getKey().toString());
+                }
                 insertData();
             }
         });
     }
 
-    private void requestMessagePermission() {
-        if (ContextCompat.checkSelfPermission(CreatePage5.this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(CreatePage5.this,Manifest.permission.SEND_SMS)) {
-            }
-            else {
-                ActivityCompat.requestPermissions(CreatePage5.this,new String[]{Manifest.permission.SEND_SMS},MY_PERMISSIONS_REQUEST_SEND_SMS);
-            }
-        }
-    }
+//    private void requestMessagePermission() {
+//        if (ContextCompat.checkSelfPermission(CreatePage5.this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(CreatePage5.this,Manifest.permission.SEND_SMS)) {
+//            }
+//            else {
+//                ActivityCompat.requestPermissions(CreatePage5.this,new String[]{Manifest.permission.SEND_SMS},MY_PERMISSIONS_REQUEST_SEND_SMS);
+//            }
+//        }
+//    }
     @Override
     public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Iterator it = invited_people.entrySet().iterator();
-                    while (it.hasNext()){
-                        Map.Entry pair = (Map.Entry)it.next();
-                        MultipleSMS(pair.getValue().toString(),pair.getKey().toString());
-                    }
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "SMS faild, please try again.", Toast.LENGTH_LONG).show();

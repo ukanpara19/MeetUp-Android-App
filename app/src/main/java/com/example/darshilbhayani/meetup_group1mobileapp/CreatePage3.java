@@ -88,7 +88,7 @@ public class CreatePage3 extends AppCompatActivity{
                     return;
                 }
 
-                                event.put("event_date",date);
+                event.put("event_date",date);
                 event.put("event_time",time);
                 event.put("event_duration",duration +" minutes");
 
@@ -127,7 +127,15 @@ public class CreatePage3 extends AppCompatActivity{
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            date_edittext.setText(String.valueOf(year) + "-" + String.valueOf(month+1) + "-" + String.valueOf(day));
+            if(day<10 & month<10 ) {
+                date_edittext.setText(String.valueOf(year) + "-" + String.valueOf("0" + (month + 1)) + "-" + String.valueOf("0" + day));
+            }else if(day<10 & month>=10) {
+                date_edittext.setText(String.valueOf(year) + "-" + String.valueOf(month + 1) + "-" + String.valueOf("0" + day));
+            } else if (day>=10 & month<10) {
+                date_edittext.setText(String.valueOf(year) + "-" + String.valueOf("0" + (month + 1)) + "-" + String.valueOf(day));
+            }else {
+                date_edittext.setText(String.valueOf(year) + "-" + String.valueOf(month+1) + "-" + String.valueOf(day));
+            }
         }
     }
 }
