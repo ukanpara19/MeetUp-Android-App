@@ -88,6 +88,8 @@ public class MapNavigation extends FragmentActivity implements OnMapReadyCallbac
 
     Button buttonFromLoc;
 
+    ImageView exit;
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
@@ -211,10 +213,13 @@ public class MapNavigation extends FragmentActivity implements OnMapReadyCallbac
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
             //textView = (TextView)findViewById(R.id.text_location);
-            buttonFromLoc = (Button)findViewById(R.id.exitNav);
-            buttonFromLoc.setOnClickListener(this);
+            //buttonFromLoc = (Button)findViewById(R.id.exitNav);
+            //buttonFromLoc.setOnClickListener(this);
 
-            buttonFromLoc.setOnClickListener(new View.OnClickListener() {
+            exit = (ImageView) findViewById(R.id.exit);
+
+
+            exit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(curr,MyPlanHistory.class);
