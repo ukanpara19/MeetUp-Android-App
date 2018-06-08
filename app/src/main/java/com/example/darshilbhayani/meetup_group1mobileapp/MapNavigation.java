@@ -415,7 +415,7 @@ public class MapNavigation extends FragmentActivity implements OnMapReadyCallbac
         try {
                 Marker hamburg = mMap.addMarker(new MarkerOptions()
                         .position(destination)
-                        .title("Destination Location").icon(BitmapDescriptorFactory.fromResource(drawableImg.get(String.valueOf(PlanNm.charAt(0)).toLowerCase()))));
+                        .title("Destination Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_ok)));
                 // Move the camera instantly to hamburg with a zoom of 15.
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
                 // Zoom in, animating the camera.

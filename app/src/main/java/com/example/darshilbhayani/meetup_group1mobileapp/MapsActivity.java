@@ -427,6 +427,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         startActivity(i);
 
                     } else if (id == R.id.nav_settings) {
+                        i=new Intent(curr,Settings_main.class);
+                        startActivity(i);
                     }
 
                     else if (id == R.id.nav_Addplan) {
@@ -620,16 +622,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onPause() {
-        try{
+       // try{
         super.onPause();
-
         //stop location updates when Activity is no longer active
-        if (mGoogleApiClient != null) {
+       /* if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 
 
