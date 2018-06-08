@@ -64,6 +64,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -205,24 +206,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     Event eventData = event.get(entryData.getKey());
 
+                    Log.i("eventData...PPLLL", eventData.getppl_joined());
+
                     Double lat = Double.parseDouble(eventData.getLat_dest().toString());
                     Double lon = Double.parseDouble(eventData.getLan_dest().trim());
                     String PlanNm = eventData.getEvent_name();
 
                     Log.d("lat-long Heree!!!", "" + lat + "......." + lon);
                     LatLng sourceLocal = new LatLng((double)lon, (double)lat);
-
-                /*
-
-                MarkerOptions mo = new MarkerOptions().position(destination).
-                        title("Jersey Shore, New Jersey").
-                        icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_b)).
-                        visible(true);
-
-                Marker marker =  mMap.addMarker(mo);
-                mo.anchor(0f, 0.5f);
-                marker.showInfoWindow();
-                 */
 
                     Marker marker =  mMap.addMarker(new MarkerOptions()
                             .position(sourceLocal)
@@ -234,84 +225,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     markersData.put(marker,eventData);
                     markersVisibility.put(marker,true);
                     markerType.put(marker,eventData.getEvent_type());
-
-                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(final Marker marker) {
-                            final Event dataModel = markersData.get(marker);
-                            if(dataModel!=null) {
-                                String title = dataModel.getEvent_name();
-
-                                myDialog.setContentView(R.layout.custompopup);
-                                imgView = (ImageView) myDialog.findViewById(R.id.btnclose);
-
-                                TextView eventNm = myDialog.findViewById(R.id.eventNm);
-                                eventNm.setText(dataModel.getEvent_name());
-
-                                TextView personNm = myDialog.findViewById(R.id.planName);
-                                personNm.setText(dataModel.getEmail_id());
-
-                                TextView eventType = myDialog.findViewById(R.id.eventTy);
-                                eventType.setText(dataModel.getEvent_type());
-
-                                TextView time = myDialog.findViewById(R.id.time);
-                                time.setText(dataModel.getEvent_time());
-
-                                TextView date = myDialog.findViewById(R.id.date);
-                                date.setText(dataModel.getEvent_date());
-
-                                TextView eventLen = myDialog.findViewById(R.id.eventLength);
-                                eventLen.setText(dataModel.getEvent_duration());
-
-                                Button join = myDialog.findViewById(R.id.join);
-                                join.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        String tmp = dataModel.getppl_joined();
-
-                                        SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
-                                        String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
-
-                                        if(!tmp.trim().equals(""))
-                                            tmp = tmp+";"+loogedInUser;
-                                        else
-                                            tmp = loogedInUser;
-                                        dataModel.setppl_joined(tmp);
-
-                                        Log.i("dataModel..",dataModel.getppl_joined());
-
-                                        Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
-                                                dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
-                                                dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
-                                                dataModel.getLat_source(),dataModel.getppl_joined());
-
-                                        //Log.i("ID",marker.getTag().toString());
-
-                                        mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
-                                        Toast.makeText(MapsActivity.this,dataModel.getEvent_name()+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
-                                        myDialog.dismiss();
-                                    }
-                                });
-
-                                imgView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        myDialog.dismiss();
-                                    }
-                                });
-
-                                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                myDialog.show();
-
-
-                                //ByDefault Making Join to the Event!!
-                                //Start
-                                /**/
-                                //End
-                            }
-                            return false;
-                        }
-                    });
                 }
 
 
@@ -324,6 +237,99 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                final Event dataModel = markersData.get(marker);
+                if(dataModel!=null) {
+                    String title = dataModel.getEvent_name();
+
+                    myDialog.setContentView(R.layout.custompopup);
+                    imgView = (ImageView) myDialog.findViewById(R.id.btnclose);
+
+                    Log.i("dataModel.getppl_joined",dataModel.getppl_joined()==null?"":dataModel.getppl_joined());
+
+                    TextView totalParticipant = myDialog.findViewById(R.id.totalParticipant);
+                    Log.i("&&", "--"+dataModel.getppl_joined());
+                    if(!dataModel.getppl_joined().contains(";")) {
+                        Log.i("Here!!!", "Came Inside 00");
+                        totalParticipant.setText("1");
+                    }else {
+                        Log.i("Here!!!", "Came Inside");
+                        String[] len =dataModel.getppl_joined().toString().split(";");
+                        totalParticipant.setText(String.valueOf(len.length));
+                    }
+
+                    TextView eventNm = myDialog.findViewById(R.id.eventNm);
+                    eventNm.setText(dataModel.getEvent_name());
+
+                    TextView personNm = myDialog.findViewById(R.id.planName);
+                    personNm.setText(dataModel.getEmail_id());
+
+                    TextView eventType = myDialog.findViewById(R.id.eventTy);
+                    eventType.setText(dataModel.getEvent_type());
+
+                    TextView time = myDialog.findViewById(R.id.time);
+                    time.setText(dataModel.getEvent_time());
+
+                    TextView date = myDialog.findViewById(R.id.date);
+                    date.setText(dataModel.getEvent_date());
+
+                    TextView eventLen = myDialog.findViewById(R.id.eventLength);
+                    eventLen.setText(dataModel.getEvent_duration());
+
+                    ImageView img = myDialog.findViewById(R.id.imageView2);
+                    img.setImageResource(drawableImg.get(String.valueOf(dataModel.getEvent_name().charAt(0)).toLowerCase()));
+
+                    Button join = myDialog.findViewById(R.id.join);
+
+                    join.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String tmp = dataModel.getppl_joined();
+
+                            SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                            String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
+
+                            if(!tmp.trim().equals(""))
+                                tmp = tmp+";"+loogedInUser;
+                            else
+                                tmp = loogedInUser;
+                            dataModel.setppl_joined(tmp);
+
+                            Log.i("dataModel..",dataModel.getppl_joined());
+
+                            Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
+                                    dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
+                                    dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
+                                    dataModel.getLat_source(),dataModel.getppl_joined());
+
+                            mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
+                            Toast.makeText(MapsActivity.this,dataModel.getEvent_name()+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
+                            myDialog.dismiss();
+                        }
+                    });
+
+                    imgView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            myDialog.dismiss();
+                        }
+                    });
+
+                    myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    myDialog.show();
+
+
+                    //ByDefault Making Join to the Event!!
+                    //Start
+                    /**/
+                    //End
+                }
+                return false;
             }
         });
 
