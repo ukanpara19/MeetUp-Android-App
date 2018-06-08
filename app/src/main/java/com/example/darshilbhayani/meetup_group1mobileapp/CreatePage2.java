@@ -111,7 +111,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
         event = (HashMap<String, String>)intent.getSerializableExtra("hashmap");
         String event_type = intent.getStringExtra("event_object");
 
-
         //Search a location
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -323,32 +322,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    public void drawRoute(LatLng source, LatLng finalDestination, GoogleMap mMapLocal){
-
-        try{
-            if(source!=null && finalDestination!=null) {
-
-                Log.i("DrawRoute","Came inside to drawa");
-
-                LatLng origin = source;
-                LatLng destination = finalDestination;
-                DrawRouteMaps.getInstance(this)
-                        .draw(origin, destination, mMapLocal);
-                //DrawMarker.getInstance(this).draw(mMap, origin, R.drawable.marker_a, "Origin Location");
-                //DrawMarker.getInstance(this).draw(mMap, destination, R.drawable.marker_b, "Destination Location");
-
-                LatLngBounds bounds = new LatLngBounds.Builder()
-                        .include(origin)
-                        .include(destination).build();
-                Point displaySize = new Point();
-                getWindowManager().getDefaultDisplay().getSize(displaySize);
-                mMapLocal.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -376,15 +349,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 }
                 String source_location = source_edittext.getText().toString().trim();
                 destinationLocation(mMap,source_location,"source_search_imageview");
-
-                LatLng source=null, destination=null;
-                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
-                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
-
-                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
-                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
-
-                drawRoute(source,destination,mMap);
             }
         });
 
@@ -397,16 +361,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
                 }
                 String dest_location = destination_edittext.getText().toString().trim();
                 destinationLocation(mMap,dest_location,"dest_search_imageview");
-
-                LatLng source=null, destination=null;
-                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
-                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
-
-                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
-                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
-
-
-                drawRoute(source,destination,mMap);
             }
         });
 
@@ -458,15 +412,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 setLocaation("source_current_location_imageview");
-
-                LatLng source=null, destination=null;
-                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
-                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
-
-                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
-                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
-
-                drawRoute(source,destination,mMap);
             }
         });
 
@@ -474,15 +419,6 @@ public class CreatePage2 extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 setLocaation("dest_current_location_imageview");
-
-                LatLng source=null, destination=null;
-                if(event.get("lat_source")!=null && event.get("lan_source")!=null)
-                    source= new LatLng(Double.parseDouble(event.get("lan_source")),Double.parseDouble(event.get("lat_source")));
-
-                if(event.get("lat_dest")!=null && event.get("lan_dest")!=null)
-                    destination= new LatLng(Double.parseDouble(event.get("lan_dest")),Double.parseDouble(event.get("lat_dest")));
-
-                drawRoute(source,destination,mMap);
             }
         });
     }
