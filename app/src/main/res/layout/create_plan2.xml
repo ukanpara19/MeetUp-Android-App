@@ -81,6 +81,7 @@
                     android:layout_height="45dp"
                     android:background="@drawable/border_xml"
                     android:ems="10"
+                    android:paddingLeft="10dp"
                     android:hint="Enter Starting Location"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toEndOf="@+id/planName"
