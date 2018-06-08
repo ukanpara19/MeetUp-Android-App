@@ -286,32 +286,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     Button join = myDialog.findViewById(R.id.join);
 
-                    join.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String tmp = dataModel.getppl_joined();
+                    SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                    String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
 
-                            SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
-                            String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
+                    boolean currUserJoined = false;
+                    if(dataModel.getppl_joined().contains(loogedInUser))
+                        currUserJoined = true;
 
-                            if(!tmp.trim().equals(""))
-                                tmp = tmp+";"+loogedInUser;
-                            else
-                                tmp = loogedInUser;
-                            dataModel.setppl_joined(tmp);
+                    if(currUserJoined){
+                        Drawable drawable = getResources().getDrawable(R.color.grey);
+                        join.setBackground(drawable);
+                        Toast.makeText(MapsActivity.this,dataModel.getEvent_name()+" Plan already Joined!",Toast.LENGTH_SHORT).show();
+                    }else {
 
-                            Log.i("dataModel..",dataModel.getppl_joined());
+                        join.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String tmp = dataModel.getppl_joined();
 
-                            Event eWriteData = new Event(dataModel.getEmail_id(),dataModel.getEvent_date(),dataModel.getEvent_dest(),
-                                    dataModel.getEvent_duration(),dataModel.getEvent_name(),dataModel.getEvent_source(),dataModel.getEvent_time(),
-                                    dataModel.getEvent_type(),dataModel.getLan_dest(),dataModel.getLan_source(),dataModel.getLat_dest(),
-                                    dataModel.getLat_source(),dataModel.getppl_joined());
+                                SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                                String loogedInUser = editor.getString("Email_ID", "darshilbhayani1992@gmail.com");
 
-                            mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
-                            Toast.makeText(MapsActivity.this,dataModel.getEvent_name()+" Plan Successfully Joined!",Toast.LENGTH_SHORT).show();
-                            myDialog.dismiss();
-                        }
-                    });
+                                if (!tmp.trim().equals(""))
+                                    tmp = tmp + ";" + loogedInUser;
+                                else
+                                    tmp = loogedInUser;
+                                dataModel.setppl_joined(tmp);
+
+                                Log.i("dataModel..", dataModel.getppl_joined());
+
+                                Event eWriteData = new Event(dataModel.getEmail_id(), dataModel.getEvent_date(), dataModel.getEvent_dest(),
+                                        dataModel.getEvent_duration(), dataModel.getEvent_name(), dataModel.getEvent_source(), dataModel.getEvent_time(),
+                                        dataModel.getEvent_type(), dataModel.getLan_dest(), dataModel.getLan_source(), dataModel.getLat_dest(),
+                                        dataModel.getLat_source(), dataModel.getppl_joined());
+
+                                mDatabase.child("event").child(marker.getTag().toString()).setValue(eWriteData);
+                                Toast.makeText(MapsActivity.this, dataModel.getEvent_name() + " Plan Successfully Joined!", Toast.LENGTH_SHORT).show();
+                                myDialog.dismiss();
+                            }
+                        });
+                    }
 
                     imgView.setOnClickListener(new View.OnClickListener() {
                         @Override
