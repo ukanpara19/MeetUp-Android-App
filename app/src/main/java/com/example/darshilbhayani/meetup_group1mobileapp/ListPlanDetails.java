@@ -334,31 +334,37 @@ public class ListPlanDetails extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Event edit_event_data = event.get(String.valueOf(view.getTag()));
 
-
                 Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-                int year = calendar.get(Calendar.YEAR);
+               /* int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
-                int date = calendar.get(Calendar.DATE);
+                int date = calendar.get(Calendar.DATE);*/
+
+                int year = 2018;
+                int month = 6;
+                int date = 8;
 
                 String[] event_date = edit_event_data.getEvent_date().split("-");
                 Log.d("today date",year+"-"+month+"-"+date);
                 Log.d("event_date",event_date[0]+"-"+event_date[1]+"-"+event_date[2]);
-                Log.d("year",year+"-"+event_date[0]);
+
                 if(Integer.valueOf(event_date[0])>=year){
-                    Log.d("month",month+"-"+event_date[1]);
+
                     if(Integer.valueOf(event_date[1])>=month){
-                        Log.d("date",date+"-"+event_date[2]);
-                        if(Integer.valueOf(event_date[2])>date){
+
+                        if(Integer.valueOf(event_date[2])>=date){
                             Log.d("date","Event can be edited");
                         }else{
+                            Log.d("date",date+"-"+event_date[2]);
                             Toast.makeText(ListPlanDetails.this,"Event Expired. Can not be Edited.",Toast.LENGTH_LONG).show();
                             return;
                         }
                     }else{
+                        Log.d("month",month+"-"+event_date[1]);
                         Toast.makeText(ListPlanDetails.this,"Event Expired. Can not be Edited.",Toast.LENGTH_LONG).show();
                         return;
                     }
                 }else {
+                    Log.d("year",year+"-"+event_date[0]);
                     Toast.makeText(ListPlanDetails.this,"Event Expired. Can not be Edited.",Toast.LENGTH_LONG).show();
                     return;
                 }

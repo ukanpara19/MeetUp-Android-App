@@ -71,7 +71,7 @@
         <activity android:name=".ListPlanDetails"></activity>
         <activity android:name=".MyPlanHistory"></activity>
         <activity android:name=".requestContactPermission"></activity>
-        <activity android:name=".MapsActivity" android:theme="@style/AppTheme"></activity>
+        <activity android:name=".MapsActivity" android:theme="@style/AppTheme" android:configChanges="orientation|screenSize" ></activity>
         <activity android:name=".EditPlan"></activity>
         <activity android:name=".Settings_main"></activity>
         <activity android:name=".ProfilePage"></activity>
