@@ -182,7 +182,7 @@ public class CreatePage5 extends AppCompatActivity implements OnMapReadyCallback
         Event event_set = new Event();
 
         SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
-        String loogedInUser = editor.getString("Email_ID","darshilbhayani1892@gmail.com");
+        String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
 
             event_set.setEvent_all(loogedInUser,event.get("event_date"),event.get("event_dest"),event.get("event_duration"), event.get("event_name"),event.get("event_source"),
                     event.get("event_time"),event.get("event_type"),

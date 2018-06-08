@@ -123,7 +123,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void darwPlanMarkers(GoogleMap mMap) {
         try{
             loadDatForJoinPlan();
-            fillData(planData);
 
             Log.i("Dattatat.ABCD.",event+"");
             Log.i("Dattatat..",event.entrySet()+"");
@@ -205,11 +204,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     Event eventData = event.get(entryData.getKey());
 
-                    Log.i("PlanId.........",entryData.getKey());
-                    Log.i("getEvent_nam........",eventData.getEvent_name());
-                    Log.i("eventData.......",eventData.getppl_joined()+"");
-                    Log.i("eventData..nm.....",eventData.getEvent_name()+"");
-
                     Double lat = Double.parseDouble(eventData.getLat_dest().toString());
                     Double lon = Double.parseDouble(eventData.getLan_dest().trim());
                     String PlanNm = eventData.getEvent_name();
@@ -273,10 +267,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     @Override
                                     public void onClick(View view) {
                                         String tmp = dataModel.getppl_joined();
+
+                                        SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+                                        String loogedInUser = editor.getString("Email_ID","darshilbhayani1992@gmail.com");
+
                                         if(!tmp.trim().equals(""))
-                                            tmp = tmp+";darshilbhayani92@gmail.com";
+                                            tmp = tmp+";"+loogedInUser;
                                         else
-                                            tmp = "darshilbhayani92@gmail.com";
+                                            tmp = loogedInUser;
                                         dataModel.setppl_joined(tmp);
 
                                         Log.i("dataModel..",dataModel.getppl_joined());
@@ -663,22 +661,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    private void fillData(HashMap<String, HashMap<String, String>> planData) {
-        HashMap<String, String> tmp = new HashMap<>();
-
-        setData(tmp,"37.594678","-122.389865","Testing Plan1");
-        planData.put("1",tmp);
-
-        tmp = new HashMap<>();
-        setData(tmp,"37.542967","-122.304735","Enjoying Plan1");
-        planData.put("2",tmp);
-
-        tmp = new HashMap<>();
-        setData(tmp,"37.534766","-121.424872","Sexifying Plan1");
-        planData.put("3",tmp);
-
     }
 
     private void setData(HashMap<String, String> tmp, String lon, String lat, String PlanNm) {
