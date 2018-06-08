@@ -189,9 +189,11 @@ public class CreatePage5 extends AppCompatActivity implements OnMapReadyCallback
                     event.get("lan_dest"),event.get("lan_source"),event.get("lat_dest")
                     ,event.get("lat_source"),"");
             mDatabase.child("event").child(String.valueOf(ran.nextInt())).setValue(event_set);
+
         Toast.makeText(getBaseContext(), "Created Successfully!",
                 Toast.LENGTH_SHORT).show();
         Intent intent1 = new Intent(CreatePage5.this,MapsActivity.class);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent1);
 
     }

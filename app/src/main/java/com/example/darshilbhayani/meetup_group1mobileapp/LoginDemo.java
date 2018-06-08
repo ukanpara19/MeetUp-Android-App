@@ -38,8 +38,6 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashMap;
 
-
-
 public class LoginDemo extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Button signinButton,registerButton;
@@ -60,7 +58,6 @@ public class LoginDemo extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         signinButton = findViewById(R.id.button4);
         registerButton =  findViewById(R.id.button);
         usernameEdittext =  findViewById(R.id.editText4);
@@ -70,6 +67,16 @@ public class LoginDemo extends AppCompatActivity {
         forgot_password_image =  findViewById(R.id.imageView4);
 
         mCallbackManager = CallbackManager.Factory.create();
+        SharedPreferences preferences=getSharedPreferences(MY_PREFS_NAME,MODE_PRIVATE);
+        Log.d("SharedPref",preferences.getString("logged_in",null));
+        if(preferences.getString("logged_in",null)!=null)
+        {
+            Intent i = new Intent(LoginDemo.this,MapsActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(i);
+
+        }
+
         LoginManager.getInstance().registerCallback(mCallbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -233,10 +240,7 @@ public class LoginDemo extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("Firebase Successful", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Log.d("user",user+"");
                             SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                             editor.putString("logged_in", "yes");
                             editor.putString("Email_ID",fbEmailId);
@@ -246,7 +250,6 @@ public class LoginDemo extends AppCompatActivity {
                             pd.hide();
                             startActivity(i);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w("Firebase Failed", "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginDemo.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -260,13 +263,15 @@ public class LoginDemo extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),"Reset password link sent.",Toast.LENGTH_SHORT).show();
                     usernameEdittext.setText("");
                     passwordEdittext.setText("");
+                    pd.hide();
+                    Toast.makeText(getApplicationContext(),"Reset password link sent.",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"Invalid Email ID.",Toast.LENGTH_SHORT).show();
                     passwordEdittext.setText("");
+                    pd.hide();
+                    Toast.makeText(getApplicationContext(),"Invalid Email ID/No Internet connection.",Toast.LENGTH_SHORT).show();
                 }
             }
         });

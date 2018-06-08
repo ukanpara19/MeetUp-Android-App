@@ -35,10 +35,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class ListPlanDetails extends AppCompatActivity {
 
@@ -321,12 +327,46 @@ public class ListPlanDetails extends AppCompatActivity {
         rowDataView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), EditPlan.class);
-                Log.i("Tag!", String.valueOf(view.getTag()));
-                Event e1Tmp = event.get(String.valueOf(view.getTag()));
-                i.putExtra("EVENT",e1Tmp);
-                i.putExtra("ID",String.valueOf(view.getTag()));
-                startActivity(i);
+                Event edit_event_data = event.get(String.valueOf(view.getTag()));
+
+
+                Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int date = calendar.get(Calendar.DATE);
+
+                String[] event_date = edit_event_data.getEvent_date().split("-");
+                Log.d("today date",year+"-"+month+"-"+date);
+                Log.d("event_date",event_date[0]+"-"+event_date[1]+"-"+event_date[2]);
+                Log.d("year",year+"-"+event_date[0]);
+                if(Integer.valueOf(event_date[0])>=year){
+                    Log.d("month",month+"-"+event_date[1]);
+                    if(Integer.valueOf(event_date[1])>=month){
+                        Log.d("date",date+"-"+event_date[2]);
+                        if(Integer.valueOf(event_date[2])>date){
+                            Log.d("date","Event can be edited");
+                        }else{
+                            Toast.makeText(ListPlanDetails.this,"Event Expired. Can not be Edited.",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }else{
+                        Toast.makeText(ListPlanDetails.this,"Event Expired. Can not be Edited.",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }else {
+                    Toast.makeText(ListPlanDetails.this,"Event Expired. Can not be Edited.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                try {
+                        Intent i = new Intent(getApplicationContext(), EditPlan.class);
+                        i.putExtra("EVENT",edit_event_data);
+                        i.putExtra("ID",String.valueOf(view.getTag()));
+                        startActivity(i);
+                }
+                catch (Exception e){
+
+                }
             }
         });
     }
