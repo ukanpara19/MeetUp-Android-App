@@ -259,7 +259,7 @@ public class MyPlanHistory extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                
+
             }
         });
     }

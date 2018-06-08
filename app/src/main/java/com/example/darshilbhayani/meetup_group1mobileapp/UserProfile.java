@@ -10,10 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Semaphore;
 
@@ -37,7 +34,6 @@ public class UserProfile extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     static HashMap<String,User> userDetails = new HashMap<>();
-
     TextView userNm,userEmailId,userPhno;
 
     @Override
@@ -49,16 +45,7 @@ public class UserProfile extends AppCompatActivity {
         userEmailId = (TextView) findViewById(R.id.userEmailId);
         userPhno = (TextView) findViewById(R.id.userPhno);
 
-            SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
-            String loogedInUser = editor.getString("Email_ID","darshilbhayani92@gmail.com");
-
-            if(userDetails.keySet().contains(loogedInUser.toString())){
-                User currUserData = userDetails.get(loogedInUser.toString());
-
-                userNm.setText(currUserData.getName()==null?"":currUserData.getName());
-                userEmailId.setText(currUserData.getEmail()==null?"":currUserData.getEmail());
-                userPhno.setText(currUserData.getNumber()==null?"":currUserData.getNumber());
-            }
+        Log.i("loogedInUser","...!!!...");
 
         getUserData();
     }
@@ -168,8 +155,21 @@ public class UserProfile extends AppCompatActivity {
                 }
             });
 
+            SharedPreferences editor = getApplicationContext().getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE);
+            String loogedInUser = editor.getString("Email_ID","darshilbhayani1892@gmail.com");
 
+            Log.i("loogedInUser","...!!!..."+loogedInUser);
 
+            int i=1;
+            for(Map.Entry<String,User> userData : userDetails.entrySet()) {
+                User currUserData = userData.getValue();
+                if(currUserData.getEmail().equals(loogedInUser)){
+
+                    userNm.setText(currUserData.getName()==null?"":currUserData.getName());
+                    userEmailId.setText(currUserData.getEmail()==null?"":currUserData.getEmail());
+                    userPhno.setText(currUserData.getNumber()==null?"":currUserData.getNumber());
+                }
+            }
 
         }catch (Exception e){
 
