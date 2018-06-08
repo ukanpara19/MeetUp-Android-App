@@ -247,7 +247,7 @@ public class MyPlanHistory extends AppCompatActivity {
                 for(Map.Entry<String,Event> evnData : event.entrySet()) {
 
                     Event e1 = evnData.getValue();
-                    if(e1.getEmail_id().equals(loogedInUser)) {
+                    if(e1.getEmail_id().equals(loogedInUser) || e1.getppl_joined().contains(loogedInUser)) {
                         rowDataListPlans.add(new rowDataListPlans(Integer.parseInt(evnData.getKey()), e1.getEvent_name(),
                                 drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase()),
                                 e1.getEvent_date(), e1.getEvent_time(), e1.getEvent_duration(), drawableImg.get(String.valueOf(e1.getEvent_name().charAt(0)).toLowerCase())));
@@ -259,7 +259,7 @@ public class MyPlanHistory extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                
             }
         });
     }
