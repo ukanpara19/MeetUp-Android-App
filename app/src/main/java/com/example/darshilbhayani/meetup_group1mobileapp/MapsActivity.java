@@ -32,6 +32,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -67,7 +68,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener,
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
@@ -356,17 +357,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_maps);
 
+
+
+            //-- Drawer button --
             mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
             mtoggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
 
             mDrawerLayout.addDrawerListener(mtoggle);
             mtoggle.syncState();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+            //-- Drawer Button --
 
             //----Navigation Drawer---
 
             Intent i = new Intent(this, MapsActivity.class);
             curr = this;
-            final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_maps);
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_bar_maps);
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
                 @Override
@@ -377,13 +386,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
                     if (id == R.id.nav_Map) {
                         i = new Intent(curr, MapsActivity.class);
-
                         startActivity(i);
 
                     } else if (id == R.id.nav_settings) {
-                        i=new Intent(curr,Settings_main.class);
-                        startActivity(i);
                     }
+
                     else if (id == R.id.nav_Addplan) {
                         i = new Intent(curr, CreatePage1.class);
                         startActivity(i);
@@ -406,16 +413,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         SharedPreferences.Editor editor = getSharedPreferences(LoginDemo.MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor.putString("logged_in", "No");
                         editor.putString("Email_ID","");
-                        editor.apply();
                         startActivity(i);
                     }
+
 
                     return true;
                 }
 
             });
 
-            //---Navigation Drawer-----
+            //----Navigation Drawer---
 
 
             Button btnAll = findViewById(R.id.button_all);
@@ -915,6 +922,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
+    //-- Drawer Button --
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // -- Drawer Button --
 
 
 }
