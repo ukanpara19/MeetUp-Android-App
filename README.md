@@ -1,9 +1,9 @@
 # MeetUp-Android-App!
 
-Meetup up a Scoial event planning Android App.
+MeetUp is a Social event planning Android App.
 
-So if you are a person who organizes events for your friends very often.Normally one would need to ask people on by one to join th eveent. 
-But with MeetUp- One can simply create a plan, and simply ask them to join the plan in serveal clicks. 
+So if you are a person who organizes events for your friends very often.Normally one would need to ask people on by one to join the event. 
+But with MeetUp- One can simply create a plan, and simply ask them to join the plan in several clicks. 
 It makes event planning much more convinient.
 
 In addition, Meetup is also good meeting new peole and finding things nearyby. 
