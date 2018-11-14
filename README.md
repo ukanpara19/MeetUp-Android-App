@@ -9,3 +9,6 @@ In addition, Meetup is also good for meeting new people and finding new activiti
 Its simple, clean , effective and convinient! 
 
 Technologies and tools used: Java, Firebase, Facebook API, Google maps API, Android Studio, Android SDK 5.0
+
+![picture1](https://user-images.githubusercontent.com/33382057/48458342-c01db980-e77a-11e8-9644-602dedfd6413.png)
+
